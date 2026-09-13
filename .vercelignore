@@ -1,0 +1,11 @@
+.git
+.github
+.venv
+**/.venv
+**/node_modules
+**/.svelte-kit
+**/.ruff_cache
+**/.pytest_cache
+**/__pycache__
+docs
+tests

@@ -1,0 +1,28 @@
+minimum_pre_commit_version: "4.0.0"
+default_install_hook_types: [pre-commit, pre-push]
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: repository-audit
+        name: repository scaffold audit
+        entry: just audit
+        language: system
+        pass_filenames: false
+
+      - id: repository-checks
+        name: repository checks
+        entry: just check
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

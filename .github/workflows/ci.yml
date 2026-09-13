@@ -1,0 +1,89 @@
+name: Repository checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Repository checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v10
+        with:
+          version: 0.11.3
+          enable-cache: true
+          cache-dependency-glob: src/backend/uv.lock
+
+      - name: Install just
+        uses: extractions/setup-just@v4
+        with:
+          just-version: 1.21.0
+
+      - name: Install frontend dependencies
+        working-directory: src/frontend
+        run: bun ci
+
+      - name: Install backend dependencies
+        working-directory: src/backend
+        run: uv sync --frozen
+
+      - name: Run repository checks
+        run: just check
+
+  deploy-production:
+    name: Deploy production
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: ${{ steps.deploy.outputs.url }}
+    env:
+      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Pull production configuration
+        run: bunx vercel@59.16.0 pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build production deployment
+        run: bunx vercel@59.16.0 build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy production build
+        id: deploy
+        run: echo "url=$(bunx vercel@59.16.0 deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})" >> "$GITHUB_OUTPUT"
+
+      - name: Check deployed frontend
+        run: curl --fail --silent --retry 5 --retry-delay 2 "${{ steps.deploy.outputs.url }}/" > /dev/null
+
+      - name: Check deployed API
+        run: curl --fail --silent --retry 5 --retry-delay 2 "${{ steps.deploy.outputs.url }}/api/health/live"

@@ -1,0 +1,84 @@
+name: studyspot
+
+services:
+  frontend:
+    build:
+      context: ./src/frontend
+    environment:
+      API_PROXY_TARGET: http://backend:8000
+    ports:
+      - "127.0.0.1:5173:5173"
+    depends_on:
+      backend:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - bun
+        - -e
+        - fetch('http://localhost:5173').then((response) => process.exit(response.ok ? 0 : 1)).catch(() => process.exit(1))
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  backend:
+    build:
+      context: ./src/backend
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-studyspot}:${POSTGRES_PASSWORD:-studyspot}@postgres:5432/${POSTGRES_DB:-studyspot}
+      MEILISEARCH_URL: http://meilisearch:7700
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      meilisearch:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://localhost:8000/health/live', timeout=2)
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  postgres:
+    image: postgis/postgis:17-3.5
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-studyspot}
+      POSTGRES_USER: ${POSTGRES_USER:-studyspot}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-studyspot}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.45.1
+    environment:
+      MEILI_ENV: development
+      MEILI_NO_ANALYTICS: "true"
+    ports:
+      - "127.0.0.1:7700:7700"
+    volumes:
+      - meilisearch-data:/meili_data
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:7700/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  postgres-data:
+  meilisearch-data:

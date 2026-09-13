@@ -1,0 +1,51 @@
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /src/frontend
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/New_York
+    groups:
+      frontend-dependencies:
+        patterns: ["*"]
+
+  - package-ecosystem: uv
+    directory: /src/backend
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/New_York
+    groups:
+      backend-dependencies:
+        patterns: ["*"]
+
+  - package-ecosystem: nix
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/New_York
+
+  - package-ecosystem: pre-commit
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/New_York
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/New_York
+    groups:
+      github-actions:
+        patterns: ["*"]

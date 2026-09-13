@@ -1,0 +1,29 @@
+name: Nix development shell
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Nix flake
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: DeterminateSystems/determinate-nix-action@v3.5.2
+
+      - name: Check flake
+        run: nix flake check --print-build-logs

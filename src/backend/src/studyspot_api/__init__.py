@@ -1,0 +1,1 @@
+"""StudySpot API package."""
