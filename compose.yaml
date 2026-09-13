@@ -26,7 +26,6 @@ services:
         - action: sync
           path: ./src/frontend/src
           target: /app/src
-          initial_sync: true
         - action: sync
           path: ./src/frontend/static
           target: /app/static
@@ -82,7 +81,6 @@ services:
         - action: sync
           path: ./src/backend/src
           target: /app/src
-          initial_sync: true
         - action: rebuild
           path: ./src/backend/pyproject.toml
         - action: rebuild
