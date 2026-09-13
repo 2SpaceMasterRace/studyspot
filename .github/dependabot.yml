@@ -23,6 +23,17 @@ updates:
       backend-dependencies:
         patterns: ["*"]
 
+  - package-ecosystem: uv
+    directory: /docs
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: America/New_York
+    groups:
+      documentation-dependencies:
+        patterns: ["*"]
+
   - package-ecosystem: nix
     directory: /
     schedule:

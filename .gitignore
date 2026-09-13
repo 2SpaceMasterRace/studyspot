@@ -12,6 +12,7 @@ __pycache__/
 .ty_cache/
 .coverage
 htmlcov/
+docs/build/
 
 # JavaScript
 node_modules/
@@ -36,3 +37,4 @@ result
 result-*
 .vercel
 .env*
+!.envrc
