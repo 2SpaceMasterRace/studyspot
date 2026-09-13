@@ -31,7 +31,17 @@ Configure these GitHub repository values:
 
 Until `VERCEL_DEPLOY_ENABLED` is `true`, the deployment jobs are skipped and the repository checks still run normally. This prevents a newly configured repository from producing failed deploy jobs while credentials are incomplete.
 
-Configure `DATABASE_URL`, `MEILISEARCH_URL`, and other environment values for the Vercel Preview environment, scoped to the `staging` branch. Never point staging at writable production data.
+Finish the repository setup manually:
+
+1. Create a narrowly scoped Vercel access token.
+2. Add it to GitHub Actions as the `VERCEL_TOKEN` repository secret.
+3. Confirm the public `VERCEL_ORG_ID` and `VERCEL_PROJECT_ID` repository variables.
+4. Set the `VERCEL_DEPLOY_ENABLED` repository variable to `true`.
+5. In the Vercel project settings, assign `dev-studyspot-nyu.vercel.app` to the `staging` branch if that domain is available.
+
+Do not put the token in `.env`, commit it, or paste it into an issue or pull request.
+
+No hosted database or search variables are required by the current liveness-only scaffold. When those integrations are implemented, scope their environment values to the `staging` branch and never point staging at writable production data.
 
 Vercel automatically provides a stable generated branch URL when Git integration is enabled. To use `dev-studyspot-nyu.vercel.app`, add that domain to the project and assign it to the `staging` branch; the exact `.vercel.app` name must be available.
 
@@ -57,7 +67,11 @@ nix run . -- deploy-production
 
 ## Stateful dependencies
 
-Vercel deploys application services, not the local PostgreSQL and Meilisearch containers. Provision hosted services in a region close to the API and inject their connection information through environment variables. Run migrations as a controlled release operation and keep search indexing repeatable.
+Vercel deploys application services, not the local PostgreSQL and Meilisearch containers. For the current scaffold, PostgreSQL/PostGIS and Meilisearch remain local-only through Docker Compose. Do not provision a paid hosted dependency before the application actually uses it.
+
+A future container deployment for the backend and Meilisearch is intentionally deferred. Fly.io can run the same container images, but account, application, billing, and secret setup remain manual and may incur charges. No provisioning script is maintained in this repository. Revisit the hosting configuration when persistent staging data and implemented search make it necessary. Run migrations as a controlled release operation and keep search indexing repeatable.
+
+When Fly.io is introduced, create separate staging and production applications, attach separate persistent volumes, and keep secrets scoped to their application. Record only non-secret application names and regions in the repository.
 
 ## Rollback
 

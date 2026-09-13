@@ -29,7 +29,6 @@ services:
         - action: sync
           path: ./src/frontend/static
           target: /app/static
-          initial_sync: true
         - action: sync+restart
           path: ./src/frontend/vite.config.ts
           target: /app/vite.config.ts
