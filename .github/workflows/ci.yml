@@ -28,7 +28,7 @@ jobs:
           bun-version: 1.3.14
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v10
+        uses: astral-sh/setup-uv@v8.1.0
         with:
           version: 0.11.3
           enable-cache: true
@@ -52,7 +52,9 @@ jobs:
 
   deploy-production:
     name: Deploy production
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: >-
+      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
+      vars.VERCEL_ORG_ID != '' && vars.VERCEL_PROJECT_ID != ''
     needs: check
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -62,6 +64,7 @@ jobs:
     env:
       VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
     steps:
       - name: Check out repository
@@ -72,15 +75,23 @@ jobs:
         with:
           bun-version: 1.3.14
 
+      - name: Verify Vercel configuration
+        run: |
+          test -n "$VERCEL_TOKEN" || { echo "Missing Actions secret: VERCEL_TOKEN" >&2; exit 1; }
+          test -n "$VERCEL_ORG_ID" || { echo "Missing Actions variable: VERCEL_ORG_ID" >&2; exit 1; }
+          test -n "$VERCEL_PROJECT_ID" || { echo "Missing Actions variable: VERCEL_PROJECT_ID" >&2; exit 1; }
+
       - name: Pull production configuration
-        run: bunx vercel@59.16.0 pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: bunx vercel@59.16.0 pull --yes --environment=production --token="$VERCEL_TOKEN"
 
       - name: Build production deployment
-        run: bunx vercel@59.16.0 build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: bunx vercel@59.16.0 build --prod --token="$VERCEL_TOKEN"
 
       - name: Deploy production build
         id: deploy
-        run: echo "url=$(bunx vercel@59.16.0 deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})" >> "$GITHUB_OUTPUT"
+        run: |
+          deployment_url="$(bunx vercel@59.16.0 deploy --prebuilt --prod --token="$VERCEL_TOKEN")"
+          echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
 
       - name: Check deployed frontend
         run: curl --fail --silent --retry 5 --retry-delay 2 "${{ steps.deploy.outputs.url }}/" > /dev/null

@@ -1,6 +1,8 @@
 # Deployment
 
-StudySpot deploys the Svelte frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service. Requests to `/api/*` use FastAPI, with Vercel removing the `/api` prefix before invoking the application.
+StudySpot deploys the Svelte frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service. Requests to `/api/*` use FastAPI through a Vercel service rewrite.
+
+The current demo is available at [studyspot-nyu.vercel.app](https://studyspot-nyu.vercel.app).
 
 ## First deployment
 
