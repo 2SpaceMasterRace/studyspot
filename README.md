@@ -63,13 +63,13 @@ For a pinned toolchain, use [Nix](https://nixos.org/). You will still need a run
 
 ```shell
 nix develop
-just doctor
 just setup
+just check
 ```
 
 Developers with `direnv` can run `direnv allow` once to activate the flake automatically when entering the repository.
 
-Without Nix, install Bun, Python 3.12, uv, just, pre-commit, Git, and Docker, then run `just doctor` and `just setup`. Use `just --list` to see every supported repository command.
+Without Nix, install Bun, Python 3.12, uv, just, pre-commit, Git, and Docker, then run `just setup` followed by `just check`. Use `just --list` to see every supported repository command.
 
 ### Running the complete system
 
@@ -82,7 +82,7 @@ just dev
 Or start them in the background and wait for their health checks:
 
 ```shell
-just up
+just start
 ```
 
 Once healthy, the services are available at:
@@ -93,9 +93,9 @@ Once healthy, the services are available at:
 | API liveness | <http://localhost:7501/health/live> |
 | PostgreSQL | `localhost:7502` |
 | Meilisearch | <http://localhost:7503> |
-| Documentation (`just docs-serve`) | <http://localhost:7504> |
+| Documentation (`just docs`) | <http://localhost:7504> |
 
-Follow logs with `just logs`, stop services while preserving local data with `just down`, or remove the local PostgreSQL and Meilisearch volumes with `just clean`.
+Follow logs with `just logs`, stop services while preserving local data with `just shutdown`, or remove the local PostgreSQL and Meilisearch volumes with `just clean`.
 
 ### Running one application
 
@@ -119,7 +119,7 @@ There is no supported download or seed command yet. The planned import code belo
 
 ### Checks
 
-Run the repository's formatting, linting, type checking, audit, production frontend build, and warning-strict documentation build:
+Verify the toolchain, Docker daemon, Compose configuration, formatting, linting, type checking, production frontend build, and warning-strict documentation build:
 
 ```shell
 just check
@@ -155,7 +155,7 @@ The project uses Vercel Services to deploy the SvelteKit frontend and FastAPI ba
 
 The documentation is written in MyST Markdown, built with Sphinx, and rendered with the Furo theme. Sources live in [`docs/source/`](docs/source/).
 
-Build the documentation with `just docs`, then open `docs/build/html/index.html`. Run `just docs-serve` to serve it at <http://localhost:7504>.
+Run `just docs`, then open <http://localhost:7504>. The command builds the documentation before starting the local server.
 
 Documentation from `main` is published to <https://2spacemasterrace.github.io/studyspot/>.
 
