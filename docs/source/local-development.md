@@ -2,16 +2,16 @@
 
 ## Docker and Compose model
 
-A Dockerfile builds one reusable image. A container is a running instance of that image. Docker Compose defines how the frontend, backend, database, and search containers start, communicate, persist data, and report health.
+A Dockerfile builds one reusable image. A container is a running instance of that image. Docker Compose defines how the frontend, backend, and search containers start, communicate, persist local state, and report health.
 
 ```text
 Dockerfile -> image -> container
 
-Browser -> frontend:5173 -> backend:8000 -> postgres:5432
+Browser -> frontend:5173 -> backend:8000 -> /app/.local/studyspot.db
                                       \----> meilisearch:7700
 ```
 
-Compose gives every service a private DNS name. The backend therefore connects to `postgres:5432` and `meilisearch:7700`; `localhost` inside the backend container refers only to that backend container. On the host, Compose publishes the same services consecutively as frontend `7500`, backend `7501`, PostgreSQL `7502`, and Meilisearch `7503`.
+Compose gives every service a private DNS name. The backend connects to `meilisearch:7700`; `localhost` inside the backend container refers only to that backend container. Turso is an embedded file on the backend's named volume, not a network service. On the host, Compose publishes frontend `7500`, backend `7501`, and Meilisearch `7502`.
 
 ## Fast edit loop
 
@@ -31,7 +31,7 @@ docker compose up --build --watch
 
 ## Data lifecycle
 
-PostgreSQL and Meilisearch use named volumes. Normal shutdown preserves their data:
+The local Turso file and Meilisearch index use named volumes. Normal shutdown preserves them:
 
 ```shell
 just shutdown
@@ -73,8 +73,18 @@ The goal is behavioral parity rather than identical infrastructure:
 
 - the same application source and dependency locks
 - the same normalized `data/spots.json` snapshot once the importer populates it
+- the same Turso repository interface, schema, and query contract
 - the same HTTP routes and response contracts
 - the same data mapping and search-ranking behavior
 - the same liveness and readiness semantics
 
-PostgreSQL/PostGIS and Meilisearch remain in Compose as integration targets while the serving-store choice is evaluated. They are not deployed today because the scaffold has no runtime data or search behavior. The planned NYC Open Data importer will populate a reproducible `data/spots.json` snapshot before production persistence is introduced.
+The infrastructure differs only where the runtime requires it: local FastAPI will open an embedded Turso file, while stateless Vercel functions will connect to Turso Cloud over the network. The planned adapter hides that transport difference and must pass the same tests in both modes. Meilisearch remains a local integration target; no permanent production search service is required by the current scaffold.
+
+The backend receives these Compose defaults:
+
+```text
+TURSO_DATABASE_URL=file:/app/.local/studyspot.db
+TURSO_AUTH_TOKEN=
+```
+
+To exercise the future remote adapter deliberately, set a Turso Cloud URL and token in an ignored `.env` file before starting Compose. Do not use the production token locally. The current scaffold does not query either database mode yet.

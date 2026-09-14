@@ -15,8 +15,8 @@ or study. A spot will contain `id`, `name`, `category`, `address`, `neighborhood
 `latitude`, and `longitude`.
 
 The importer, tests, and real records are not implemented yet. `spots.json` is therefore an
-empty JSON array. Database migrations, database files, and search indexes do not belong here;
-the serving layer will load the normalized dataset into its chosen storage.
+empty JSON array. Turso migrations, local database files, and search indexes do not belong
+here; the backend loader will copy the normalized dataset into the Turso serving database.
 
 StudySpot treats these records as candidate gathering and study locations. It must not claim
 that a location has Wi-Fi, outlets, seating, or a quiet environment unless NYC Open Data

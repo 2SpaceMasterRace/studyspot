@@ -67,7 +67,7 @@ nix run . -- deploy-preview
 nix run . -- deploy-production
 ```
 
-The command calls the exact Vercel CLI version named in the `justfile`. `bunx` may download that CLI on first use, so manual deployment still needs network access and Vercel authentication; the CLI is not stored in the Nix flake. Vercel currently builds the SvelteKit and FastAPI scaffolds without runtime study-spot data or search behavior. The empty NYC Open Data boundary lives under `data/`; PostgreSQL/PostGIS and Meilisearch remain local integration services while the product milestones are unimplemented.
+The command calls the exact Vercel CLI version named in the `justfile`. `bunx` may download that CLI on first use, so manual deployment still needs network access and Vercel authentication; the CLI is not stored in the Nix flake. Vercel currently builds the SvelteKit and FastAPI scaffolds without runtime study-spot data or search behavior. Turso is the selected database: local development will use an embedded file, while Vercel will use environment-scoped Turso Cloud credentials. The adapter is not implemented yet.
 
 ## Why Nix does not build the application images yet
 
@@ -77,4 +77,4 @@ If StudySpot moves to an OCI-native host, `dockerTools.buildLayeredImage` output
 
 ## Secrets
 
-Never place credentials in `flake.nix`, derivation inputs, or the Nix store. Local secrets belong in ignored environment files; CI and deployment secrets belong in GitHub and Vercel secret stores.
+Never place credentials in `flake.nix`, derivation inputs, or the Nix store. A local Turso file needs no secret. Hosted `TURSO_DATABASE_URL` and `TURSO_AUTH_TOKEN` values belong in Vercel environment settings, with separate values for Preview and Production.
