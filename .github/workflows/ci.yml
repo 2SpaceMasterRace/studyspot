@@ -3,7 +3,7 @@ name: Repository checks
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [main, staging]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,7 +32,9 @@ jobs:
         with:
           version: 0.11.3
           enable-cache: true
-          cache-dependency-glob: src/backend/uv.lock
+          cache-dependency-glob: |
+            src/backend/uv.lock
+            docs/uv.lock
 
       - name: Install just
         uses: extractions/setup-just@v4
@@ -47,54 +49,9 @@ jobs:
         working-directory: src/backend
         run: uv sync --frozen
 
+      - name: Install documentation dependencies
+        working-directory: docs
+        run: uv sync --frozen
+
       - name: Run repository checks
         run: just check
-
-  deploy-production:
-    name: Deploy production
-    if: >-
-      github.event_name == 'push' && github.ref == 'refs/heads/main' &&
-      vars.VERCEL_ORG_ID != '' && vars.VERCEL_PROJECT_ID != ''
-    needs: check
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    environment:
-      name: production
-      url: ${{ steps.deploy.outputs.url }}
-    env:
-      VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ vars.VERCEL_PROJECT_ID }}
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v7
-
-      - name: Install Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.3.14
-
-      - name: Verify Vercel configuration
-        run: |
-          test -n "$VERCEL_TOKEN" || { echo "Missing Actions secret: VERCEL_TOKEN" >&2; exit 1; }
-          test -n "$VERCEL_ORG_ID" || { echo "Missing Actions variable: VERCEL_ORG_ID" >&2; exit 1; }
-          test -n "$VERCEL_PROJECT_ID" || { echo "Missing Actions variable: VERCEL_PROJECT_ID" >&2; exit 1; }
-
-      - name: Pull production configuration
-        run: bunx vercel@59.16.0 pull --yes --environment=production --token="$VERCEL_TOKEN"
-
-      - name: Build production deployment
-        run: bunx vercel@59.16.0 build --prod --token="$VERCEL_TOKEN"
-
-      - name: Deploy production build
-        id: deploy
-        run: |
-          deployment_url="$(bunx vercel@59.16.0 deploy --prebuilt --prod --token="$VERCEL_TOKEN")"
-          echo "url=$deployment_url" >> "$GITHUB_OUTPUT"
-
-      - name: Check deployed frontend
-        run: curl --fail --silent --retry 5 --retry-delay 2 "${{ steps.deploy.outputs.url }}/" > /dev/null
-
-      - name: Check deployed API
-        run: curl --fail --silent --retry 5 --retry-delay 2 "${{ steps.deploy.outputs.url }}/api/health/live"
