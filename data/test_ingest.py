@@ -12,7 +12,6 @@ from pathlib import Path
 
 import ingest
 from ingest import (
-    NYU_BUILDINGS,
     SCHEMA_FIELDS,
     build_dataset,
     build_query_url,
@@ -80,15 +79,14 @@ def test_nyu_hand_list_matches_schema_and_has_unique_ids() -> None:
         assert spot["borough"] in {"Manhattan", "Brooklyn", "Queens", "Bronx", "Staten Island"}
 
 
-def test_nyu_hand_list_is_not_mutated_between_calls() -> None:
+def test_nyu_hand_list_is_read_fresh_each_call() -> None:
     nyu_spots()[0]["name"] = "mutated"
     assert nyu_spots()[0]["name"] != "mutated"
-    assert NYU_BUILDINGS[0]["name"] != "mutated"
 
 
 def test_build_dataset_combines_and_sorts() -> None:
     spots = build_dataset([SAMPLE_LIBRARY])
-    assert len(spots) == 1 + len(NYU_BUILDINGS)
+    assert len(spots) == 1 + len(nyu_spots())
     ids = [spot["id"] for spot in spots]
     assert len(ids) == len(set(ids)), "ids must be unique across sources"
     keys = [(spot["borough"] or "", spot["name"]) for spot in spots]

@@ -75,111 +75,12 @@ _BOROUGH_TITLES = {
 
 # --- Hand-maintained NYU coverage -------------------------------------------
 
-# A short, curated list of NYU buildings so the dataset has university coverage
-# alongside the public library branches. Coordinates and addresses are recorded
-# by hand from public building information; keep this list small and factual.
-NYU_BUILDINGS: tuple[dict[str, Any], ...] = (
-    {
-        "id": "nyu-bobst-library",
-        "name": "Elmer Holmes Bobst Library",
-        "category": "university_library",
-        "address": "70 Washington Square South, New York, NY 10012",
-        "neighborhood": "Greenwich Village",
-        "borough": "Manhattan",
-        "latitude": 40.7295,
-        "longitude": -73.9974,
-    },
-    {
-        "id": "nyu-kimmel-center",
-        "name": "Kimmel Center for University Life",
-        "category": "university_building",
-        "address": "60 Washington Square South, New York, NY 10012",
-        "neighborhood": "Greenwich Village",
-        "borough": "Manhattan",
-        "latitude": 40.7301,
-        "longitude": -73.9977,
-    },
-    {
-        "id": "nyu-courant-institute",
-        "name": "Courant Institute of Mathematical Sciences (Warren Weaver Hall)",
-        "category": "university_building",
-        "address": "251 Mercer Street, New York, NY 10012",
-        "neighborhood": "Greenwich Village",
-        "borough": "Manhattan",
-        "latitude": 40.7286,
-        "longitude": -73.9956,
-    },
-    {
-        "id": "nyu-stern-tisch-hall",
-        "name": "NYU Stern School of Business (Tisch Hall)",
-        "category": "university_building",
-        "address": "40 West 4th Street, New York, NY 10012",
-        "neighborhood": "Greenwich Village",
-        "borough": "Manhattan",
-        "latitude": 40.7291,
-        "longitude": -73.9965,
-    },
-    {
-        "id": "nyu-silver-center",
-        "name": "Silver Center for Arts and Science",
-        "category": "university_building",
-        "address": "100 Washington Square East, New York, NY 10003",
-        "neighborhood": "Greenwich Village",
-        "borough": "Manhattan",
-        "latitude": 40.7301,
-        "longitude": -73.9955,
-    },
-    {
-        "id": "nyu-tandon-dibner-library",
-        "name": "Bern Dibner Library (NYU Tandon)",
-        "category": "university_library",
-        "address": "5 MetroTech Center, Brooklyn, NY 11201",
-        "neighborhood": "Downtown Brooklyn",
-        "borough": "Brooklyn",
-        "latitude": 40.6942,
-        "longitude": -73.9865,
-    },
-    {
-        "id": "nyu-tandon-rogers-hall",
-        "name": "Rogers Hall (NYU Tandon)",
-        "category": "university_building",
-        "address": "6 MetroTech Center, Brooklyn, NY 11201",
-        "neighborhood": "Downtown Brooklyn",
-        "borough": "Brooklyn",
-        "latitude": 40.6939,
-        "longitude": -73.9855,
-    },
-    {
-        "id": "nyu-global-center",
-        "name": "Global Center for Academic and Spiritual Life",
-        "category": "university_building",
-        "address": "238 Thompson Street, New York, NY 10012",
-        "neighborhood": "Greenwich Village",
-        "borough": "Manhattan",
-        "latitude": 40.7294,
-        "longitude": -73.9986,
-    },
-    {
-        "id": "nyu-60-fifth-avenue",
-        "name": "60 Fifth Avenue",
-        "category": "university_building",
-        "address": "60 Fifth Avenue, New York, NY 10011",
-        "neighborhood": "Greenwich Village",
-        "borough": "Manhattan",
-        "latitude": 40.7357,
-        "longitude": -73.9944,
-    },
-    {
-        "id": "nyu-paulson-center",
-        "name": "John A. Paulson Center",
-        "category": "university_building",
-        "address": "181 Mercer Street, New York, NY 10012",
-        "neighborhood": "Greenwich Village",
-        "borough": "Manhattan",
-        "latitude": 40.7271,
-        "longitude": -73.9967,
-    },
-)
+# A short, curated list of NYU buildings gives the dataset university coverage
+# alongside the public library branches. The records live in the versioned data
+# file below (not hardcoded here) so they can be edited without touching code;
+# coordinates and addresses are recorded by hand from public building
+# information. Keep the list small and factual.
+NYU_BUILDINGS_PATH = Path(__file__).resolve().parent / "nyu_buildings.json"
 
 
 # --- Fetching ---------------------------------------------------------------
@@ -277,9 +178,12 @@ def normalize_libraries(records: Iterable[dict[str, Any]]) -> list[dict[str, Any
     return spots
 
 
-def nyu_spots() -> list[dict[str, Any]]:
-    """Return the hand-maintained NYU building records as schema dicts."""
-    return [dict(building) for building in NYU_BUILDINGS]
+def nyu_spots(path: Path = NYU_BUILDINGS_PATH) -> list[dict[str, Any]]:
+    """Read the hand-maintained NYU building records from the data file."""
+    buildings = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(buildings, list):
+        raise ValueError(f"{path} must contain a JSON array of NYU buildings")
+    return [dict(building) for building in buildings]
 
 
 def build_dataset(library_records: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:

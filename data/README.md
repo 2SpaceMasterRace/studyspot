@@ -11,6 +11,8 @@ NYC Open Data (Socrata SODA) -> ingest.py -> spots.json
   schema, appends a small hand-maintained list of NYU buildings, and writes
   `spots.json`.
 - `spots.json` is the canonical generated dataset consumed by the application.
+- `nyu_buildings.json` is the hand-maintained list of NYU buildings, kept as
+  data (not hardcoded in `ingest.py`) so it can be edited without touching code.
 - `test_ingest.py` covers the mapping and validation logic.
 
 Every spot contains `id`, `name`, `category`, `address`, `neighborhood`,

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "nyu-bobst-library",
+    "name": "Elmer Holmes Bobst Library",
+    "category": "university_library",
+    "address": "70 Washington Square South, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7295,
+    "longitude": -73.9974
+  },
+  {
+    "id": "nyu-kimmel-center",
+    "name": "Kimmel Center for University Life",
+    "category": "university_building",
+    "address": "60 Washington Square South, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7301,
+    "longitude": -73.9977
+  },
+  {
+    "id": "nyu-courant-institute",
+    "name": "Courant Institute of Mathematical Sciences (Warren Weaver Hall)",
+    "category": "university_building",
+    "address": "251 Mercer Street, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7286,
+    "longitude": -73.9956
+  },
+  {
+    "id": "nyu-stern-tisch-hall",
+    "name": "NYU Stern School of Business (Tisch Hall)",
+    "category": "university_building",
+    "address": "40 West 4th Street, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7291,
+    "longitude": -73.9965
+  },
+  {
+    "id": "nyu-silver-center",
+    "name": "Silver Center for Arts and Science",
+    "category": "university_building",
+    "address": "100 Washington Square East, New York, NY 10003",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7301,
+    "longitude": -73.9955
+  },
+  {
+    "id": "nyu-tandon-dibner-library",
+    "name": "Bern Dibner Library (NYU Tandon)",
+    "category": "university_library",
+    "address": "5 MetroTech Center, Brooklyn, NY 11201",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "latitude": 40.6942,
+    "longitude": -73.9865
+  },
+  {
+    "id": "nyu-tandon-rogers-hall",
+    "name": "Rogers Hall (NYU Tandon)",
+    "category": "university_building",
+    "address": "6 MetroTech Center, Brooklyn, NY 11201",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "latitude": 40.6939,
+    "longitude": -73.9855
+  },
+  {
+    "id": "nyu-global-center",
+    "name": "Global Center for Academic and Spiritual Life",
+    "category": "university_building",
+    "address": "238 Thompson Street, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7294,
+    "longitude": -73.9986
+  },
+  {
+    "id": "nyu-60-fifth-avenue",
+    "name": "60 Fifth Avenue",
+    "category": "university_building",
+    "address": "60 Fifth Avenue, New York, NY 10011",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7357,
+    "longitude": -73.9944
+  },
+  {
+    "id": "nyu-paulson-center",
+    "name": "John A. Paulson Center",
+    "category": "university_building",
+    "address": "181 Mercer Street, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7271,
+    "longitude": -73.9967
+  }
+]
