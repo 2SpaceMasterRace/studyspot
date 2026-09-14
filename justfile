@@ -44,7 +44,7 @@ ingest-spots:
 
 # Load data/spots.json into the configured Turso database (local file by default).
 load-spots:
-    PYTHONPATH=src/backend/src uv run --project src/backend python -m studyspot_api.spots.loader
+    PYTHONPATH=src/backend/src uv run --project src/backend python -m studyspot_api.spots.store
 
 # Build and start the complete local system with live source updates.
 dev:

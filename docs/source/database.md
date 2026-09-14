@@ -1,6 +1,6 @@
 # Turso database
 
-Turso is StudySpot's selected serving database. The connection adapter (`studyspot_api.db`), the `spots` table schema, and the loader (`studyspot_api.spots.loader`) are implemented. Schema migrations and the API query layer are not implemented yet.
+Turso is StudySpot's selected serving database. The connection adapter, the `spots` table schema, and the snapshot loader are implemented together in `studyspot_api.spots.store`. Schema migrations and the API query layer are not implemented yet.
 
 ## Environment model
 
@@ -19,9 +19,9 @@ Follow Turso's current [Python SDK guidance](https://docs.turso.tech/sdk/python/
 
 - the `libsql` package handles both the local embedded file and remote Turso
   Cloud access from stateless Vercel functions; and
-- both live behind one StudySpot interface (`studyspot_api.db.connect`).
+- both live behind one StudySpot interface (`studyspot_api.spots.store.connect`).
 
-`studyspot_api.db.connect` interprets a local `file:` URL as a filesystem path and passes any other URL plus token to Turso Cloud. A single `libsql` dependency covers both cases, so `pyturso` is not required. The loader's schema tests run against a temporary local database and exercise the same contract the remote boundary must satisfy.
+`studyspot_api.spots.store.connect` interprets a local `file:` URL as a filesystem path and passes any other URL plus token to Turso Cloud. A single `libsql` dependency covers both cases, so `pyturso` is not required. The loader's schema tests run against a temporary local database and exercise the same contract the remote boundary must satisfy.
 
 The application configuration has exactly two database variables:
 

@@ -1,24 +1,30 @@
-"""Load the normalized study-spot snapshot into the Turso serving table.
+"""Study-spot data store: the libSQL connection and the snapshot loader.
 
-``data/spots.json`` is the reproducible source of truth produced by
-``data/ingest.py``. This loader projects it into the ``spots`` table that the
-API queries. The table is a rebuildable projection, so loading is idempotent:
-it (re)creates the schema and upserts every record by ``id``.
+This single module owns StudySpot's access to the serving database:
 
-Run it against the configured database (see ``studyspot_api.db``). From the
-repository root::
+- ``connect`` opens one libSQL interface for both a local embedded ``file:``
+  database (local development and Docker Compose) and a Turso Cloud database
+  (Vercel Preview and Production), driven by ``TURSO_DATABASE_URL`` and
+  ``TURSO_AUTH_TOKEN`` (see ``docs/source/database.md``). Never expose either
+  value to browser code; the API owns all database access.
+- The loader projects ``data/spots.json`` -- the reproducible source of truth
+  produced by ``data/ingest.py`` -- into the ``spots`` table the API queries.
+  The table is a rebuildable projection, so loading is idempotent: it
+  (re)creates the schema and upserts every record by ``id``.
+
+Run the loader against the configured database from the repository root::
 
     just load-spots
 
 or equivalently::
 
-    PYTHONPATH=src/backend/src uv run --project src/backend \
-        python -m studyspot_api.spots.loader
+    PYTHONPATH=src/backend/src uv run --project src/backend \\
+        python -m studyspot_api.spots.store
 
 Point it at a specific snapshot or database with flags::
 
-    ... python -m studyspot_api.spots.loader --spots data/spots.json
-    ... python -m studyspot_api.spots.loader --database-url file:.local/studyspot.db
+    ... python -m studyspot_api.spots.store --spots data/spots.json
+    ... python -m studyspot_api.spots.store --database-url file:.local/studyspot.db
 """
 
 from __future__ import annotations
@@ -32,7 +38,56 @@ from typing import Any
 
 import libsql
 
-from studyspot_api import db
+# --- Connection -------------------------------------------------------------
+
+TURSO_DATABASE_URL_ENV = "TURSO_DATABASE_URL"
+TURSO_AUTH_TOKEN_ENV = "TURSO_AUTH_TOKEN"
+
+
+def _resolve_local_path(database_url: str) -> str | None:
+    """Return a filesystem path for a local ``file:`` URL, else ``None``.
+
+    A local libSQL database is addressed as ``file:<path>``. Everything else
+    (``libsql://``, ``https://``, ``wss://``) is a remote Turso Cloud endpoint.
+    """
+    if database_url.startswith("file:"):
+        return database_url[len("file:") :]
+    return None
+
+
+def connect(
+    database_url: str | None = None,
+    auth_token: str | None = None,
+) -> libsql.Connection:  # ty: ignore[unresolved-attribute]  # libsql ships no type stubs
+    """Connect to the configured libSQL database.
+
+    ``database_url`` and ``auth_token`` default to the ``TURSO_DATABASE_URL`` and
+    ``TURSO_AUTH_TOKEN`` environment variables. A ``file:`` URL opens a local
+    embedded database and ignores the token; any other URL connects to Turso
+    Cloud and requires the token.
+    """
+    database_url = (
+        database_url if database_url is not None else os.environ.get(TURSO_DATABASE_URL_ENV)
+    )
+    if not database_url:
+        raise RuntimeError(
+            f"{TURSO_DATABASE_URL_ENV} is not set; expected a file: path or a Turso Cloud URL"
+        )
+
+    auth_token = auth_token if auth_token is not None else os.environ.get(TURSO_AUTH_TOKEN_ENV, "")
+
+    local_path = _resolve_local_path(database_url)
+    if local_path is not None:
+        return libsql.connect(local_path)  # ty: ignore[unresolved-attribute]
+
+    if not auth_token:
+        raise RuntimeError(
+            f"{TURSO_AUTH_TOKEN_ENV} is required for the remote database {database_url!r}"
+        )
+    return libsql.connect(database_url, auth_token=auth_token)  # ty: ignore[unresolved-attribute]
+
+
+# --- Loader -----------------------------------------------------------------
 
 # Columns mirror the shared study-spot schema. Coordinates are required so every
 # row can be placed on the map; address and neighborhood may be absent when the
@@ -65,7 +120,7 @@ ON CONFLICT(id) DO UPDATE SET
 
 _COLUMNS = ("id", "name", "category", "address", "neighborhood", "borough", "latitude", "longitude")
 
-# Repo-root default: this file is src/backend/src/studyspot_api/spots/loader.py.
+# Repo-root default: this file is src/backend/src/studyspot_api/spots/store.py.
 _DEFAULT_SPOTS_PATH = Path(__file__).resolve().parents[5] / "data" / "spots.json"
 
 SPOTS_PATH_ENV = "STUDYSPOT_SPOTS_PATH"
@@ -115,7 +170,7 @@ def load_from_file(
     """Load a snapshot file into the configured database. Returns rows written."""
     path = spots_path or default_spots_path()
     spots = read_spots(path)
-    conn = db.connect(database_url=database_url, auth_token=auth_token)
+    conn = connect(database_url=database_url, auth_token=auth_token)
     return load_spots(conn, spots)
 
 
@@ -130,7 +185,7 @@ def _parse_args(argv: Sequence[str] | None) -> argparse.Namespace:
     parser.add_argument(
         "--database-url",
         default=None,
-        help=f"libSQL URL (default: ${db.TURSO_DATABASE_URL_ENV}).",
+        help=f"libSQL URL (default: ${TURSO_DATABASE_URL_ENV}).",
     )
     return parser.parse_args(argv)
 

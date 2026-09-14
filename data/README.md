@@ -40,7 +40,7 @@ network (~227 NYPL, Brooklyn, and Queens branches) plus the NYU hand-list.
   hand-list records neighborhoods it knows by hand.
 
 Turso migrations, local database files, and search indexes do not belong here.
-The backend loader (`studyspot_api.spots.loader`) copies this snapshot into the
+The backend store (`studyspot_api.spots.store`) copies this snapshot into the
 Turso serving database; from the repository root, run `just load-spots` after
 regenerating `spots.json`.
 
