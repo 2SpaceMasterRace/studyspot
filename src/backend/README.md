@@ -1,6 +1,6 @@
 # StudySpot API
 
-This uv project contains the FastAPI application composition root and process liveness endpoint. Study-spot routes and dependency clients remain unimplemented.
+This uv project contains the FastAPI application composition root and process liveness endpoint. Routes for NYC café and public-third-place records and their serving-store adapter remain unimplemented.
 
 ```shell
 uv sync

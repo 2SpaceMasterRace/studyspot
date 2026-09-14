@@ -5,7 +5,10 @@
 
 <svelte:head>
 	<title>StudySpot</title>
-	<meta name="description" content="Lorem ipsum dolor sit amet." />
+	<meta
+		name="description"
+		content="Discover cafés and other NYC third places where students can meet and study."
+	/>
 </svelte:head>
 
 <div class="page">
@@ -22,11 +25,9 @@
 	<main>
 		<section aria-labelledby="hero-title">
 			<div class="copy">
-				<p class="eyebrow">Lorem ipsum dolor</p>
-				<h1 id="hero-title">Lorem ipsum dolor sit amet.</h1>
-				<p class="description">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.
-				</p>
+				<p class="eyebrow">NYC third places</p>
+				<h1 id="hero-title">Find a place to study together.</h1>
+				<p class="description">Explore cafés and public gathering places from NYC Open Data.</p>
 			</div>
 
 			<SearchBar />

@@ -1,6 +1,6 @@
 # Contributing
 
-Read the repository's [contribution guide](https://github.com/2SpaceMasterRace/studyspot/blob/main/CONTRIBUTING.md) and the nearest scoped `AGENTS.md` before editing an owned area.
+Read the repository's [contribution guide](https://github.com/2SpaceMasterRace/studyspot/blob/main/CONTRIBUTING.md) before editing the project.
 
 ## Branch workflow
 

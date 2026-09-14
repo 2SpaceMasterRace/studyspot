@@ -1,6 +1,6 @@
 # Deployment
 
-StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. A backend service rewrite removes the public `/api` prefix before FastAPI route matching, so `/api/health/live` reaches the application's `/health/live` endpoint. The deployed scaffold contains no study-spot dataset or search index and therefore has no external runtime data dependency yet.
+StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. A backend service rewrite removes the public `/api` prefix before FastAPI route matching, so `/api/health/live` reaches the application's `/health/live` endpoint. The repository contains an empty NYC Open Data scaffold, but the deployed application has no runtime study-spot data or search dependency yet.
 
 Vercel's Git integration is the only automatic deployment path. GitHub Actions independently validates the repository, Compose topology, documentation, and Nix flake; it does not build or upload a duplicate Vercel deployment.
 
@@ -72,7 +72,7 @@ nix run . -- deploy-production
 
 ## Data and search state
 
-The deployed scaffold does not yet import NYC or NYU records, package a normalized snapshot, or build runtime search structures. The planned implementation will normalize public source records into a versioned deployment artifact and derive disposable search state from that artifact.
+The deployed scaffold does not yet import NYC Open Data records, consume `data/spots.json`, or build runtime search structures. The planned implementation will normalize café and public-third-place records into that reproducible dataset and derive serving and search state from it.
 
 PostgreSQL/PostGIS and Meilisearch remain part of the local Compose topology for integration work. They are not current production dependencies. Revisit production persistence when the data and search behavior is implemented, and require it once StudySpot stores user-generated corrections, favorites, accounts, import cursors, or other state that cannot be rebuilt from public inputs.
 

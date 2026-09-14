@@ -23,7 +23,7 @@
 			id="spot-search"
 			name="q"
 			bind:value={query}
-			placeholder="Library, building, or neighborhood"
+			placeholder="Café, public space, or neighborhood"
 			autocomplete="off"
 		/>
 	</label>

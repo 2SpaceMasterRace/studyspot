@@ -72,9 +72,9 @@ The package delegates to the repository's `justfile`, so Nix and non-Nix develop
 The goal is behavioral parity rather than identical infrastructure:
 
 - the same application source and dependency locks
-- the same normalized public-data snapshot once the data importer exists
+- the same normalized `data/spots.json` snapshot once the importer populates it
 - the same HTTP routes and response contracts
 - the same data mapping and search-ranking behavior
 - the same liveness and readiness semantics
 
-PostgreSQL/PostGIS and Meilisearch remain in Compose as integration targets for future durable features. They are not deployed today because the scaffold has no runtime data or search behavior. The planned public-data implementation will determine whether a packaged snapshot is sufficient before production persistence is introduced.
+PostgreSQL/PostGIS and Meilisearch remain in Compose as integration targets while the serving-store choice is evaluated. They are not deployed today because the scaffold has no runtime data or search behavior. The planned NYC Open Data importer will populate a reproducible `data/spots.json` snapshot before production persistence is introduced.
