@@ -43,10 +43,10 @@ Compose creates private DNS using service names. Inside the backend container, `
 
 ```yaml
 ports:
-  - "127.0.0.1:8000:8000"
+  - "127.0.0.1:7501:8000"
 ```
 
-The first port belongs to the host; the second belongs to the container. They may differ, but StudySpot retains conventional ports because development tools recognize them. Binding to `127.0.0.1` prevents local development services from being exposed on every network interface.
+The first port belongs to the host; the second belongs to the container. StudySpot uses consecutive host ports `7500` through `7503`, while containers retain the conventional ports expected by their images and development tools. Binding to `127.0.0.1` prevents local development services from being exposed on every network interface.
 
 ## Disposable containers and persistent data
 
