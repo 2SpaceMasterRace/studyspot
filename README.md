@@ -57,7 +57,7 @@ The simplest setup only requires Git and Docker Compose 2.23 or newer:
 docker compose up --build --watch
 ```
 
-Open <http://localhost:5173>. Source changes are synchronized into the frontend and backend containers; dependency changes rebuild only the affected image.
+Open <http://localhost:7500>. Source changes are synchronized into the frontend and backend containers; dependency changes rebuild only the affected image.
 
 For a pinned toolchain, use [Nix](https://nixos.org/). You will still need a running Docker engine.
 
@@ -89,10 +89,11 @@ Once healthy, the services are available at:
 
 | Service | Local address |
 |---|---|
-| Frontend | <http://localhost:5173> |
-| API liveness | <http://localhost:8000/health/live> |
-| PostgreSQL | `localhost:5432` |
-| Meilisearch | <http://localhost:7700> |
+| Frontend | <http://localhost:7500> |
+| API liveness | <http://localhost:7501/health/live> |
+| PostgreSQL | `localhost:7502` |
+| Meilisearch | <http://localhost:7503> |
+| Documentation (`just docs-serve`) | <http://localhost:7504> |
 
 Follow logs with `just logs`, stop services while preserving local data with `just down`, or remove the local PostgreSQL and Meilisearch volumes with `just clean`.
 
@@ -154,7 +155,7 @@ The project uses Vercel Services to deploy the SvelteKit frontend and FastAPI ba
 
 The documentation is written in MyST Markdown, built with Sphinx, and rendered with the Furo theme. Sources live in [`docs/source/`](docs/source/).
 
-Build the documentation with `just docs`, then open `docs/build/html/index.html`. Run `just docs-serve` to serve it at <http://localhost:8001>.
+Build the documentation with `just docs`, then open `docs/build/html/index.html`. Run `just docs-serve` to serve it at <http://localhost:7504>.
 
 Documentation from `main` is published to <https://2spacemasterrace.github.io/studyspot/>.
 

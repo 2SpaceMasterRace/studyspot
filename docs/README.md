@@ -9,7 +9,7 @@ just docs
 just docs-serve
 ```
 
-The build is written to `docs/build/html/`, and the local server is available at <http://localhost:8001>.
+The build is written to `docs/build/html/`, and the local server is available at <http://localhost:7504>.
 
 Run the warning-strict documentation check with:
 

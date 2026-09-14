@@ -4,7 +4,7 @@ import { playwright } from '@vitest/browser-playwright';
 import adapter from '@sveltejs/adapter-vercel';
 import { sveltekit } from '@sveltejs/kit/vite';
 
-const apiProxyTarget = process.env.API_PROXY_TARGET ?? 'http://localhost:8000';
+const apiProxyTarget = process.env.API_PROXY_TARGET ?? 'http://localhost:7501';
 
 export default defineConfig({
 	plugins: [
