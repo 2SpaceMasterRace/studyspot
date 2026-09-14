@@ -25,11 +25,11 @@ doctor:
 
 # Start the frontend scaffold.
 dev-frontend:
-    cd src/frontend && bun run dev
+    cd src/frontend && bun run dev -- --host 127.0.0.1 --port 7500
 
 # Start the backend scaffold.
 dev-backend:
-    cd src/backend && uv run uvicorn studyspot_api.main:app --app-dir src --reload
+    cd src/backend && uv run uvicorn studyspot_api.main:app --app-dir src --host 127.0.0.1 --port 7501 --reload
 
 # Build and start the complete local system with live source updates.
 dev:
@@ -67,9 +67,9 @@ check-docs:
 docs:
     uv run --project docs sphinx-build --builder html docs/source docs/build/html
 
-# Build and serve the documentation at http://localhost:8001.
+# Build and serve the documentation at http://localhost:7504.
 docs-serve: docs
-    python3.12 -m http.server 8001 --bind 127.0.0.1 --directory docs/build/html
+    python3.12 -m http.server 7504 --bind 127.0.0.1 --directory docs/build/html
 
 # Validate the Nix development environment.
 nix-check:
@@ -78,12 +78,6 @@ nix-check:
 # Create a Vercel preview deployment.
 deploy-preview:
     bunx vercel@59.16.0 deploy
-
-# Build and deploy using the staging branch's Vercel preview configuration.
-deploy-staging:
-    bunx vercel@59.16.0 pull --yes --environment=preview --git-branch=staging
-    bunx vercel@59.16.0 build
-    bunx vercel@59.16.0 deploy --prebuilt --meta githubDeployment=1 --meta githubCommitRef=staging
 
 # Deploy the current revision to Vercel production.
 deploy-production:

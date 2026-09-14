@@ -12,7 +12,7 @@ cd studyspot
 docker compose up --build --watch
 ```
 
-Open <http://localhost:5173>. Requests under `/api/*` are proxied to FastAPI.
+Open <http://localhost:7500>. Requests under `/api/*` are proxied to FastAPI.
 
 ## Nix setup
 
@@ -51,9 +51,10 @@ Use `just --list` as the authoritative list of supported commands.
 
 | Service | Address |
 |---|---|
-| Frontend | <http://localhost:5173> |
-| API liveness | <http://localhost:8000/health/live> |
-| PostgreSQL | `localhost:5432` |
-| Meilisearch | <http://localhost:7700> |
+| Frontend | <http://localhost:7500> |
+| API liveness | <http://localhost:7501/health/live> |
+| PostgreSQL | `localhost:7502` |
+| Meilisearch | <http://localhost:7503> |
+| Documentation (`just docs-serve`) | <http://localhost:7504> |
 
-The conventional service ports are retained because existing database and search tools recognize them. Browser traffic should normally enter through the frontend, which mirrors production's `/api/*` boundary.
+Host-facing ports use the consecutive `7500` through `7504` range. The four Compose services occupy `7500` through `7503`; the optional documentation server uses `7504`. Containers retain their conventional internal ports, so service defaults and image health checks remain unchanged. Browser traffic should normally enter through the frontend, which mirrors production's `/api/*` boundary.
