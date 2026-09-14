@@ -40,12 +40,16 @@ services:
           path: ./src/frontend/Dockerfile
 
   backend:
+    # libsql 0.1.11 ships a Linux wheel only for x86_64.
+    platform: linux/amd64
     build:
       context: ./src/backend
     environment:
       TURSO_DATABASE_URL: ${TURSO_DATABASE_URL:-file:/app/.local/studyspot.db}
       TURSO_AUTH_TOKEN: ${TURSO_AUTH_TOKEN:-}
-      MEILISEARCH_URL: http://meilisearch:7700
+      MEILISEARCH_URL: ${MEILISEARCH_URL:-http://meilisearch:7700}
+      MEILISEARCH_API_KEY: ${MEILISEARCH_API_KEY:-}
+      MEILISEARCH_INDEX: ${MEILISEARCH_INDEX:-spots}
     ports:
       - "127.0.0.1:7501:8000"
     volumes:

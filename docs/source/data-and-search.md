@@ -18,4 +18,9 @@ The directory intentionally contains only four files:
 
 Every spot will contain `id`, `name`, `category`, `address`, `neighborhood`, `borough`, `latitude`, and `longitude`. Source-specific fields must be normalized before reaching the API.
 
-The importer, real dataset, Turso loader, schema migrations, and search behavior are not implemented. Database code and files belong to the backend Turso adapter rather than this source-data directory. Turso and any separate search index remain rebuildable serving projections of `spots.json` until the product accepts non-reproducible writes.
+The importer and real dataset remain separate work. `just reindex` reads the
+full `spots` table from Turso, configures the `spots` index, clears it, and
+repopulates it. It is safe to run repeatedly and reports the indexed count.
+Search uses ordered attributes `name`, `neighborhood`, `category`, `address`,
+and `borough`, with indexing-time prefix search and Meilisearch defaults for
+typo tolerance.

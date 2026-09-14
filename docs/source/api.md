@@ -12,11 +12,17 @@ The FastAPI application is available directly at `http://localhost:7501` and thr
 }
 ```
 
+## Search route
+
+`GET /spots/search?q=coffee` trims the query and returns up to 20 summaries in
+Meilisearch relevance order. Prefixes and ordinary Meilisearch typo tolerance
+are enabled. Blank queries return HTTP 422; an unavailable search service
+returns HTTP 503. The API does not contact Meilisearch during startup.
+
 ## Planned routes
 
 - `GET /spots`
 - `GET /spots/{id}`
-- `GET /spots/search?q=coffee`
 - `GET /health/ready`
 
 The readiness route will report required dependency failures. The study-spot routes are public contracts but are not implemented yet.

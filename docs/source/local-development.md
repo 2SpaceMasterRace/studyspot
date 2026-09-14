@@ -85,6 +85,13 @@ The backend receives these Compose defaults:
 ```text
 TURSO_DATABASE_URL=file:/app/.local/studyspot.db
 TURSO_AUTH_TOKEN=
+MEILISEARCH_URL=http://meilisearch:7700
+MEILISEARCH_API_KEY=
+MEILISEARCH_INDEX=spots
 ```
 
-To exercise the future remote adapter deliberately, set a Turso Cloud URL and token in an ignored `.env` file before starting Compose. Do not use the production token locally. The current scaffold does not query either database mode yet.
+To exercise the hosted adapter deliberately, set a Turso Cloud URL and token
+in an ignored `.env` file before starting Compose. Do not use the production
+token locally. Run `just reindex` after loading rows into `spots`; it uses a
+disposable backend container and waits for Meilisearch tasks. Hosted
+Meilisearch can be configured with `MEILISEARCH_URL` and the optional API key.
