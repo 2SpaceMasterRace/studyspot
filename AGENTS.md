@@ -72,10 +72,11 @@ HTTP boundaries:
 Run `just --list` from the repository root. Only listed commands are supported. If a command is missing, add it alongside the behavior it runs.
 
 - `just dev`: build and start the complete local system in the foreground.
-- `just up`: build, start, and wait for a healthy local system in the background.
-- `just down`: stop containers while preserving local data.
+- `just start`: build, start, and wait for a healthy local system in the background.
+- `just shutdown`: stop containers while preserving local data.
 - `just clean`: stop containers and delete local PostgreSQL and Meilisearch data.
-- `just check`: run the repository's supported static checks and builds.
+- `just check`: verify the toolchain and run the repository's supported static checks and builds.
+- `just docs`: build and serve the Sphinx documentation at `localhost:7504`.
 - `just nix-check`: validate the pinned Nix development environment.
 - `just deploy-preview`: create a Vercel preview deployment.
 - `just deploy-production`: deploy the current revision to Vercel production.
