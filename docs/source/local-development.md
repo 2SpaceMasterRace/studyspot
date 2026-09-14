@@ -34,7 +34,7 @@ docker compose up --build --watch
 PostgreSQL and Meilisearch use named volumes. Normal shutdown preserves their data:
 
 ```shell
-just down
+just shutdown
 ```
 
 To deliberately remove containers and local data:
@@ -48,7 +48,7 @@ The clean operation cannot be undone unless the data was backed up.
 ## Useful diagnostics
 
 ```shell
-just doctor
+just check
 docker compose ps
 docker compose logs --follow backend
 docker compose exec backend sh

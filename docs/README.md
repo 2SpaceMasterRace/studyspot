@@ -6,15 +6,14 @@ From the repository root:
 
 ```shell
 just docs
-just docs-serve
 ```
 
-The build is written to `docs/build/html/`, and the local server is available at <http://localhost:7504>.
+The build is written to `docs/build/html/` and served at <http://localhost:7504>.
 
-Run the warning-strict documentation check with:
+Run the warning-strict documentation check as part of the complete repository check:
 
 ```shell
-just check-docs
+just check
 ```
 
 Documentation merged into `main` is published to <https://2spacemasterrace.github.io/studyspot/> by GitHub Pages. Forks must configure Pages to use GitHub Actions as its source.

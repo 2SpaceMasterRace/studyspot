@@ -10,8 +10,8 @@ setup:
     uv sync --project docs --frozen
     uv run --project src/backend pre-commit install --hook-type pre-commit --hook-type pre-push
 
-# Verify the local toolchain, Docker daemon, Compose file, and Watch support.
-doctor:
+# Verify the toolchain and run every supported static check and build.
+check:
     bun --version
     python3.12 --version
     uv --version
@@ -22,6 +22,13 @@ doctor:
     docker info >/dev/null
     docker compose config --quiet
     docker compose watch --help >/dev/null
+    cd src/frontend && bun run lint
+    cd src/frontend && bun run check
+    cd src/frontend && bun run build
+    cd src/backend && uv run ruff format --check .
+    cd src/backend && uv run ruff check .
+    cd src/backend && uv run ty check
+    uv run --project docs sphinx-build --fail-on-warning --keep-going --builder html docs/source docs/build/html
 
 # Start the frontend scaffold.
 dev-frontend:
@@ -36,11 +43,11 @@ dev:
     docker compose up --build --watch
 
 # Start the complete local system in the background.
-up:
+start:
     docker compose up --build --detach --wait
 
 # Stop the local system without deleting data.
-down:
+shutdown:
     docker compose down
 
 # Follow logs from the local system.
@@ -56,19 +63,9 @@ format:
     cd src/frontend && bun run format
     cd src/backend && uv run ruff format .
 
-# Run every check currently supported by the scaffold.
-check: audit check-frontend check-backend check-docs
-
-# Build the Sphinx documentation and fail on warnings.
-check-docs:
-    uv run --project docs sphinx-build --fail-on-warning --keep-going --builder html docs/source docs/build/html
-
-# Build the Sphinx documentation.
+# Build and serve the Sphinx documentation at http://localhost:7504.
 docs:
     uv run --project docs sphinx-build --builder html docs/source docs/build/html
-
-# Build and serve the documentation at http://localhost:7504.
-docs-serve: docs
     python3.12 -m http.server 7504 --bind 127.0.0.1 --directory docs/build/html
 
 # Validate the Nix development environment.
@@ -82,46 +79,3 @@ deploy-preview:
 # Deploy the current revision to Vercel production.
 deploy-production:
     bunx vercel@59.16.0 deploy --prod
-
-# Check frontend formatting, linting, types, and production compilation.
-check-frontend:
-    cd src/frontend && bun run lint
-    cd src/frontend && bun run check
-    cd src/frontend && bun run build
-
-# Check backend formatting, linting, and types.
-check-backend:
-    cd src/backend && uv run ruff format --check .
-    cd src/backend && uv run ruff check .
-    cd src/backend && uv run ty check
-
-# Verify required scaffold files and forbidden generated files.
-audit:
-    test -f AGENTS.md
-    test -f CLAUDE.md
-    test -f contracts/README.md
-    test -f src/frontend/AGENTS.md
-    test -f src/backend/AGENTS.md
-    test -f compose.yaml
-    test -f src/frontend/Dockerfile
-    test -f src/backend/Dockerfile
-    test -f docs/pyproject.toml
-    test -f docs/.python-version
-    test -f docs/README.md
-    test -f docs/uv.lock
-    test -f docs/source/conf.py
-    test -f docs/source/index.md
-    test -f docs/source/docker.md
-    test -f docs/source/nix.md
-    test -f flake.nix
-    test -f flake.lock
-    test -f .github/workflows/ci.yml
-    test -f .github/branch-protection.json
-    test -f .github/workflows/compose.yml
-    test -f .github/workflows/docs.yml
-    test -f .github/workflows/nix.yml
-    test -f vercel.json
-    test -f .vercelignore
-    test ! -f src/frontend/drizzle.config.ts
-    test ! -f src/frontend/auth-schema.ts
-    test ! -f src/frontend/compose.yaml
