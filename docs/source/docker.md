@@ -21,7 +21,7 @@ docker build --tag studyspot-frontend src/frontend
 docker build --tag studyspot-backend src/backend
 ```
 
-PostGIS and Meilisearch use versioned upstream images from their registries. Compose builds or downloads all four as needed.
+Meilisearch uses a versioned upstream image from its registry. Compose builds the two application images and downloads the search image as needed.
 
 Dockerfile layers are ordered so dependency manifests are copied and installed before frequently changed source code. This lets Docker reuse the expensive dependency layer after ordinary code edits.
 
@@ -33,11 +33,11 @@ Browser
 frontend:5173
    |
 backend:8000
-   |-- postgres:5432
+   |-- /app/.local/studyspot.db
    \-- meilisearch:7700
 ```
 
-Compose creates private DNS using service names. Inside the backend container, `postgres` resolves to the database container. `localhost` would refer to the backend container itself.
+The database path is an embedded Turso file on the backend's named volume, so there is no database container, private DNS name, or host port. Compose private DNS lets the backend reach `meilisearch:7700`; `localhost` inside a container refers only to that container.
 
 ## Port mappings
 
@@ -46,11 +46,11 @@ ports:
   - "127.0.0.1:7501:8000"
 ```
 
-The first port belongs to the host; the second belongs to the container. StudySpot uses consecutive host ports `7500` through `7503`, while containers retain the conventional ports expected by their images and development tools. Binding to `127.0.0.1` prevents local development services from being exposed on every network interface.
+The first port belongs to the host; the second belongs to the container. StudySpot's containers use consecutive host ports `7500` through `7502`, while containers retain the conventional ports expected by their images and development tools. The optional documentation server uses `7503`. Binding to `127.0.0.1` prevents local development services from being exposed on every network interface.
 
 ## Disposable containers and persistent data
 
-Application containers should be replaceable. PostgreSQL and Meilisearch write to named volumes so a normal shutdown preserves their data:
+Application containers should be replaceable. The backend's local Turso file and Meilisearch index live on named volumes so a normal shutdown preserves them:
 
 ```shell
 docker compose down
@@ -64,7 +64,7 @@ docker compose down --volumes
 
 ## Health and startup order
 
-Compose starts PostgreSQL and Meilisearch first. Their health checks verify that they are accepting requests before the backend starts. The frontend waits for the backend health endpoint. A running process is not considered ready until its health check succeeds.
+Compose starts Meilisearch first and verifies that it is accepting requests before the backend starts. The frontend waits for the backend health endpoint. The future Turso adapter will open its local file in the backend process, so database readiness belongs in the planned API readiness check rather than Compose startup order. A running process is not considered ready until its health check succeeds.
 
 ## Development loop
 
@@ -85,4 +85,4 @@ docker compose restart backend
 docker compose down
 ```
 
-Compose is appropriate for local development, integration tests, and a single-machine demo. It does not by itself provide multi-machine scheduling, managed TLS, database backups, or cross-region failover.
+Compose is appropriate for local development, integration tests, and a single-machine demo. It does not provide managed TLS, remote database backups, or cross-region failover; production database operations belong to Turso Cloud.

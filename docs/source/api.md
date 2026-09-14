@@ -4,7 +4,7 @@ The FastAPI application is available directly at `http://localhost:7501` and thr
 
 ## Implemented route
 
-`GET /health/live` reports whether the API process can serve requests. It intentionally does not contact PostgreSQL or Meilisearch.
+`GET /health/live` reports whether the API process can serve requests. It intentionally does not contact Turso or Meilisearch.
 
 ```json
 {

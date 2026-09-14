@@ -8,7 +8,7 @@ From the repository root:
 just docs
 ```
 
-The build is written to `docs/build/html/` and served at <http://localhost:7504>.
+The build is written to `docs/build/html/` and served at <http://localhost:7503>.
 
 Run the warning-strict documentation check as part of the complete repository check:
 

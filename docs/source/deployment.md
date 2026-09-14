@@ -1,6 +1,6 @@
 # Deployment
 
-StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. A backend service rewrite removes the public `/api` prefix before FastAPI route matching, so `/api/health/live` reaches the application's `/health/live` endpoint. The repository contains an empty NYC Open Data scaffold, but the deployed application has no runtime study-spot data or search dependency yet.
+StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. A backend service rewrite removes the public `/api` prefix before FastAPI route matching, so `/api/health/live` reaches the application's `/health/live` endpoint. Turso Cloud is the selected production database, but the deployed scaffold does not query it yet.
 
 Vercel's Git integration is the only automatic deployment path. GitHub Actions independently validates the repository, Compose topology, documentation, and Nix flake; it does not build or upload a duplicate Vercel deployment.
 
@@ -43,7 +43,7 @@ Configure GitHub manually:
 
 The current Vercel project has both aliases assigned, but Deployment Protection redirects anonymous requests to Vercel SSO. Public verification will fail until the protection scope is changed.
 
-No hosted database or search variables are required. When non-reproducible data is introduced later, scope its environment values to the `staging` branch and never point staging at writable production data.
+No database secret belongs in GitHub Actions because Vercel injects runtime values. All Preview deployments may share the rebuildable staging dataset while the API is read-only. Before adding user-generated writes, give ephemeral previews isolated databases or read-only credentials and keep staging separate from production.
 
 After making staging public, verify both boundaries and require an exact HTTP 200 rather than accepting redirects:
 
@@ -54,7 +54,7 @@ curl --fail-with-body --silent --show-error https://dev-studyspot-nyu.vercel.app
 
 ## Production
 
-Pushes to `main` deploy through the same Vercel Git integration and update [studyspot-nyu.vercel.app](https://studyspot-nyu.vercel.app). Promote only after the shared staging deployment is public and verified.
+Pushes to `main` deploy through the same Vercel Git integration and update [studyspot-nyu.vercel.app](https://studyspot-nyu.vercel.app). Production receives only the `studyspot-production` Turso credentials. Promote only after the shared staging deployment is public, its data load succeeds, and both web boundaries are verified.
 
 ## Manual commands
 
@@ -72,9 +72,9 @@ nix run . -- deploy-production
 
 ## Data and search state
 
-The deployed scaffold does not yet import NYC Open Data records, consume `data/spots.json`, or build runtime search structures. The planned implementation will normalize café and public-third-place records into that reproducible dataset and derive serving and search state from it.
+The deployed scaffold does not yet import NYC Open Data records, consume `data/spots.json`, load Turso, or build runtime search structures. The planned implementation will normalize café and public-third-place records into that reproducible dataset and derive Turso serving state and any search projection from it.
 
-PostgreSQL/PostGIS and Meilisearch remain part of the local Compose topology for integration work. They are not current production dependencies. Revisit production persistence when the data and search behavior is implemented, and require it once StudySpot stores user-generated corrections, favorites, accounts, import cursors, or other state that cannot be rebuilt from public inputs.
+The local Turso file and hosted Turso databases use the same schema and query contract but different transports. Meilisearch remains part of the local Compose topology for integration work and is not a current production dependency. While every record comes from the normalized public snapshot, either Turso environment can be cleared and reloaded. Once StudySpot stores corrections, favorites, accounts, import cursors, or other non-reproducible state, backups and backward-compatible migrations become release requirements.
 
 ## Rollback
 
@@ -84,3 +84,5 @@ List deployments and point production back to a known working deployment:
 bunx vercel@59.16.0 list
 bunx vercel@59.16.0 rollback DEPLOYMENT_URL
 ```
+
+A Vercel rollback does not change Turso data. Keep schema changes compatible with the previous application revision, or restore/reload the matching database state separately.
