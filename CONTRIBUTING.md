@@ -2,10 +2,9 @@
 
 ## Before you start
 
-1. Read `AGENTS.md` and the nearest scoped `AGENTS.md` for your area.
-2. Confirm the ticket's public contract and definition of done.
-3. Run `just setup` from the repository root.
-4. Create a short-lived branch from `staging` for one ticket.
+1. Confirm the ticket's public contract and definition of done.
+2. Run `just setup` from the repository root.
+3. Create a short-lived branch from `staging` for one ticket.
 
 If you use Nix, run `nix develop` before `just setup`. The shell provides the repository toolchain but still expects Docker to be running on the host.
 
