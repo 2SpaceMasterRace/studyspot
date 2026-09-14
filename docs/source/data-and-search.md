@@ -1,6 +1,6 @@
 # Data and search
 
-The versioned, normalized public-data snapshot is the first release's authoritative input. Runtime stores and indexes are projections that can be deleted and rebuilt.
+No public-data snapshot, runtime store, or search index is implemented yet. The planned design makes a versioned, normalized public-data snapshot authoritative and treats runtime stores and indexes as rebuildable projections.
 
 ```text
 NYC library data --\
@@ -18,4 +18,4 @@ The data implementation has not landed yet. It will provide:
 - deterministic, repeatable search indexing
 - tests for source mapping and malformed records
 
-Local PostgreSQL and Meilisearch data use Docker volumes so integration work survives normal restarts. Vercel staging and production instead receive the same immutable snapshot in their deployment artifacts and rebuild runtime search state from it. A hosted database becomes necessary only when StudySpot owns data that cannot be regenerated from its public sources.
+Local PostgreSQL and Meilisearch data use Docker volumes so integration work survives normal restarts. Vercel staging and production currently receive no dataset or search state. Once the import and search milestones land, deployment must prove that the normalized snapshot is packaged and that runtime search state can be rebuilt before relying on this stateless design. A hosted database becomes necessary when StudySpot owns data that cannot be regenerated from its public sources.

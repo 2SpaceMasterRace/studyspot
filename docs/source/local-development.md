@@ -11,7 +11,7 @@ Browser -> frontend:5173 -> backend:8000 -> postgres:5432
                                       \----> meilisearch:7700
 ```
 
-Compose gives every service a private DNS name. The backend therefore connects to `postgres:5432` and `meilisearch:7700`; `localhost` inside the backend container refers only to that backend container.
+Compose gives every service a private DNS name. The backend therefore connects to `postgres:5432` and `meilisearch:7700`; `localhost` inside the backend container refers only to that backend container. On the host, Compose publishes the same services consecutively as frontend `7500`, backend `7501`, PostgreSQL `7502`, and Meilisearch `7503`.
 
 ## Fast edit loop
 
@@ -72,9 +72,9 @@ The package delegates to the repository's `justfile`, so Nix and non-Nix develop
 The goal is behavioral parity rather than identical infrastructure:
 
 - the same application source and dependency locks
-- the same normalized public-data snapshot
+- the same normalized public-data snapshot once the data importer exists
 - the same HTTP routes and response contracts
 - the same data mapping and search-ranking behavior
 - the same liveness and readiness semantics
 
-PostgreSQL/PostGIS and Meilisearch remain in Compose as integration targets for future durable features. The first release does not deploy them because all current source data and search state can be reproduced from the versioned snapshot.
+PostgreSQL/PostGIS and Meilisearch remain in Compose as integration targets for future durable features. They are not deployed today because the scaffold has no runtime data or search behavior. The planned public-data implementation will determine whether a packaged snapshot is sufficient before production persistence is introduced.

@@ -1,6 +1,6 @@
 # HTTP API
 
-The FastAPI application is available directly at `http://localhost:8000` and through the frontend proxy under `http://localhost:5173/api`.
+The FastAPI application is available directly at `http://localhost:7501` and through the frontend proxy under `http://localhost:7500/api`.
 
 ## Implemented route
 

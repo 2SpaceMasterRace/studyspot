@@ -26,10 +26,10 @@ jobs:
         run: docker compose up --build --detach --wait
 
       - name: Check API liveness
-        run: curl --fail --silent http://localhost:8000/health/live
+        run: curl --fail --silent http://localhost:7501/health/live
 
       - name: Check frontend
-        run: curl --fail --silent http://localhost:5173/ > /dev/null
+        run: curl --fail --silent http://localhost:7500/ > /dev/null
 
       - name: Show logs after failure
         if: failure()

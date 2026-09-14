@@ -21,8 +21,8 @@ Run the local container smoke boundary with:
 
 ```shell
 just up
-curl --fail http://localhost:5173/
-curl --fail http://localhost:8000/health/live
+curl --fail http://localhost:7500/
+curl --fail http://localhost:7501/health/live
 just down
 ```
 

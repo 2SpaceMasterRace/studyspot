@@ -1,6 +1,6 @@
 # Deployment
 
-StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. A backend service rewrite removes the public `/api` prefix before FastAPI route matching, so `/api/health/live` reaches the application's `/health/live` endpoint. The normalized public-data snapshot is included in the deployment artifact, so the first release requires no external runtime service.
+StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. A backend service rewrite removes the public `/api` prefix before FastAPI route matching, so `/api/health/live` reaches the application's `/health/live` endpoint. The deployed scaffold contains no study-spot dataset or search index and therefore has no external runtime data dependency yet.
 
 Vercel's Git integration is the only automatic deployment path. GitHub Actions independently validates the repository, Compose topology, documentation, and Nix flake; it does not build or upload a duplicate Vercel deployment.
 
@@ -72,9 +72,9 @@ nix run . -- deploy-production
 
 ## Data and search state
 
-NYC and NYU source records are normalized into a versioned snapshot before deployment. FastAPI loads that snapshot and builds disposable runtime search structures. A new deployment can therefore recreate its complete state without a persistent filesystem or database.
+The deployed scaffold does not yet import NYC or NYU records, package a normalized snapshot, or build runtime search structures. The planned implementation will normalize public source records into a versioned deployment artifact and derive disposable search state from that artifact.
 
-PostgreSQL/PostGIS and Meilisearch remain part of the local Compose topology for integration work. They are not production dependencies until StudySpot stores user-generated corrections, favorites, accounts, import cursors, or other state that cannot be rebuilt from public inputs.
+PostgreSQL/PostGIS and Meilisearch remain part of the local Compose topology for integration work. They are not current production dependencies. Revisit production persistence when the data and search behavior is implemented, and require it once StudySpot stores user-generated corrections, favorites, accounts, import cursors, or other state that cannot be rebuilt from public inputs.
 
 ## Rollback
 

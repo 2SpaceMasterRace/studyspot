@@ -64,11 +64,10 @@ Nix supplies the local tools used around deployment but does not host or package
 
 ```shell
 nix run . -- deploy-preview
-nix run . -- deploy-staging
 nix run . -- deploy-production
 ```
 
-The command calls the exact Vercel CLI version named in the `justfile`. `bunx` may download that CLI on first use, so manual deployment still needs network access and Vercel authentication; the CLI is not stored in the Nix flake. Vercel then builds the SvelteKit and FastAPI services with the versioned public-data snapshot. PostgreSQL/PostGIS and Meilisearch remain local integration services until StudySpot owns non-reproducible state.
+The command calls the exact Vercel CLI version named in the `justfile`. `bunx` may download that CLI on first use, so manual deployment still needs network access and Vercel authentication; the CLI is not stored in the Nix flake. Vercel currently builds the SvelteKit and FastAPI scaffolds without a study-spot dataset or search index. PostgreSQL/PostGIS and Meilisearch remain local integration services while those product milestones are unimplemented.
 
 ## Why Nix does not build the application images yet
 
