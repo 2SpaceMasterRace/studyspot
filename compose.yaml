@@ -43,10 +43,13 @@ services:
     build:
       context: ./src/backend
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-studyspot}:${POSTGRES_PASSWORD:-studyspot}@postgres:5432/${POSTGRES_DB:-studyspot}
+      TURSO_DATABASE_URL: ${TURSO_DATABASE_URL:-file:/app/.local/studyspot.db}
+      TURSO_AUTH_TOKEN: ${TURSO_AUTH_TOKEN:-}
       MEILISEARCH_URL: http://meilisearch:7700
     ports:
       - "127.0.0.1:7501:8000"
+    volumes:
+      - turso-data:/app/.local
     command:
       - uv
       - run
@@ -61,8 +64,6 @@ services:
       - "8000"
       - --reload
     depends_on:
-      postgres:
-        condition: service_healthy
       meilisearch:
         condition: service_healthy
     healthcheck:
@@ -87,30 +88,13 @@ services:
         - action: rebuild
           path: ./src/backend/Dockerfile
 
-  postgres:
-    image: postgis/postgis:17-3.5
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-studyspot}
-      POSTGRES_USER: ${POSTGRES_USER:-studyspot}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-studyspot}
-    ports:
-      - "127.0.0.1:7502:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 5s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
-
   meilisearch:
     image: getmeili/meilisearch:v1.45.1
     environment:
       MEILI_ENV: development
       MEILI_NO_ANALYTICS: "true"
     ports:
-      - "127.0.0.1:7503:7700"
+      - "127.0.0.1:7502:7700"
     volumes:
       - meilisearch-data:/meili_data
     healthcheck:
@@ -121,5 +105,5 @@ services:
       start_period: 10s
 
 volumes:
-  postgres-data:
+  turso-data:
   meilisearch-data:

@@ -6,6 +6,7 @@ Tests live with the code they verify.
 |---|---|---|
 | Frontend components | `src/frontend/src/**/*.spec.ts` | Vitest |
 | Backend API | `src/backend/tests/` | pytest |
+| Turso repository and loader | Beside the backend adapter | pytest with a temporary local database |
 | Data import | `data/test_ingest.py` | Python tests (planned) |
 | Full system | `tests/e2e/` | Playwright |
 
@@ -26,4 +27,4 @@ curl --fail http://localhost:7501/health/live
 just shutdown
 ```
 
-The data test module is currently only a placeholder. Each product milestone adds meaningful tests for its public behavior. Once the first suites land, a `just test` command and the pre-push gate must run them.
+The data test module is currently only a placeholder. The Turso milestone must test schema creation, idempotent loading, query behavior, and error mapping against a temporary local database without cloud credentials. The staging deployment will verify the same adapter contract over the remote Turso transport. Each product milestone adds meaningful tests for its public behavior. Once the first suites land, a `just test` command and the pre-push gate must run them.

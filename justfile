@@ -63,10 +63,10 @@ format:
     cd src/frontend && bun run format
     cd src/backend && uv run ruff format .
 
-# Build and serve the Sphinx documentation at http://localhost:7504.
+# Build and serve the Sphinx documentation at http://localhost:7503.
 docs:
     uv run --project docs sphinx-build --builder html docs/source docs/build/html
-    python3.12 -m http.server 7504 --bind 127.0.0.1 --directory docs/build/html
+    python3.12 -m http.server 7503 --bind 127.0.0.1 --directory docs/build/html
 
 # Validate the Nix development environment.
 nix-check:

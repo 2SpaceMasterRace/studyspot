@@ -1,5 +1,5 @@
 # Search boundary
 
-The search ticket will implement querying and ranking for normalized café and public-third-place records here. The serving database and whether a separate Meilisearch index is necessary remain implementation decisions.
+The search ticket will implement querying and ranking for normalized café and public-third-place records here. Turso is the serving database; whether search also needs a rebuildable Meilisearch projection remains an implementation decision.
 
 No search behavior is implemented in this scaffold.

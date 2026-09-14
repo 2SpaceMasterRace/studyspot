@@ -23,6 +23,7 @@ nix
 architecture
 api
 data-and-search
+database
 ```
 
 ```{toctree}
