@@ -5,7 +5,7 @@
 1. Read `AGENTS.md` and the nearest scoped `AGENTS.md` for your area.
 2. Confirm the ticket's public contract and definition of done.
 3. Run `just setup` from the repository root.
-4. Create a short-lived branch for one ticket.
+4. Create a short-lived branch from `staging` for one ticket.
 
 If you use Nix, run `nix develop` before `just setup`. The shell provides the repository toolchain but still expects Docker to be running on the host.
 
@@ -28,3 +28,5 @@ just check
 Run the relevant tests once the ticket has added them. Describe the behavior changed, the checks run, and any measured performance in the pull request.
 
 Never commit `.env` files or credentials. Copy `.env.example` to `.env` only when you need to override the safe local Compose defaults.
+
+Open feature pull requests into `staging`. After the shared staging deployment is verified, open a release pull request from `staging` into `main`. Do not push feature work directly to either long-lived branch. If an emergency fix lands on `main`, merge it back into `staging` immediately.
