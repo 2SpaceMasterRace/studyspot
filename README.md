@@ -1,6 +1,6 @@
 # [StudySpot](https://studyspot-nyu.vercel.app/)
-
-_I just want somewhere nearby to meet or study, but finding a good café or third place means searching scattered listings and guessing what is actually useful._
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue)](https://python.org)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 
 StudySpot is an open-source search demo for discovering cafés and other third places across New York City. The goal is to make finding a useful place feel immediate: search by a name, category, or neighborhood and get a small, consistent set of results derived from NYC Open Data.
 
@@ -38,18 +38,6 @@ The shared study-spot summary contract is intentionally small:
 ```
 
 The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/search?q=coffee`. Today, only `GET /health/live` is available.
-
-### FAQ
-
-**Why make this?** Cafés and public gathering places are spread across separate city datasets and listings. StudySpot explores what happens when candidate third places have one predictable shape and one fast search interface.
-
-**Why Turso?** It keeps local development lightweight with an embedded database file while giving stateless Vercel functions a managed remote database. Its SQLite-compatible SQL also fits a small, reproducible public dataset without operating another database server.
-
-**Why keep Meilisearch locally?** It provides a realistic integration target for dedicated typo-tolerant search. Its index is derived data, so the first release can build a smaller in-memory index from the packaged dataset instead of operating a permanent search server.
-
-**Where will the data come from?** The first dataset will use NYC Open Data records for cafés and other public third places. The intentionally small [`data/`](data/) scaffold will contain one importer, its tests, and the generated `spots.json` dataset.
-
-**Does every result have Wi-Fi, outlets, or quiet seating?** Not necessarily. StudySpot presents candidate places to meet or study and only claims amenities explicitly supported by the source data.
 
 ## Development
 
