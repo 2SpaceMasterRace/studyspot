@@ -17,6 +17,7 @@ doctor:
     uv --version
     docker --version
     docker compose version
+    python3.12 -c 'import re, subprocess; value = subprocess.check_output(["docker", "compose", "version", "--short"], text=True).strip(); match = re.match(r"v?(\d+)\.(\d+)\.(\d+)", value); assert match and tuple(map(int, match.groups())) >= (2, 23, 0), f"Docker Compose 2.23.0+ is required, found {value}"'
     just --version
     docker info >/dev/null
     docker compose config --quiet

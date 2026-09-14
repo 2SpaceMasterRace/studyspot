@@ -128,19 +128,21 @@ Run `just nix-check` to validate the pinned development environment. Tests will 
 
 ## Deployment
 
-Create a Vercel preview deployment with:
+Vercel's Git integration owns normal deployments:
+
+- feature pull requests receive isolated Preview deployments;
+- pushes to `staging` update the shared staging deployment; and
+- pushes to `main` update production.
+
+The Vercel deployment status is a required pull-request check. GitHub Actions runs repository, container, documentation, and Nix checks, but does not perform a second deployment.
+
+Create an out-of-band Vercel preview deployment with:
 
 ```shell
 just deploy-preview
 ```
 
-Build a branch-linked staging deployment with:
-
-```shell
-just deploy-staging
-```
-
-Deploy the current revision to production with:
+Deploy the current revision directly to production only for an explicit manual release or recovery:
 
 ```shell
 just deploy-production

@@ -1,4 +1,4 @@
-# Nix development and packaging
+# Nix development environment and command wrapper
 
 Nix provides StudySpot's reproducible development and CI toolchain. Docker remains the container format, while Vercel remains the application deployment platform.
 
@@ -10,7 +10,7 @@ flake.lock -> exact pinned input revisions
 /nix/store -> immutable build results
 ```
 
-The StudySpot flake exposes development shells, checks, a packaged command, and a runnable default app for Linux and macOS on x86-64 and ARM64.
+The StudySpot flake exposes development shells, checks, and a command wrapper for Linux and macOS on x86-64 and ARM64.
 
 ## Development shell
 
@@ -30,15 +30,15 @@ nix develop -c just check
 
 Nix supplies the Docker CLI, but a Docker daemon must run on the host.
 
-## Packaged command surface
+## Command wrapper
 
-Build the StudySpot command package:
+Build the StudySpot command wrapper:
 
 ```shell
 nix build
 ```
 
-The `result` symlink points to the immutable Nix store output. The package contains a `studyspot` command that delegates to the repository's supported `just` recipes.
+The `result` symlink points to the immutable Nix store output. It contains a `studyspot` command that delegates to the repository's supported `just` recipes. Run it from a StudySpot checkout; the wrapper does not copy the application source or `justfile` into the Nix store.
 
 Run it without installing it:
 
@@ -60,7 +60,7 @@ The flake check verifies that the expected Bun, Python, uv, Docker, direnv, and 
 
 ## Deployment
 
-Nix makes the deployment toolchain reproducible but does not host the application:
+Nix supplies the local tools used around deployment but does not host or package the Vercel application:
 
 ```shell
 nix run . -- deploy-preview
@@ -68,7 +68,7 @@ nix run . -- deploy-staging
 nix run . -- deploy-production
 ```
 
-The command calls the pinned Vercel CLI through the `justfile`. Vercel then builds the SvelteKit and FastAPI services with the versioned public-data snapshot. PostgreSQL/PostGIS and Meilisearch remain local integration services until StudySpot owns non-reproducible state.
+The command calls the exact Vercel CLI version named in the `justfile`. `bunx` may download that CLI on first use, so manual deployment still needs network access and Vercel authentication; the CLI is not stored in the Nix flake. Vercel then builds the SvelteKit and FastAPI services with the versioned public-data snapshot. PostgreSQL/PostGIS and Meilisearch remain local integration services until StudySpot owns non-reproducible state.
 
 ## Why Nix does not build the application images yet
 
