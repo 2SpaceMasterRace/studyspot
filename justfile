@@ -38,6 +38,14 @@ dev-frontend:
 dev-backend:
     cd src/backend && uv run uvicorn studyspot_api.main:app --app-dir src --host 127.0.0.1 --port 7501 --reload
 
+# Regenerate data/spots.json from NYC Open Data.
+ingest-spots:
+    python3 data/ingest.py
+
+# Load data/spots.json into the configured Turso database (local file by default).
+load-spots:
+    PYTHONPATH=src/backend/src uv run --project src/backend python -m studyspot_api.spots.loader
+
 # Build and start the complete local system with live source updates.
 dev:
     docker compose up --build --watch

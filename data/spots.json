@@ -1,1 +1,2372 @@
-[]
+[
+  {
+    "id": "facdb-238830045f7fec917afba635e4c868ff",
+    "name": "Allerton Library",
+    "category": "library",
+    "address": "2740 Barnes Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8668098528,
+    "longitude": -73.8632252325
+  },
+  {
+    "id": "facdb-d7b6a850541d90d0f27a92bb7cb2d031",
+    "name": "Baychester Library",
+    "category": "library",
+    "address": "2049 Asch Loop North",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8702860682,
+    "longitude": -73.8286119331
+  },
+  {
+    "id": "facdb-e9af454dd8d5e239a1027e70e6aa249b",
+    "name": "Belmont Library And Enrico Fermi Cultural Center",
+    "category": "library",
+    "address": "610 East 186 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8543523252,
+    "longitude": -73.8878943674
+  },
+  {
+    "id": "facdb-7fa06308ea830f26e865390afe3fb4a5",
+    "name": "Bronx Library Center",
+    "category": "library",
+    "address": "310 East Kingsbridge Road",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.863002937,
+    "longitude": -73.8945096133
+  },
+  {
+    "id": "facdb-a9c12e501b332c82a0a1bcf8a524c6fa",
+    "name": "Castle Hill Library",
+    "category": "library",
+    "address": "947 Castle Hill Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8266161307,
+    "longitude": -73.8501808487
+  },
+  {
+    "id": "facdb-d9cf3116e074431edffa31e522158e25",
+    "name": "City Island Library",
+    "category": "library",
+    "address": "320 City Island Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8477591237,
+    "longitude": -73.7864096459
+  },
+  {
+    "id": "facdb-d18a235b145df3cc0cf5784fe3b04593",
+    "name": "Clason'S Point Library",
+    "category": "library",
+    "address": "1215 Morrison Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8299994088,
+    "longitude": -73.8750270357
+  },
+  {
+    "id": "facdb-11227fa7d859b1c64029c0a3c92b4911",
+    "name": "Eastchester Library",
+    "category": "library",
+    "address": "1385 East Gun Hill Road",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8701459976,
+    "longitude": -73.8450655401
+  },
+  {
+    "id": "facdb-10c0c3484af97dbdbd519ac043dd6448",
+    "name": "Edenwald Library",
+    "category": "library",
+    "address": "1255 East 233 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8889011106,
+    "longitude": -73.840834064
+  },
+  {
+    "id": "facdb-b43dccbd9814ff1239d213c864d3395d",
+    "name": "Francis Martin Library",
+    "category": "library",
+    "address": "2150 University Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8574404243,
+    "longitude": -73.9092811598
+  },
+  {
+    "id": "facdb-05601de94006cc0b5ec99e025c6bfe0b",
+    "name": "Grand Concourse Library",
+    "category": "library",
+    "address": "155 East 173 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8440100646,
+    "longitude": -73.9100923152
+  },
+  {
+    "id": "facdb-0ddf3f7fd6063f6f89642e76e3c68f56",
+    "name": "High Bridge Library",
+    "category": "library",
+    "address": "78 West 168 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8379673359,
+    "longitude": -73.9235452658
+  },
+  {
+    "id": "facdb-7ebd35d614226315c5a3d49b3e680723",
+    "name": "Hunts Point Library",
+    "category": "library",
+    "address": "877 Southern Boulevard",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8186939668,
+    "longitude": -73.8941383912
+  },
+  {
+    "id": "facdb-b3df3a9708327cd901d785517e576463",
+    "name": "Jerome Park Library",
+    "category": "library",
+    "address": "118 Eames Place",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8690449509,
+    "longitude": -73.9012159947
+  },
+  {
+    "id": "facdb-61f9d318fc837d2e4dcdf8c1119f2bdf",
+    "name": "Kingsbridge Library",
+    "category": "library",
+    "address": "291 West 231 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8807292781,
+    "longitude": -73.9077085056
+  },
+  {
+    "id": "facdb-3a55e205bd4a9e7992c2f308ff9b68c3",
+    "name": "Melrose Library",
+    "category": "library",
+    "address": "910 Morris Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8265945209,
+    "longitude": -73.9175815519
+  },
+  {
+    "id": "facdb-e5dc16e45a49c1f198513ef6fa41f215",
+    "name": "Morris Park Library",
+    "category": "library",
+    "address": "985 Morris Park Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8480693405,
+    "longitude": -73.8569779971
+  },
+  {
+    "id": "facdb-03c6d733eefe179d405351b9ccc899ca",
+    "name": "Morrisania Library",
+    "category": "library",
+    "address": "610 East 169 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8312720847,
+    "longitude": -73.9017895369
+  },
+  {
+    "id": "facdb-717971c38bd27bb381c8b3fd594c1433",
+    "name": "Mosholu Library",
+    "category": "library",
+    "address": "285 East 205 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8743910426,
+    "longitude": -73.8783950702
+  },
+  {
+    "id": "facdb-4c0e0398476b5abe2c2cb16159fb0b8a",
+    "name": "Mott Haven Library",
+    "category": "library",
+    "address": "321 East 140 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8116357791,
+    "longitude": -73.9243762205
+  },
+  {
+    "id": "facdb-6011ab9825262c85e7922e6b103f14e2",
+    "name": "Parkchester Library",
+    "category": "library",
+    "address": "1985 Westchester Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8337678169,
+    "longitude": -73.8583561777
+  },
+  {
+    "id": "facdb-9adcf696a8a7a8026da5195272ae8221",
+    "name": "Pelham Bay Library",
+    "category": "library",
+    "address": "3060 Middletown Road",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8442982997,
+    "longitude": -73.8278852129
+  },
+  {
+    "id": "facdb-693e924ddfac47d83dd88ead481a580b",
+    "name": "Pelham Parkway-Van Nest Library",
+    "category": "library",
+    "address": "2147 Barnes Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8548839042,
+    "longitude": -73.8641466562
+  },
+  {
+    "id": "facdb-9a306601f42b0f14fe1430b01ff0d93e",
+    "name": "Riverdale Library",
+    "category": "library",
+    "address": "5540 Mosholu Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.9037177326,
+    "longitude": -73.9027434441
+  },
+  {
+    "id": "facdb-e99e623effd50be94c01940ce9038f69",
+    "name": "Sedgwick Library",
+    "category": "library",
+    "address": "1701 Dr Martin Luther King Jr Blvd",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8495022562,
+    "longitude": -73.9175828714
+  },
+  {
+    "id": "facdb-9681eb17981e7b0be56df2d1410cfbcb",
+    "name": "Soundview Library",
+    "category": "library",
+    "address": "660 Soundview Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.818715778,
+    "longitude": -73.8628905385
+  },
+  {
+    "id": "facdb-5cd56fba44846deb250f45e59c8332b1",
+    "name": "Spuyten Duyvil Library",
+    "category": "library",
+    "address": "650 West 235 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8862807253,
+    "longitude": -73.9146784376
+  },
+  {
+    "id": "facdb-3385bf98f721fb0ee9683edb1a59a23d",
+    "name": "Throg'S Neck Library",
+    "category": "library",
+    "address": "3025 Cross Bronx Expressway",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8229078273,
+    "longitude": -73.8190903284
+  },
+  {
+    "id": "facdb-5ad8b68e57686b852d766cff3004f926",
+    "name": "Tremont Library",
+    "category": "library",
+    "address": "1866 Washington Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8460528369,
+    "longitude": -73.898347751
+  },
+  {
+    "id": "facdb-5f712739e9d0d040ce8acf7725953a74",
+    "name": "Van Cortlandt Library, Arline Schwarzman Building",
+    "category": "library",
+    "address": "3882 Cannon Place",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8836360487,
+    "longitude": -73.8944885204
+  },
+  {
+    "id": "facdb-236183dcfecc8d0ae3528d0ca05f7622",
+    "name": "Wakefield Library",
+    "category": "library",
+    "address": "4100 Lowerre Place",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8911059186,
+    "longitude": -73.8595242442
+  },
+  {
+    "id": "facdb-2d562a3c6f43d5346a2a0a0f94f751a3",
+    "name": "West Farms Library",
+    "category": "library",
+    "address": "2085 Honeywell Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8446817203,
+    "longitude": -73.8830469968
+  },
+  {
+    "id": "facdb-5d80002be33c91d7ef81b8bd61c7f517",
+    "name": "Westchester Square Library",
+    "category": "library",
+    "address": "2521 Glebe Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8411198984,
+    "longitude": -73.8466191218
+  },
+  {
+    "id": "facdb-4230d4e5cb8252c60a8d3bd0167764f5",
+    "name": "Woodlawn Heights Library",
+    "category": "library",
+    "address": "4355 Katonah Avenue",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.9004468341,
+    "longitude": -73.8679486582
+  },
+  {
+    "id": "facdb-b374e2b2fc5e74face18dc76be6a8465",
+    "name": "Woodstock Library",
+    "category": "library",
+    "address": "761 East 160 Street",
+    "neighborhood": null,
+    "borough": "Bronx",
+    "latitude": 40.8206484685,
+    "longitude": -73.9046295224
+  },
+  {
+    "id": "facdb-52396f3077e250df8dca482d22edb62f",
+    "name": "Adams Street Library",
+    "category": "library",
+    "address": "9 Adams Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.7041441536,
+    "longitude": -73.9879956505
+  },
+  {
+    "id": "facdb-d6dc72c0c749b16e91851b52cc256d14",
+    "name": "Arlington Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6806631,
+    "longitude": -73.8873421
+  },
+  {
+    "id": "facdb-fc1937affe9840293e6b5e72755ce177",
+    "name": "Bay Ridge Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6336068,
+    "longitude": -74.0295073
+  },
+  {
+    "id": "facdb-b643f9b12afe956b928b4bca162dc75f",
+    "name": "Bedford Library",
+    "category": "library",
+    "address": "496 Franklin Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6818255657,
+    "longitude": -73.9561679472
+  },
+  {
+    "id": "facdb-51782162f92f276e5b1f0ccb098206c9",
+    "name": "Bedford Library Learning Center",
+    "category": "library",
+    "address": "496 Franklin Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6818255657,
+    "longitude": -73.9561679472
+  },
+  {
+    "id": "nyu-tandon-dibner-library",
+    "name": "Bern Dibner Library (NYU Tandon)",
+    "category": "university_library",
+    "address": "5 MetroTech Center, Brooklyn, NY 11201",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "latitude": 40.6942,
+    "longitude": -73.9865
+  },
+  {
+    "id": "facdb-1b93bf18b98a19a8f00758b5528a2e78",
+    "name": "Borough Park Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.638856,
+    "longitude": -73.989018
+  },
+  {
+    "id": "facdb-3ccc892d61c2745d02f1de9a698e48af",
+    "name": "Brighton Beach Library",
+    "category": "library",
+    "address": "16 Brighton First Road",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.5761748007,
+    "longitude": -73.9667463596
+  },
+  {
+    "id": "facdb-c08dd14dff03a8b9ccb6b7940fd2de48",
+    "name": "Brooklyn Heights Library",
+    "category": "library",
+    "address": "286 Cadman Plaza West",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6956853672,
+    "longitude": -73.9914394426
+  },
+  {
+    "id": "facdb-df4caf21ed676838ad34d2018f8b20ba",
+    "name": "Brower Park Library",
+    "category": "library",
+    "address": "155 Brooklyn Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6744909815,
+    "longitude": -73.9440049534
+  },
+  {
+    "id": "facdb-33287cda7c7d99a02fcd26724d69300d",
+    "name": "Brownsville Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.671469,
+    "longitude": -73.9085913
+  },
+  {
+    "id": "facdb-bac970d8b84a1ac4462bb7f20b498908",
+    "name": "Bushwick Library",
+    "category": "library",
+    "address": "340 Bushwick Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.7045623725,
+    "longitude": -73.9396258899
+  },
+  {
+    "id": "facdb-71246fc08b528402bee8b81e928afbad",
+    "name": "Canarsie Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6422167,
+    "longitude": -73.8995607
+  },
+  {
+    "id": "facdb-b39dc0b1ea61169ae55ad37f112a602e",
+    "name": "Carroll Gardens Pop-Up Library",
+    "category": "library",
+    "address": "250 Baltic Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6861307275,
+    "longitude": -73.9947612172
+  },
+  {
+    "id": "facdb-f2bc99e0432afd4c8a3f9591fce05687",
+    "name": "Center For Brooklyn History",
+    "category": "library",
+    "address": "128 Pierrepont Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.694799624,
+    "longitude": -73.9924132662
+  },
+  {
+    "id": "facdb-970671df21b4eae2be004394fb1ae6a3",
+    "name": "Central Library",
+    "category": "library",
+    "address": "10 Grand Army Plaza",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6722468777,
+    "longitude": -73.9681108345
+  },
+  {
+    "id": "facdb-e6da6cf4063e2e4a10770100c1cca62a",
+    "name": "Central Library Learning Center",
+    "category": "library",
+    "address": "10 Grand Army Plaza",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6722468777,
+    "longitude": -73.9681108345
+  },
+  {
+    "id": "facdb-361b5dfe9b89cea512bc67979c2d284c",
+    "name": "Clarendon Library",
+    "category": "library",
+    "address": "2035 Nostrand Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6357517462,
+    "longitude": -73.9476281097
+  },
+  {
+    "id": "facdb-e712c6bcc023d57adefd02a3b76948bd",
+    "name": "Clinton Hill Library",
+    "category": "library",
+    "address": "380 Washington Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6873829949,
+    "longitude": -73.9660318897
+  },
+  {
+    "id": "facdb-7a4c83ca6bac6ae7a44a7225992aad52",
+    "name": "Coney Island Library",
+    "category": "library",
+    "address": "1901 Mermaid Ave. (Near W. 19Th St.) Brooklyn, Ny 11224",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.5767651,
+    "longitude": -73.9860791
+  },
+  {
+    "id": "facdb-38c9399e1af0f4a08ef042ebdd958fa8",
+    "name": "Cortelyou Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.640844,
+    "longitude": -73.965968
+  },
+  {
+    "id": "facdb-7dca3ea1ff5d3f183b03367da6b683f1",
+    "name": "Crown Heights Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6611981,
+    "longitude": -73.9481517
+  },
+  {
+    "id": "facdb-0a1b6e5a0b3f8fa0c38c6a910916b2f3",
+    "name": "Cypress Hills Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6726465,
+    "longitude": -73.8740892
+  },
+  {
+    "id": "facdb-fe3efe0365330942f665f659420c7ac9",
+    "name": "Dekalb Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6947857,
+    "longitude": -73.9284044
+  },
+  {
+    "id": "facdb-13522ee484728cf90b296e5706502f14",
+    "name": "Dyker Library",
+    "category": "library",
+    "address": "8202 13 Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6163154589,
+    "longitude": -74.0119900831
+  },
+  {
+    "id": "facdb-4a45556b3fdf640415385d501204e650",
+    "name": "East Flatbush Library",
+    "category": "library",
+    "address": "9612 Church Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6557127372,
+    "longitude": -73.914939804
+  },
+  {
+    "id": "facdb-62637f3f67fddb6d57c92413e94dbf3b",
+    "name": "Eastern Parkway Learning Center",
+    "category": "library",
+    "address": "1044 Eastern Parkway - 2Nd Floor Brooklyn, Ny 11213",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6684861,
+    "longitude": -73.93364
+  },
+  {
+    "id": "facdb-649854be7f563a9f724df0a963fbc23e",
+    "name": "Eastern Parkway Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6684863,
+    "longitude": -73.9336735
+  },
+  {
+    "id": "facdb-1b5f19ba9293b1171b520d2ce197f0fb",
+    "name": "Flatbush Learning Center",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6519213,
+    "longitude": -73.958256
+  },
+  {
+    "id": "facdb-281ed1b58917038a2ca8afb34eee5097",
+    "name": "Flatbush Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.651891,
+    "longitude": -73.958256
+  },
+  {
+    "id": "facdb-264b7f8f8a579c5347016fd3aaf03b15",
+    "name": "Flatlands Library",
+    "category": "library",
+    "address": "2065 Flatbush Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6197818309,
+    "longitude": -73.9332116024
+  },
+  {
+    "id": "facdb-eba7a58f8edf922eff6bf7c8114fddc4",
+    "name": "Fort Hamilton Library",
+    "category": "library",
+    "address": "9424 Fourth Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6164102983,
+    "longitude": -74.0313966261
+  },
+  {
+    "id": "facdb-a1dcb669020b66e36c8fb3fad14fd958",
+    "name": "Gerritsen Beach Library",
+    "category": "library",
+    "address": "2808 Gerritsen Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.5913763189,
+    "longitude": -73.9239623621
+  },
+  {
+    "id": "facdb-ce3e26314b2ed8a7bd743ab9140504aa",
+    "name": "Gravesend Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.5906025,
+    "longitude": -73.9717539
+  },
+  {
+    "id": "facdb-3474af1c39cf86d85b6109e992d37cbf",
+    "name": "Greenpoint Library And Environmental Education Center",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.726063,
+    "longitude": -73.950631
+  },
+  {
+    "id": "facdb-9c34ac86af977bbb9be0b34635ea56d9",
+    "name": "Highlawn Library",
+    "category": "library",
+    "address": "1664 West 13 Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6056973232,
+    "longitude": -73.9862317806
+  },
+  {
+    "id": "facdb-b67e32b84461dd0548dbdcdd49cd2f00",
+    "name": "Homecrest Library",
+    "category": "library",
+    "address": "2525 Coney Island Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.5952409159,
+    "longitude": -73.9606033658
+  },
+  {
+    "id": "facdb-c12faf93843b1de4f8b8b375dfee8da2",
+    "name": "Jamaica Bay Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.634485,
+    "longitude": -73.889271
+  },
+  {
+    "id": "facdb-c11c39e1eeb8ee91370a4e27dd2c3030",
+    "name": "Kensington Library",
+    "category": "library",
+    "address": "4207 18 Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6312737121,
+    "longitude": -73.9754231938
+  },
+  {
+    "id": "facdb-af8acfbc8cd3eaaa0e82395a8267c28c",
+    "name": "Kings Bay Library",
+    "category": "library",
+    "address": "3650 Nostrand Ave. (Near Ave. W) Brooklyn, Ny 11229",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.5947871,
+    "longitude": -73.9411462
+  },
+  {
+    "id": "facdb-8727e2a7a0725736cdf83e214d3d4fd7",
+    "name": "Kings Highway Library",
+    "category": "library",
+    "address": "2115 Ocean Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6102600375,
+    "longitude": -73.9531124404
+  },
+  {
+    "id": "facdb-13087f1014cb4ae22b84af82d279a681",
+    "name": "Leonard Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.713637,
+    "longitude": -73.947968
+  },
+  {
+    "id": "facdb-fb34a2830552addb2321b94e0eb9d385",
+    "name": "Library For Arts & Culture",
+    "category": "library",
+    "address": "10 Lafayette Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6860429094,
+    "longitude": -73.9784017621
+  },
+  {
+    "id": "facdb-16c43157ad1d08974acb24533d982f8d",
+    "name": "Macon Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6830369,
+    "longitude": -73.9348376
+  },
+  {
+    "id": "facdb-06994ae1765308adf812985cb2204b7d",
+    "name": "Mapleton Library",
+    "category": "library",
+    "address": "1702 60 Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6230710774,
+    "longitude": -73.9894435491
+  },
+  {
+    "id": "facdb-d0d861d53c42f5959816c470d7edb315",
+    "name": "Marcy Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6916309,
+    "longitude": -73.9512645
+  },
+  {
+    "id": "facdb-75c69c33f53a998990c45587c5bf8fc1",
+    "name": "Mckinley Park Library",
+    "category": "library",
+    "address": "6802 Fort Hamilton Pkwy (At 68Th St.) Brooklyn, Ny 11219",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.629178,
+    "longitude": -74.01188
+  },
+  {
+    "id": "facdb-8497a170a89bf93d417cc67f74fb58c2",
+    "name": "Midwood Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.625907,
+    "longitude": -73.9604005
+  },
+  {
+    "id": "facdb-be471d75711054798c0809ae6f5b3dd9",
+    "name": "Mill Basin Library",
+    "category": "library",
+    "address": "2385 Ralph Ave (Near Ave N) Brooklyn, Ny 11234",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6199454,
+    "longitude": -73.9169226
+  },
+  {
+    "id": "facdb-8d0bd764a53202a46d6f459f07ced99f",
+    "name": "New Lots Learning Center",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6651154,
+    "longitude": -73.8861478
+  },
+  {
+    "id": "facdb-a019a82fc37d567c3be212bdf4dc1ee7",
+    "name": "New Lots Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6651154,
+    "longitude": -73.8861478
+  },
+  {
+    "id": "facdb-66284cf527b45819781565ea645f4240",
+    "name": "New Utrecht Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6080187,
+    "longitude": -74.0033411
+  },
+  {
+    "id": "facdb-e9ff0c907d0746ac46b8f56af137dbdb",
+    "name": "Pacific Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.683449,
+    "longitude": -73.978549
+  },
+  {
+    "id": "facdb-adab66cfeb78bb35689bb93ef08c7c6a",
+    "name": "Paerdegat Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6325973,
+    "longitude": -73.9199539
+  },
+  {
+    "id": "facdb-64a4d7a6a341b1e5c406013a37d82bb5",
+    "name": "Park Slope Library",
+    "category": "library",
+    "address": "431 6 Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6682222211,
+    "longitude": -73.9834260381
+  },
+  {
+    "id": "facdb-7f56119c3c7c8e50f5cdef7f716ce421",
+    "name": "Red Hook Pop-Up Library",
+    "category": "library",
+    "address": "362 Van Brunt Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6776575074,
+    "longitude": -74.0128955441
+  },
+  {
+    "id": "nyu-tandon-rogers-hall",
+    "name": "Rogers Hall (NYU Tandon)",
+    "category": "university_building",
+    "address": "6 MetroTech Center, Brooklyn, NY 11201",
+    "neighborhood": "Downtown Brooklyn",
+    "borough": "Brooklyn",
+    "latitude": 40.6939,
+    "longitude": -73.9855
+  },
+  {
+    "id": "facdb-5513fbfeaf0d0c736e53a7ad9c769a23",
+    "name": "Rugby Library",
+    "category": "library",
+    "address": "1000 Utica Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6486412879,
+    "longitude": -73.9303828979
+  },
+  {
+    "id": "facdb-c8544d24008d60fd46791492ec23f966",
+    "name": "Ryder Library",
+    "category": "library",
+    "address": "5902 23 Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6159201257,
+    "longitude": -73.9760429331
+  },
+  {
+    "id": "facdb-1796ef48f88daa663ce954b67b58aa47",
+    "name": "Saratoga Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.684789,
+    "longitude": -73.915177
+  },
+  {
+    "id": "facdb-0809656e340a82528569fc986db14658",
+    "name": "Sheepshead Bay Library",
+    "category": "library",
+    "address": "2636 East 14 Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.587008637,
+    "longitude": -73.9554293531
+  },
+  {
+    "id": "facdb-4211bf0dccbffaff367d5382931e3ba3",
+    "name": "Spring Creek Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6532637,
+    "longitude": -73.8859641
+  },
+  {
+    "id": "facdb-152b4ea25001f26454e5f99aa07f8d64",
+    "name": "Stone Avenue Library",
+    "category": "library",
+    "address": "581 Mother Gaston Boulevard",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6644731187,
+    "longitude": -73.9052186164
+  },
+  {
+    "id": "facdb-54e3a919e5ea7a1eaa9ba729d9fbd9c7",
+    "name": "Sunset Park Library",
+    "category": "library",
+    "address": "5108 Fourth Avenue",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6459314704,
+    "longitude": -74.0136541247
+  },
+  {
+    "id": "facdb-5cacfeebafe3aa570e8801c08de0dcba",
+    "name": "Teen Tech Center At The Annex",
+    "category": "library",
+    "address": "1 John Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.7046234707,
+    "longitude": -73.9878336501
+  },
+  {
+    "id": "facdb-8b5205f087b5719f34eb1c2b285d0490",
+    "name": "Ulmer Park Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.5926124,
+    "longitude": -73.9886502
+  },
+  {
+    "id": "facdb-5e390df8e9820dc314a2658598f27b62",
+    "name": "Walt Whitman Library",
+    "category": "library",
+    "address": "93 Saint Edwards Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6944941379,
+    "longitude": -73.9777371602
+  },
+  {
+    "id": "facdb-6bcc0473289142db923dcf28ba1602ca",
+    "name": "Washington Irving Library",
+    "category": "library",
+    "address": "360 Irving Ave. (At Woodbine St.) Brooklyn, Ny 11237",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6975031,
+    "longitude": -73.9122378
+  },
+  {
+    "id": "facdb-879f883aee3323b32a891c7f37d61eb1",
+    "name": "Williamsburgh Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.7069143,
+    "longitude": -73.9575883
+  },
+  {
+    "id": "facdb-dd8c229c6ba501084f0fcee8361acbd5",
+    "name": "Windsor Terrace Library",
+    "category": "library",
+    "address": "160 East 5 Street",
+    "neighborhood": null,
+    "borough": "Brooklyn",
+    "latitude": 40.6487264875,
+    "longitude": -73.9767581941
+  },
+  {
+    "id": "facdb-eec118768e15a5e03d3354abda7b00da",
+    "name": "125Th Street Library",
+    "category": "library",
+    "address": "224 East 125 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8030267103,
+    "longitude": -73.9348530293
+  },
+  {
+    "id": "facdb-de1e828b7f0c16b0f7cda8f9b58c0387",
+    "name": "53Rd Street Library",
+    "category": "library",
+    "address": "18 West 53 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7608259705,
+    "longitude": -73.9773472093
+  },
+  {
+    "id": "facdb-9d43356b875ea17ae06094fc70c64bc7",
+    "name": "58Th Street Library",
+    "category": "library",
+    "address": "127 East 58 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7622404059,
+    "longitude": -73.969325187
+  },
+  {
+    "id": "nyu-60-fifth-avenue",
+    "name": "60 Fifth Avenue",
+    "category": "university_building",
+    "address": "60 Fifth Avenue, New York, NY 10011",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7357,
+    "longitude": -73.9944
+  },
+  {
+    "id": "facdb-a36d89c436fb146cb22ebc31aad009fc",
+    "name": "67Th Street Library",
+    "category": "library",
+    "address": "328 East 67 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7649198159,
+    "longitude": -73.9595509675
+  },
+  {
+    "id": "facdb-eaf0d2b6f328adf71b3caadf496ef1a8",
+    "name": "96Th Street Library",
+    "category": "library",
+    "address": "112 East 96 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7859659338,
+    "longitude": -73.951809729
+  },
+  {
+    "id": "facdb-e31111812ca778f03c5e70e5faadd7cb",
+    "name": "Aguilar Library",
+    "category": "library",
+    "address": "174 East 110 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.794187916,
+    "longitude": -73.9434695702
+  },
+  {
+    "id": "facdb-fa9c9c6a843b8f8f19ee5b47e78409e0",
+    "name": "Andrew Heiskell Braille And Talking Book Library",
+    "category": "library",
+    "address": "40 West 20 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.740474945,
+    "longitude": -73.9933540835
+  },
+  {
+    "id": "facdb-94485dc6480ce8258b7bb2db1e4df42d",
+    "name": "Battery Park City Library",
+    "category": "library",
+    "address": "175 North End Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7156379103,
+    "longitude": -74.01613199
+  },
+  {
+    "id": "facdb-7f852afc1b23b84ef4dcc56926d4a762",
+    "name": "Bloomingdale Library",
+    "category": "library",
+    "address": "150 West 100 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7959276435,
+    "longitude": -73.9678504972
+  },
+  {
+    "id": "facdb-a4f1eed1eef75b46b1d69b2dda94344c",
+    "name": "Chatham Square Library",
+    "category": "library",
+    "address": "33 East Broadway",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.713337378,
+    "longitude": -73.9964915185
+  },
+  {
+    "id": "facdb-e6372bc7973503e781d63c6d98d8fac3",
+    "name": "Columbus Library",
+    "category": "library",
+    "address": "742 10 Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7649400611,
+    "longitude": -73.9912114486
+  },
+  {
+    "id": "facdb-4a241334f5de230291220a27606d56fa",
+    "name": "Countee Cullen Library",
+    "category": "library",
+    "address": "104 West 136 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8147630429,
+    "longitude": -73.9412063303
+  },
+  {
+    "id": "nyu-courant-institute",
+    "name": "Courant Institute of Mathematical Sciences (Warren Weaver Hall)",
+    "category": "university_building",
+    "address": "251 Mercer Street, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7286,
+    "longitude": -73.9956
+  },
+  {
+    "id": "nyu-bobst-library",
+    "name": "Elmer Holmes Bobst Library",
+    "category": "university_library",
+    "address": "70 Washington Square South, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7295,
+    "longitude": -73.9974
+  },
+  {
+    "id": "facdb-7bf96e154025c8e7c0c4ed3990173bf2",
+    "name": "Epiphany Library",
+    "category": "library",
+    "address": "228 East 23 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7380871422,
+    "longitude": -73.9820542068
+  },
+  {
+    "id": "facdb-3d18b534d686c37da2aea0e7e4548e23",
+    "name": "Fort Washington Library",
+    "category": "library",
+    "address": "535 West 179 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8478914839,
+    "longitude": -73.9338513837
+  },
+  {
+    "id": "facdb-1e61ab24f52d4baa3dbda1d3e19426a2",
+    "name": "George Bruce Library",
+    "category": "library",
+    "address": "518 West 125 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8137809586,
+    "longitude": -73.957055147
+  },
+  {
+    "id": "nyu-global-center",
+    "name": "Global Center for Academic and Spiritual Life",
+    "category": "university_building",
+    "address": "238 Thompson Street, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7294,
+    "longitude": -73.9986
+  },
+  {
+    "id": "facdb-6cf4c3064982a8e30f161319e2ca6d2d",
+    "name": "Hamilton Fish Park Library",
+    "category": "library",
+    "address": "415 East Houston Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7193762137,
+    "longitude": -73.9796208845
+  },
+  {
+    "id": "facdb-3920ee68e11373aa6c5c07ff8baefd23",
+    "name": "Hamilton Grange Library",
+    "category": "library",
+    "address": "503 West 145 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8257199642,
+    "longitude": -73.9479989652
+  },
+  {
+    "id": "facdb-b144192f59ca2c82202a2f258e9dc134",
+    "name": "Harlem Library",
+    "category": "library",
+    "address": "9 West 124 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8061988843,
+    "longitude": -73.9433023724
+  },
+  {
+    "id": "facdb-88035e9952cf46e6d1ecbb1a34adb848",
+    "name": "Harry Belafonte 115Th Street Library",
+    "category": "library",
+    "address": "203 West 115 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8029849152,
+    "longitude": -73.9535318979
+  },
+  {
+    "id": "facdb-89e38b3ba004744901e2bc776f8783ce",
+    "name": "Hudson Park Library",
+    "category": "library",
+    "address": "66 Leroy Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7299118488,
+    "longitude": -74.005321376
+  },
+  {
+    "id": "facdb-16f77463d54e81fc6320bcc00cfc239c",
+    "name": "Inwood Library–Joseph And Sheila Rosenblatt Building",
+    "category": "library",
+    "address": "4790 Broadway",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8657251083,
+    "longitude": -73.9257199072
+  },
+  {
+    "id": "facdb-e4f6f7986c136e0d74ffbb4cb725e51f",
+    "name": "Jefferson Market Library",
+    "category": "library",
+    "address": "425 Avenue Of The Americas",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7346129327,
+    "longitude": -73.9991683476
+  },
+  {
+    "id": "nyu-paulson-center",
+    "name": "John A. Paulson Center",
+    "category": "university_building",
+    "address": "181 Mercer Street, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7271,
+    "longitude": -73.9967
+  },
+  {
+    "id": "nyu-kimmel-center",
+    "name": "Kimmel Center for University Life",
+    "category": "university_building",
+    "address": "60 Washington Square South, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7301,
+    "longitude": -73.9977
+  },
+  {
+    "id": "facdb-a11f01ac1f7c0ac089c6661012c7572a",
+    "name": "Kips Bay Library",
+    "category": "library",
+    "address": "446 Third Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7438367887,
+    "longitude": -73.9799354737
+  },
+  {
+    "id": "facdb-702313a7935fa64dfa88e4a7a12efb61",
+    "name": "Macomb'S Bridge Library",
+    "category": "library",
+    "address": "2633 Adam Clayton Powell Jr Boulevard",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8253749522,
+    "longitude": -73.935513889
+  },
+  {
+    "id": "facdb-4dff6715bba742f6d2cd9780c8c8df6a",
+    "name": "Morningside Heights Library",
+    "category": "library",
+    "address": "2900 Broadway",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8061335178,
+    "longitude": -73.9646714553
+  },
+  {
+    "id": "facdb-d981bc27de6e0dd423aa46b0362a0c22",
+    "name": "Muhlenberg Library",
+    "category": "library",
+    "address": "209 West 23 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7445200015,
+    "longitude": -73.995961283
+  },
+  {
+    "id": "facdb-144c91d88e55a62205c5cc9d22c95752",
+    "name": "Mulberry Street Library",
+    "category": "library",
+    "address": "10 Jersey Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7240742796,
+    "longitude": -73.9957236719
+  },
+  {
+    "id": "nyu-stern-tisch-hall",
+    "name": "NYU Stern School of Business (Tisch Hall)",
+    "category": "university_building",
+    "address": "40 West 4th Street, New York, NY 10012",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7291,
+    "longitude": -73.9965
+  },
+  {
+    "id": "facdb-1b2d01dbabaa19954081aa7950433960",
+    "name": "New Amsterdam Library",
+    "category": "library",
+    "address": "9 Murray Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7136065315,
+    "longitude": -74.0078659267
+  },
+  {
+    "id": "facdb-3d3f893e57902717aab9d240ae69bcc2",
+    "name": "Ottendorfer Library",
+    "category": "library",
+    "address": "135 Second Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7289238078,
+    "longitude": -73.9877835862
+  },
+  {
+    "id": "facdb-eb43596b7587fbf445ce2fd78f1afbbb",
+    "name": "Riverside Library",
+    "category": "library",
+    "address": "127 Amsterdam Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7742585422,
+    "longitude": -73.9842560499
+  },
+  {
+    "id": "facdb-d0f9f64536e8ad6862fa85219ce739c3",
+    "name": "Roosevelt Island Library",
+    "category": "library",
+    "address": "504 Main Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7607768231,
+    "longitude": -73.950545452
+  },
+  {
+    "id": "facdb-529a78f91d446522046a121e93f796e8",
+    "name": "Schomburg Center For Research In Black Culture",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8144,
+    "longitude": -73.941
+  },
+  {
+    "id": "facdb-b0ff74d1ce1165b148b545ba811cdce7",
+    "name": "Seward Park Library",
+    "category": "library",
+    "address": "192 East Broadway",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7144623913,
+    "longitude": -73.9885294832
+  },
+  {
+    "id": "nyu-silver-center",
+    "name": "Silver Center for Arts and Science",
+    "category": "university_building",
+    "address": "100 Washington Square East, New York, NY 10003",
+    "neighborhood": "Greenwich Village",
+    "borough": "Manhattan",
+    "latitude": 40.7301,
+    "longitude": -73.9955
+  },
+  {
+    "id": "facdb-896a48d6b2fa69aba71244c4929fdf0a",
+    "name": "St. Agnes Library",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7848,
+    "longitude": -73.9773
+  },
+  {
+    "id": "facdb-30aae3a8c9b3eaae63c36361eda495e7",
+    "name": "Stavros Niarchos Foundation Library (Snfl)",
+    "category": "library",
+    "address": "455 Fifth Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.751786218,
+    "longitude": -73.981528094
+  },
+  {
+    "id": "facdb-6323997ff723f6eea1fac65bd0994d7f",
+    "name": "Stephen A. Schwarzman Building",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7534887,
+    "longitude": -73.9808774
+  },
+  {
+    "id": "facdb-57611a33c42955afa4b29add9a2788a2",
+    "name": "Terence Cardinal Cooke-Cathedral Library",
+    "category": "library",
+    "address": "560 Lexington Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7568632215,
+    "longitude": -73.9726363406
+  },
+  {
+    "id": "facdb-413023d0776169213c20e63d58c3ff35",
+    "name": "The New York Public Library For The Performing Arts",
+    "category": "library",
+    "address": null,
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7731553,
+    "longitude": -73.9849449
+  },
+  {
+    "id": "facdb-043a663af03b0d70d0a3f7831ef1aefd",
+    "name": "Tompkins Square Library",
+    "category": "library",
+    "address": "331 East 10 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7273097844,
+    "longitude": -73.9804114104
+  },
+  {
+    "id": "facdb-923406b0d8f3bc0379297fd29b5865f1",
+    "name": "Washington Heights Library",
+    "category": "library",
+    "address": "1000 St Nicholas Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.8345288781,
+    "longitude": -73.9396637646
+  },
+  {
+    "id": "facdb-7bb83076843517e6390b3d1124d6150f",
+    "name": "Webster Library",
+    "category": "library",
+    "address": "1465 York Avenue",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.7706620178,
+    "longitude": -73.9513514661
+  },
+  {
+    "id": "facdb-3d9b5196db6329d2eaba964d0ef12244",
+    "name": "Yorkville Library",
+    "category": "library",
+    "address": "222 East 79 Street",
+    "neighborhood": null,
+    "borough": "Manhattan",
+    "latitude": 40.773613766,
+    "longitude": -73.9564079993
+  },
+  {
+    "id": "facdb-23ae2ab0daa02c135876a4c613e81125",
+    "name": "Arverne",
+    "category": "library",
+    "address": "312 Beach 54 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.5931527914,
+    "longitude": -73.7840411494
+  },
+  {
+    "id": "facdb-2ae4447cf0f2e4763b554fe7f16581df",
+    "name": "Astoria",
+    "category": "library",
+    "address": "14-01 Astoria Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7723888184,
+    "longitude": -73.928723913
+  },
+  {
+    "id": "facdb-12f9ad95f1a7100bbe3ae67f2da79089",
+    "name": "Auburndale",
+    "category": "library",
+    "address": "25-55 Francis Lewis Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7737590241,
+    "longitude": -73.7963502396
+  },
+  {
+    "id": "facdb-08172fb3a315dd5fa26a6cc37b0a6743",
+    "name": "Baisley Park",
+    "category": "library",
+    "address": "117-11 Sutphin Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6803224258,
+    "longitude": -73.7916806295
+  },
+  {
+    "id": "facdb-0e18d5f24d7aada30769753cf69849c8",
+    "name": "Bay Terrace",
+    "category": "library",
+    "address": "18-36 Bell Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7825359852,
+    "longitude": -73.7770147104
+  },
+  {
+    "id": "facdb-8f54e248244a2642e1e2703615191f39",
+    "name": "Bayside",
+    "category": "library",
+    "address": "214-20 Northern Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7601339324,
+    "longitude": -73.768362149
+  },
+  {
+    "id": "facdb-bb239c41457bc85fad90cf81c2ad92cc",
+    "name": "Bellerose",
+    "category": "library",
+    "address": "250-06 Hillside Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7351667229,
+    "longitude": -73.717097882
+  },
+  {
+    "id": "facdb-bae4cb35049e3a3982846a7607a30791",
+    "name": "Breezy Point Mobile Library",
+    "category": "library",
+    "address": "17 West Market Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.5612103891,
+    "longitude": -73.9136750428
+  },
+  {
+    "id": "facdb-5a5ec2dd023b06756324be57c66f9ce9",
+    "name": "Briarwood",
+    "category": "library",
+    "address": "85-12 Main Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7100418825,
+    "longitude": -73.8194588476
+  },
+  {
+    "id": "facdb-146745b995f7db41ff9738ef021e27a3",
+    "name": "Broad Channel",
+    "category": "library",
+    "address": "16-26 Cross Bay Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6007401106,
+    "longitude": -73.8200529934
+  },
+  {
+    "id": "facdb-6a3376847be73dc6190d69fc6b1b4baf",
+    "name": "Broadway",
+    "category": "library",
+    "address": "40-20 Broadway",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7585341544,
+    "longitude": -73.9186254787
+  },
+  {
+    "id": "facdb-b7eeee1cd88e865720db28d56ff2cd7a",
+    "name": "Cambria Heights",
+    "category": "library",
+    "address": "218-13 Linden Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6957447119,
+    "longitude": -73.7411365589
+  },
+  {
+    "id": "facdb-9ee8be07f907ca448e981b1997caca31",
+    "name": "Central Library",
+    "category": "library",
+    "address": "89-11 Merrick Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7078052723,
+    "longitude": -73.7946441704
+  },
+  {
+    "id": "facdb-247e317f36abd76002161eba32a24826",
+    "name": "Corona",
+    "category": "library",
+    "address": "38-23 104 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7508986537,
+    "longitude": -73.8619816466
+  },
+  {
+    "id": "facdb-fd87cf0f77f086066ba18a63bcbf83bd",
+    "name": "Court Square (Future Home)",
+    "category": "library",
+    "address": "22-44 Jackson Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7449221705,
+    "longitude": -73.9456659757
+  },
+  {
+    "id": "facdb-f42012efff7096542739b70fe7ca1e80",
+    "name": "Douglaston/Little Neck",
+    "category": "library",
+    "address": "249-01 Northern Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7682299949,
+    "longitude": -73.7382355256
+  },
+  {
+    "id": "facdb-4222cbaa9d1a52faa5569cd395772ace",
+    "name": "East Elmhurst",
+    "category": "library",
+    "address": "95-06 Astoria Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.762426376,
+    "longitude": -73.8738728564
+  },
+  {
+    "id": "facdb-d676796ff4f28e191aba6ce7f6dc080d",
+    "name": "East Flushing",
+    "category": "library",
+    "address": "196-36 Northern Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7575534883,
+    "longitude": -73.7843067323
+  },
+  {
+    "id": "facdb-3ad4b6a9eb25bd4f282791fd9f8d85f9",
+    "name": "Elmhurst",
+    "category": "library",
+    "address": "86-07 Broadway",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7385177879,
+    "longitude": -73.8768709659
+  },
+  {
+    "id": "facdb-0ad7841a37579731c647d893439e431e",
+    "name": "Far Rockaway",
+    "category": "library",
+    "address": "16-37 Central Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6043336419,
+    "longitude": -73.7524660745
+  },
+  {
+    "id": "facdb-c2f22d3ece1503075e368ff3fd1ba930",
+    "name": "Far Rockaway Teen Library",
+    "category": "library",
+    "address": "20-02 Cornaga Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6025047902,
+    "longitude": -73.753560108
+  },
+  {
+    "id": "facdb-d43a18e107abff5a6164579a5381cf64",
+    "name": "Flushing",
+    "category": "library",
+    "address": "41-17 Main Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7577906006,
+    "longitude": -73.828877909
+  },
+  {
+    "id": "facdb-497687da0afcbc04b816edaac77f5cd5",
+    "name": "Forest Hills",
+    "category": "library",
+    "address": "108-19 71 Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7221495973,
+    "longitude": -73.8430473293
+  },
+  {
+    "id": "facdb-02923b42067a8b3790486a4763d785f5",
+    "name": "Fresh Meadows",
+    "category": "library",
+    "address": "193-20 Horace Harding Expressway",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7415593826,
+    "longitude": -73.7822681507
+  },
+  {
+    "id": "facdb-9709d58ea9b5baf045e6d7672ce83e58",
+    "name": "Glen Oaks",
+    "category": "library",
+    "address": "256-04 Union Turnpike",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7451449545,
+    "longitude": -73.7148458951
+  },
+  {
+    "id": "facdb-02cb698f33a96d5ab6deb0cb9df019c1",
+    "name": "Glendale",
+    "category": "library",
+    "address": "78-60 73 Place",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.70258055,
+    "longitude": -73.8757991131
+  },
+  {
+    "id": "facdb-9bd95ef12d4546cedaa7b39002d0cf26",
+    "name": "Hillcrest",
+    "category": "library",
+    "address": "187-05 Union Turnpike",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7292611568,
+    "longitude": -73.7819066512
+  },
+  {
+    "id": "facdb-89bb408780182dce657a03c9b718121b",
+    "name": "Hollis",
+    "category": "library",
+    "address": "202-05 Hillside Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7201787776,
+    "longitude": -73.7623046296
+  },
+  {
+    "id": "facdb-0272db2a815f38d52de5a70bb9181fca",
+    "name": "Howard Beach",
+    "category": "library",
+    "address": "92-06 156 Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6638125681,
+    "longitude": -73.8418005525
+  },
+  {
+    "id": "facdb-36ca16c9a9d91bd90eb53ace85d58908",
+    "name": "Hunters Point",
+    "category": "library",
+    "address": "47-40 Center Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7452871485,
+    "longitude": -73.9580246382
+  },
+  {
+    "id": "facdb-c18d839498dc3af0900202dae69c1ecc",
+    "name": "Jackson Heights",
+    "category": "library",
+    "address": "35-51 81 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7502099137,
+    "longitude": -73.8850699833
+  },
+  {
+    "id": "facdb-057d26a803e341d91bdb735afd961e30",
+    "name": "Kew Gardens Hills",
+    "category": "library",
+    "address": "72-33 Vleigh Place",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7259407866,
+    "longitude": -73.8207482989
+  },
+  {
+    "id": "facdb-aac228ca754138338e855489cb94bec5",
+    "name": "Langston Hughes",
+    "category": "library",
+    "address": "100-01 Northern Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7576399329,
+    "longitude": -73.8681396185
+  },
+  {
+    "id": "facdb-64137089e6a55419967bf8b4d55f41f4",
+    "name": "Laurelton",
+    "category": "library",
+    "address": "134-26 225 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6769600184,
+    "longitude": -73.7456697821
+  },
+  {
+    "id": "facdb-f773a83959c4644af086daa62c0bf725",
+    "name": "Lefferts",
+    "category": "library",
+    "address": "103-34 Lefferts Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6869096925,
+    "longitude": -73.8248405908
+  },
+  {
+    "id": "facdb-856bef58695ffb392825bcb2ab9b8425",
+    "name": "Lefrak City",
+    "category": "library",
+    "address": "98-30 57 Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7374406134,
+    "longitude": -73.8615730327
+  },
+  {
+    "id": "facdb-5e107a8691bd5260eb3e5f18bd9d62c8",
+    "name": "Long Island City",
+    "category": "library",
+    "address": "37-44 21 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7578222905,
+    "longitude": -73.9393047269
+  },
+  {
+    "id": "facdb-c9506d55349780f435c7762fefff62b3",
+    "name": "Maspeth",
+    "category": "library",
+    "address": "69-70 Grand Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7269828871,
+    "longitude": -73.8930855172
+  },
+  {
+    "id": "facdb-1948ba31c21bacc79ecc2578210bfeb2",
+    "name": "Mcgoldrick",
+    "category": "library",
+    "address": "155-06 Roosevelt Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7637546941,
+    "longitude": -73.8098346667
+  },
+  {
+    "id": "facdb-aedf914eb45626c8aae5f64c10def66d",
+    "name": "Middle Village",
+    "category": "library",
+    "address": "72-31 Metropolitan Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7129505319,
+    "longitude": -73.8808662699
+  },
+  {
+    "id": "facdb-4ef7549ea636d64430a7590f4de5f1f9",
+    "name": "Mitchell-Linden",
+    "category": "library",
+    "address": "31-32 Union Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.769143933,
+    "longitude": -73.8269749843
+  },
+  {
+    "id": "facdb-1f17a2b85addc7978f0fcece057f4ef7",
+    "name": "North Forest Park",
+    "category": "library",
+    "address": "98-27 Metropolitan Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7111946188,
+    "longitude": -73.8536733063
+  },
+  {
+    "id": "facdb-24a091dc4d37748f8d20c8fbf4799b7d",
+    "name": "North Hills",
+    "category": "library",
+    "address": "57-04 Marathon Parkway",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7592535927,
+    "longitude": -73.7318305949
+  },
+  {
+    "id": "facdb-7f802160d6986af063f695685c0e2f8a",
+    "name": "Ozone Park",
+    "category": "library",
+    "address": "92-24 Rockaway Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6808665675,
+    "longitude": -73.8464879909
+  },
+  {
+    "id": "facdb-6b0e15c24b65934f099e4b983554bb31",
+    "name": "Peninsula",
+    "category": "library",
+    "address": "92-25 Rockaway Beach Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.5858465557,
+    "longitude": -73.816060445
+  },
+  {
+    "id": "facdb-6eb31f516c420aedd08fa053e8f552e3",
+    "name": "Pomonok",
+    "category": "library",
+    "address": "158-21 Jewel Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7330412514,
+    "longitude": -73.8098803354
+  },
+  {
+    "id": "facdb-8e136daad715941af77a599cc1acd480",
+    "name": "Poppenhusen",
+    "category": "library",
+    "address": "121-23 14 Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7862559375,
+    "longitude": -73.8460103965
+  },
+  {
+    "id": "facdb-f373d308be3cabf2ae128397ec88299e",
+    "name": "Queens Village",
+    "category": "library",
+    "address": "94-11 217 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7198929945,
+    "longitude": -73.7390468024
+  },
+  {
+    "id": "facdb-e4139913406b8bdf4626a7d12bce79a4",
+    "name": "Queensboro Hill",
+    "category": "library",
+    "address": "60-05 Main Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7429391024,
+    "longitude": -73.8251737728
+  },
+  {
+    "id": "facdb-eb60390bf9e3ac0e288472720d921311",
+    "name": "Queensbridge",
+    "category": "library",
+    "address": "10-43 41 Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7551799661,
+    "longitude": -73.9443055025
+  },
+  {
+    "id": "facdb-e7b536f1ef4273c73263ac17c56e5f45",
+    "name": "Ravenswood",
+    "category": "library",
+    "address": "35-32 21 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7605127784,
+    "longitude": -73.9366608937
+  },
+  {
+    "id": "facdb-e881710c633de4f891591fd806b0b1a9",
+    "name": "Ravenswood",
+    "category": "library",
+    "address": "35-32 21 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7605127784,
+    "longitude": -73.9366608937
+  },
+  {
+    "id": "facdb-4730fd961a79fd05047089be52b5f7d0",
+    "name": "Rego Park",
+    "category": "library",
+    "address": "91-41 63 Drive",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7273227692,
+    "longitude": -73.8645065694
+  },
+  {
+    "id": "facdb-93485e8580f3e08b302a057e0e52a160",
+    "name": "Richmond Hill",
+    "category": "library",
+    "address": "118-14 Hillside Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7007752539,
+    "longitude": -73.8316263391
+  },
+  {
+    "id": "facdb-1e7b03d615f7e8d0cdbacec9d851b4bf",
+    "name": "Ridgewood",
+    "category": "library",
+    "address": "2012 Madison Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7051794633,
+    "longitude": -73.9025728831
+  },
+  {
+    "id": "facdb-7543d9539bab4f3033401839b86edbd5",
+    "name": "Rochdale Village",
+    "category": "library",
+    "address": "169-09 137 Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.672884247,
+    "longitude": -73.7705879439
+  },
+  {
+    "id": "facdb-5c0c9a02dfd39ff37ade397d200972f3",
+    "name": "Rosedale",
+    "category": "library",
+    "address": "144-20 243 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.659971775,
+    "longitude": -73.7399084708
+  },
+  {
+    "id": "facdb-653bd101fb910a43ed9bae29729f948f",
+    "name": "Seaside",
+    "category": "library",
+    "address": "116-15 Rockaway Beach Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.5793964366,
+    "longitude": -73.8377353189
+  },
+  {
+    "id": "facdb-5bf16ed7f9ca7eb22c6cca4b4dacab2b",
+    "name": "South Hollis",
+    "category": "library",
+    "address": "204-01 Hollis Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7070198089,
+    "longitude": -73.7537969644
+  },
+  {
+    "id": "facdb-62b0c40ce8078208edbe35bf7f77a41a",
+    "name": "South Jamaica",
+    "category": "library",
+    "address": "108-41 Guy R Brewer Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6956384216,
+    "longitude": -73.7901788532
+  },
+  {
+    "id": "facdb-52efad1ea64a98120eecc1d013d63832",
+    "name": "South Ozone Park",
+    "category": "library",
+    "address": "128-16 Rockaway Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6747842807,
+    "longitude": -73.8092635671
+  },
+  {
+    "id": "facdb-a7b982dc4ec30238a61baeddef4dbae4",
+    "name": "St. Albans",
+    "category": "library",
+    "address": "191-05 Linden Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.692534076,
+    "longitude": -73.7601095876
+  },
+  {
+    "id": "facdb-ce59412278939c254bc351dac52645ff",
+    "name": "Steinway",
+    "category": "library",
+    "address": "21-45 31 Street",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7768223709,
+    "longitude": -73.9094206937
+  },
+  {
+    "id": "facdb-b7334766444ef108bc25e6e2b7514582",
+    "name": "Sunnyside",
+    "category": "library",
+    "address": "43-06 Greenpoint Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7408121251,
+    "longitude": -73.9216709311
+  },
+  {
+    "id": "facdb-14a0a05fcb5e1354be00d97b9bdf112e",
+    "name": "Whitestone",
+    "category": "library",
+    "address": "151-10 14 Road",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7885379249,
+    "longitude": -73.8107190561
+  },
+  {
+    "id": "facdb-bc177d69b0e7e1a675b305ff83c6e1d5",
+    "name": "Windsor Park",
+    "category": "library",
+    "address": "79-50 Bell Boulevard",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7344965851,
+    "longitude": -73.7556862796
+  },
+  {
+    "id": "facdb-4aa679eaeaff324f424d549d42a86d74",
+    "name": "Woodhaven",
+    "category": "library",
+    "address": "85-41 Forest Parkway",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.6945535275,
+    "longitude": -73.8614418098
+  },
+  {
+    "id": "facdb-2c8cc67ce4e6c79f80d06dc0d521d8b9",
+    "name": "Woodside",
+    "category": "library",
+    "address": "54-22 Skillman Avenue",
+    "neighborhood": null,
+    "borough": "Queens",
+    "latitude": 40.7453493823,
+    "longitude": -73.909799047
+  },
+  {
+    "id": "facdb-ff7e25654588a2c2b3a2ec994b8ec1c7",
+    "name": "Charleston Library",
+    "category": "library",
+    "address": "225 Bricktown Way",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.5310478142,
+    "longitude": -74.2322919294
+  },
+  {
+    "id": "facdb-f5d108e6ba1b15a088abc91d26fae19b",
+    "name": "Dongan Hills Library",
+    "category": "library",
+    "address": "1617 Richmond Road",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.5904031548,
+    "longitude": -74.1011398288
+  },
+  {
+    "id": "facdb-7729bd161464d46386b115db7f369a31",
+    "name": "Great Kills Library",
+    "category": "library",
+    "address": "56 Giffords Lane",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.5524320334,
+    "longitude": -74.1511120698
+  },
+  {
+    "id": "facdb-7372d26dd0b0ab45ca0bb5f860ed05c9",
+    "name": "Huguenot Park Library",
+    "category": "library",
+    "address": "830 Huguenot Avenue",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.5340657775,
+    "longitude": -74.1932367146
+  },
+  {
+    "id": "facdb-2232149c08d35cccc85205d8cecf9db5",
+    "name": "Mariners Harbor Library",
+    "category": "library",
+    "address": "206 South Avenue",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.6346879217,
+    "longitude": -74.1666104137
+  },
+  {
+    "id": "facdb-58c05b67e09aa179a858bc7301551203",
+    "name": "New Dorp Library",
+    "category": "library",
+    "address": "309 New Dorp Lane",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.5719398183,
+    "longitude": -74.1119584585
+  },
+  {
+    "id": "facdb-439d37ec9e01ec3d1eb6fc238f76aec4",
+    "name": "Port Richmond Library",
+    "category": "library",
+    "address": "75 Bennett Street",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.6375933559,
+    "longitude": -74.1311058353
+  },
+  {
+    "id": "facdb-0f70705af2d8110f7757f193ee996491",
+    "name": "Richmondtown Library",
+    "category": "library",
+    "address": "200 Clarke Avenue",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.5665436598,
+    "longitude": -74.1385500645
+  },
+  {
+    "id": "facdb-67764ba9980827e4ab45efcb9ba1450b",
+    "name": "South Beach Library",
+    "category": "library",
+    "address": "41 Father Capodanno Boulevard",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.5958101382,
+    "longitude": -74.0630280987
+  },
+  {
+    "id": "facdb-3583d175adfc7409c2c9e95a69a7dc21",
+    "name": "St. George Library Center",
+    "category": "library",
+    "address": "5 Central Avenue",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.6417663771,
+    "longitude": -74.0766483057
+  },
+  {
+    "id": "facdb-3c2a37f3f3e8d57778910826b2ecca04",
+    "name": "Stapleton Library",
+    "category": "library",
+    "address": "132 Canal Street",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.6261052855,
+    "longitude": -74.0778438305
+  },
+  {
+    "id": "facdb-7514e4e3ab2647ab150eebcc55f0fa80",
+    "name": "Todt Hill-Westerleigh Library",
+    "category": "library",
+    "address": "2550 Victory Boulevard",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.6095828089,
+    "longitude": -74.1484992097
+  },
+  {
+    "id": "facdb-abe8d49f4539afc3b3410913867a23e1",
+    "name": "Tottenville Library",
+    "category": "library",
+    "address": "7430 Amboy Road",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.50953858,
+    "longitude": -74.2441067062
+  },
+  {
+    "id": "facdb-1eb372bf506d6952df43b15aec920e7c",
+    "name": "West New Brighton Library",
+    "category": "library",
+    "address": "976 Castleton Avenue",
+    "neighborhood": null,
+    "borough": "Staten Island",
+    "latitude": 40.6345164124,
+    "longitude": -74.1148186532
+  }
+]
