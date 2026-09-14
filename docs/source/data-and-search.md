@@ -1,21 +1,20 @@
 # Data and search
 
-No public-data snapshot, runtime store, or search index is implemented yet. The planned design makes a versioned, normalized public-data snapshot authoritative and treats runtime stores and indexes as rebuildable projections.
+StudySpot has one small data boundary:
 
 ```text
-NYC library data --\
-                    -> normalize -> versioned snapshot -> in-memory search
-NYU building data -/                         |
-                                               -> API detail/list queries
+NYC Open Data -> data/ingest.py -> data/spots.json -> API and search
 ```
 
-The data implementation has not landed yet. It will provide:
+The first dataset will showcase cafés and other public third places where students might meet or study. These are candidate locations, not guarantees of Wi-Fi, outlets, seating, quietness, or availability.
 
-- a versioned normalized snapshot under `data/`
-- repeatable imports in `data/seeds/`
-- explicit validation at each external-data boundary
-- idempotent seeding
-- deterministic, repeatable search indexing
-- tests for source mapping and malformed records
+The directory intentionally contains only four files:
 
-Local PostgreSQL and Meilisearch data use Docker volumes so integration work survives normal restarts. Vercel staging and production currently receive no dataset or search state. Once the import and search milestones land, deployment must prove that the normalized snapshot is packaged and that runtime search state can be rebuilt before relying on this stateless design. A hosted database becomes necessary when StudySpot owns data that cannot be regenerated from its public sources.
+- `README.md` documents the boundary.
+- `ingest.py` is the placeholder for download, normalization, and validation.
+- `spots.json` is the canonical generated dataset and currently contains an empty array.
+- `test_ingest.py` is the placeholder for importer tests.
+
+Every spot will contain `id`, `name`, `category`, `address`, `neighborhood`, `borough`, `latitude`, and `longitude`. Source-specific fields must be normalized before reaching the API.
+
+The importer, real dataset, database loader, and search behavior are not implemented. Database migrations and files belong to the eventual serving-store implementation, while any separate search index remains a rebuildable projection of `spots.json`.

@@ -15,12 +15,6 @@ repos:
 
   - repo: local
     hooks:
-      - id: repository-audit
-        name: repository scaffold audit
-        entry: just audit
-        language: system
-        pass_filenames: false
-
       - id: repository-checks
         name: repository checks
         entry: just check
