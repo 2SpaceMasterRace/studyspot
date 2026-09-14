@@ -68,7 +68,7 @@ nix run . -- deploy-staging
 nix run . -- deploy-production
 ```
 
-The command calls the pinned Vercel CLI through the `justfile`. Vercel then builds the SvelteKit and FastAPI services. PostgreSQL/PostGIS and Meilisearch remain hosted stateful dependencies.
+The command calls the pinned Vercel CLI through the `justfile`. Vercel then builds the SvelteKit and FastAPI services with the versioned public-data snapshot. PostgreSQL/PostGIS and Meilisearch remain local integration services until StudySpot owns non-reproducible state.
 
 ## Why Nix does not build the application images yet
 

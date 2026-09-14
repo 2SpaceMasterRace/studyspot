@@ -1,6 +1,6 @@
 # Deployment
 
-StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. PostgreSQL/PostGIS and Meilisearch remain external stateful services.
+StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. The normalized public-data snapshot is included in the deployment artifact, so the first release requires no external runtime service.
 
 ## Environments
 
@@ -16,7 +16,7 @@ feature/* -> pull request preview
 
 Developers work on short-lived feature branches and open pull requests into `staging`. Nobody pushes feature work directly to `staging`. A reviewed release pull request promotes `staging` into `main`.
 
-Protect both long-lived branches with required checks, approving review, resolved conversations, and disabled force pushes and deletion. A hotfix merged into `main` must immediately be merged back into `staging`.
+Protect both long-lived branches with required checks, resolved conversations, and disabled force pushes and deletion. Repositories with independent reviewers can require approvals; a solo maintainer should leave the approval count at zero because GitHub does not allow authors to approve their own pull requests. A hotfix merged into `main` must immediately be merged back into `staging`.
 
 ## Staging
 
@@ -41,7 +41,7 @@ Finish the repository setup manually:
 
 Do not put the token in `.env`, commit it, or paste it into an issue or pull request.
 
-No hosted database or search variables are required by the current liveness-only scaffold. When those integrations are implemented, scope their environment values to the `staging` branch and never point staging at writable production data.
+No hosted database or search variables are required. When non-reproducible data is introduced later, scope its environment values to the `staging` branch and never point staging at writable production data.
 
 Vercel automatically provides a stable generated branch URL when Git integration is enabled. To use `dev-studyspot-nyu.vercel.app`, add that domain to the project and assign it to the `staging` branch; the exact `.vercel.app` name must be available.
 
@@ -65,13 +65,11 @@ nix run . -- deploy-staging
 nix run . -- deploy-production
 ```
 
-## Stateful dependencies
+## Data and search state
 
-Vercel deploys application services, not the local PostgreSQL and Meilisearch containers. For the current scaffold, PostgreSQL/PostGIS and Meilisearch remain local-only through Docker Compose. Do not provision a paid hosted dependency before the application actually uses it.
+NYC and NYU source records are normalized into a versioned snapshot before deployment. FastAPI loads that snapshot and builds disposable runtime search structures. A new deployment can therefore recreate its complete state without a persistent filesystem or database.
 
-A future container deployment for the backend and Meilisearch is intentionally deferred. Fly.io can run the same container images, but account, application, billing, and secret setup remain manual and may incur charges. No provisioning script is maintained in this repository. Revisit the hosting configuration when persistent staging data and implemented search make it necessary. Run migrations as a controlled release operation and keep search indexing repeatable.
-
-When Fly.io is introduced, create separate staging and production applications, attach separate persistent volumes, and keep secrets scoped to their application. Record only non-secret application names and regions in the repository.
+PostgreSQL/PostGIS and Meilisearch remain part of the local Compose topology for integration work. They are not production dependencies until StudySpot stores user-generated corrections, favorites, accounts, import cursors, or other state that cannot be rebuilt from public inputs.
 
 ## Rollback
 

@@ -1,13 +1,13 @@
 # Architecture
 
-StudySpot is a modular monolith with two deployable applications and two managed data services.
+StudySpot is a modular monolith with two deployable applications and reproducible public data.
 
 ```text
-Browser -> SvelteKit -> FastAPI -> PostgreSQL/PostGIS
-                               -> Meilisearch
+Browser -> SvelteKit -> FastAPI -> normalized NYC/NYU snapshot
+                                      -> in-memory search index
 ```
 
-The frontend owns presentation and browser interaction. FastAPI owns the HTTP boundary. PostgreSQL is the system of record. Meilisearch is a rebuildable search index. Docker Compose defines the local topology and waits for each required service to become healthy.
+The frontend owns presentation and browser interaction. FastAPI owns the HTTP boundary. The normalized snapshot is the reproducible input for list, detail, geographic, and search behavior. Docker Compose also provides PostgreSQL/PostGIS and Meilisearch for integration work and waits for every local service to become healthy.
 
 The frontend proxies `/api/*` to FastAPI during local development. Vercel uses the same public path boundary to route the two application services under one deployment domain.
 
@@ -17,10 +17,10 @@ Each service has one lifecycle:
 
 - SvelteKit can rebuild without restarting PostgreSQL.
 - FastAPI can scale independently from the frontend.
-- PostgreSQL data survives application replacement.
-- Meilisearch can be rebuilt from the source of truth.
+- PostgreSQL data survives normal local container replacement.
+- Meilisearch can be rebuilt from the normalized snapshot.
 
-Packing all four processes into one container would couple their failures, scaling, logs, upgrades, and shutdown behavior. It would also make persistent data unsafe on a stateless application platform.
+Packing all four processes into one container would couple their failures, scaling, logs, upgrades, and shutdown behavior. The first Vercel release avoids that problem by deploying only the frontend and API and packaging the rebuildable public dataset with them.
 
 ## Current capability
 

@@ -4,7 +4,7 @@ Docker Compose is the default path because it requires the fewest host tools. Ni
 
 ## Docker-only setup
 
-Install Git and a recent Docker distribution with Docker Compose 2.22 or newer, then run:
+Install Git and a recent Docker distribution with Docker Compose 2.23 or newer, then run:
 
 ```shell
 git clone git@github.com:2SpaceMasterRace/studyspot.git

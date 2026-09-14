@@ -9,16 +9,16 @@ StudySpot is an open-source search demo for discovering study spaces across NYU 
 
 ## How will it work?
 
-StudySpot is designed as a small modular monolith with two applications and two data services:
+StudySpot is designed as a small modular monolith with two deployed applications and a versioned public-data snapshot:
 
 ```text
-Browser -> SvelteKit -> FastAPI -> PostgreSQL/PostGIS
-                               -> Meilisearch
+Browser -> SvelteKit -> FastAPI -> normalized NYC/NYU data
+                                      -> in-memory search index
 ```
 
-The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [FastAPI](https://fastapi.tiangolo.com/) service provides the HTTP boundary. [PostgreSQL](https://www.postgresql.org/) with [PostGIS](https://postgis.net/) will be the source of truth for study-space data and geographic queries, while [Meilisearch](https://www.meilisearch.com/) will provide a rebuildable full-text search index.
+The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [FastAPI](https://fastapi.tiangolo.com/) service provides the HTTP boundary. The first release will package normalized public NYC and NYU data with the application and build its runtime search structures from that reproducible snapshot.
 
-Local development uses Docker Compose so the browser app, API, database, and search engine start as one topology. Production web services deploy together on [Vercel](https://vercel.com/); hosted database and search services will be configured separately when the product routes are implemented.
+Local development uses Docker Compose so the browser app, API, PostgreSQL/PostGIS, and Meilisearch start as one topology. The database and external search engine remain available for integration work, but the first release does not require their state to survive. The frontend and API deploy together on [Vercel](https://vercel.com/) without another hosting provider.
 
 The shared study-spot summary contract is intentionally small:
 
@@ -41,9 +41,9 @@ The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/s
 
 **Why make this?** Study spaces are spread across university buildings, public libraries, and separate information systems. StudySpot explores what happens when that information has one predictable shape and one fast search interface.
 
-**Why PostgreSQL and PostGIS?** PostgreSQL is a durable source of truth, and PostGIS makes location-aware queries a natural extension of the data model rather than a separate system.
+**Why keep PostgreSQL and PostGIS locally?** They provide the intended path for durable data and advanced geographic queries once StudySpot stores user-generated or non-reproducible state. Public source data does not require that infrastructure for the first release.
 
-**Why Meilisearch?** Search is a different workload from authoritative storage. Meilisearch provides a dedicated full-text index that can be tuned for typo tolerance and relevance, and rebuilt from PostgreSQL whenever necessary.
+**Why keep Meilisearch locally?** It provides a realistic integration target for dedicated typo-tolerant search. Its index is derived data, so the first release can build a smaller in-memory index from the packaged dataset instead of operating a permanent search server.
 
 **Where will the data come from?** The data layer is reserved for imports from publicly available NYC library data and NYU building data. Importers, migrations, and seed files have not landed yet; they will live in [`data/`](data/).
 
@@ -51,7 +51,7 @@ The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/s
 
 ## Development
 
-The simplest setup only requires Git and Docker Compose 2.22 or newer:
+The simplest setup only requires Git and Docker Compose 2.23 or newer:
 
 ```shell
 docker compose up --build --watch

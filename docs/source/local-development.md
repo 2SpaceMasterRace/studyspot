@@ -72,9 +72,9 @@ The package delegates to the repository's `justfile`, so Nix and non-Nix develop
 The goal is behavioral parity rather than identical infrastructure:
 
 - the same application source and dependency locks
-- the same PostgreSQL/PostGIS and Meilisearch versions where hosted providers allow it
-- the same environment-variable names and HTTP routes
-- the same migrations, data mapping, and indexing behavior
+- the same normalized public-data snapshot
+- the same HTTP routes and response contracts
+- the same data mapping and search-ranking behavior
 - the same liveness and readiness semantics
 
-Production state remains external because Vercel application workloads are stateless. Local named volumes model persistence without pretending that PostgreSQL or Meilisearch can live inside a Vercel application function.
+PostgreSQL/PostGIS and Meilisearch remain in Compose as integration targets for future durable features. The first release does not deploy them because all current source data and search state can be reproduced from the versioned snapshot.
