@@ -1,9 +1,9 @@
 # StudySpot documentation
 
-StudySpot is an instant study-space search demo backed by NYC library and NYU building data. This documentation explains how to develop, operate, and extend the system without obscuring which product capabilities are still planned.
+StudySpot is an instant search demo for cafés and other New York City third places derived from NYC Open Data. This documentation explains how to develop, operate, and extend the system without obscuring which product capabilities are still planned.
 
 ```{important}
-The service topology and API liveness endpoint are implemented. Study-spot routes, dependency readiness, migrations, data imports, indexing, and real search behavior remain planned work.
+The service topology, API liveness endpoint, and empty data scaffold are implemented. Study-spot routes, data ingestion, storage loading, and real search behavior remain planned work.
 ```
 
 ```{toctree}
@@ -38,5 +38,4 @@ deployment
 :caption: Project
 
 contributing
-agent-readiness
 ```

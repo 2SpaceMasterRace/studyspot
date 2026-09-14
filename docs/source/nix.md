@@ -67,7 +67,7 @@ nix run . -- deploy-preview
 nix run . -- deploy-production
 ```
 
-The command calls the exact Vercel CLI version named in the `justfile`. `bunx` may download that CLI on first use, so manual deployment still needs network access and Vercel authentication; the CLI is not stored in the Nix flake. Vercel currently builds the SvelteKit and FastAPI scaffolds without a study-spot dataset or search index. PostgreSQL/PostGIS and Meilisearch remain local integration services while those product milestones are unimplemented.
+The command calls the exact Vercel CLI version named in the `justfile`. `bunx` may download that CLI on first use, so manual deployment still needs network access and Vercel authentication; the CLI is not stored in the Nix flake. Vercel currently builds the SvelteKit and FastAPI scaffolds without runtime study-spot data or search behavior. The empty NYC Open Data boundary lives under `data/`; PostgreSQL/PostGIS and Meilisearch remain local integration services while the product milestones are unimplemented.
 
 ## Why Nix does not build the application images yet
 

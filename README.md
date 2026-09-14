@@ -1,22 +1,22 @@
 # [StudySpot](https://studyspot-nyu.vercel.app/)
 
-_I just want somewhere nearby to study, but finding a library or campus space means checking scattered websites and guessing what is actually useful._
+_I just want somewhere nearby to meet or study, but finding a good café or third place means searching scattered listings and guessing what is actually useful._
 
-StudySpot is an open-source search demo for discovering study spaces across NYU and New York City. The goal is to make finding a useful place feel immediate: search by a library, building, or neighborhood and get a small, consistent set of results instead of hunting through separate catalogs.
+StudySpot is an open-source search demo for discovering cafés and other third places across New York City. The goal is to make finding a useful place feel immediate: search by a name, category, or neighborhood and get a small, consistent set of results derived from NYC Open Data.
 
 > [!IMPORTANT]
-> StudySpot is currently a scaffold. The frontend, FastAPI liveness endpoint, local PostgreSQL/PostGIS and Meilisearch services, CI, and Vercel deployment are in place. Study-spot routes, dependency readiness, migrations, data import, indexing, and search behavior are not implemented yet.
+> StudySpot is currently a scaffold. The frontend, FastAPI liveness endpoint, local PostgreSQL/PostGIS and Meilisearch services, CI, Vercel deployment, and empty data boundary are in place. Study-spot routes, data ingestion, database loading, indexing, and search behavior are not implemented yet.
 
 ## How will it work?
 
 StudySpot is designed as a small modular monolith with two deployed applications and a versioned public-data snapshot:
 
 ```text
-Browser -> SvelteKit -> FastAPI -> normalized NYC/NYU data
+Browser -> SvelteKit -> FastAPI -> normalized NYC Open Data
                                       -> in-memory search index
 ```
 
-The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [FastAPI](https://fastapi.tiangolo.com/) service provides the HTTP boundary. The first release will package normalized public NYC and NYU data with the application and build its runtime search structures from that reproducible snapshot.
+The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [FastAPI](https://fastapi.tiangolo.com/) service provides the HTTP boundary. The first release will package normalized NYC Open Data with the application and build its runtime search structures from that reproducible snapshot.
 
 Local development uses Docker Compose so the browser app, API, PostgreSQL/PostGIS, and Meilisearch start as one topology. The database and external search engine remain available for integration work, but the first release does not require their state to survive. The frontend and API deploy together on [Vercel](https://vercel.com/) without another hosting provider.
 
@@ -26,28 +26,28 @@ The shared study-spot summary contract is intentionally small:
 {
   "id": "string",
   "name": "string",
+  "category": "cafe",
   "address": "string",
   "neighborhood": "string",
   "borough": "string",
-  "university": null,
   "latitude": 40.7128,
   "longitude": -74.006
 }
 ```
 
-The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/search?q=bobst`. Today, only `GET /health/live` is available.
+The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/search?q=coffee`. Today, only `GET /health/live` is available.
 
 ### FAQ
 
-**Why make this?** Study spaces are spread across university buildings, public libraries, and separate information systems. StudySpot explores what happens when that information has one predictable shape and one fast search interface.
+**Why make this?** Cafés and public gathering places are spread across separate city datasets and listings. StudySpot explores what happens when candidate third places have one predictable shape and one fast search interface.
 
 **Why keep PostgreSQL and PostGIS locally?** They provide the intended path for durable data and advanced geographic queries once StudySpot stores user-generated or non-reproducible state. Public source data does not require that infrastructure for the first release.
 
 **Why keep Meilisearch locally?** It provides a realistic integration target for dedicated typo-tolerant search. Its index is derived data, so the first release can build a smaller in-memory index from the packaged dataset instead of operating a permanent search server.
 
-**Where will the data come from?** The data layer is reserved for imports from publicly available NYC library data and NYU building data. Importers, migrations, and seed files have not landed yet; they will live in [`data/`](data/).
+**Where will the data come from?** The first dataset will use NYC Open Data records for cafés and other public third places. The intentionally small [`data/`](data/) scaffold will contain one importer, its tests, and the generated `spots.json` dataset.
 
-**Can I add another school or city?** That is a natural future direction, but the current scope is the NYC and NYU demo. New sources should normalize into the shared contract rather than introduce source-specific fields at the HTTP boundary.
+**Does every result have Wi-Fi, outlets, or quiet seating?** Not necessarily. StudySpot presents candidate places to meet or study and only claims amenities explicitly supported by the source data.
 
 ## Development
 
@@ -115,7 +115,7 @@ The frontend proxies `/api/*` requests to FastAPI during local development.
 
 ### Loading data
 
-There is no supported download or seed command yet. The planned import code belongs in `data/seeds/`, database migrations in `data/migrations/`, and search indexing in `src/backend/src/studyspot_api/search/`. When these workflows are implemented, their public commands will be added to the `justfile` and documented here.
+The data boundary is scaffolded in [`data/`](data/): `ingest.py` will normalize NYC Open Data into `spots.json`, and `test_ingest.py` will verify the mapping. The importer is not implemented, so `spots.json` currently contains an empty array. Database loading and search indexing remain separate backend concerns.
 
 ### Checks
 
@@ -165,13 +165,14 @@ Useful starting points include the [architecture](docs/source/architecture.md), 
 
 - **Frontend:** Svelte 5, TypeScript, SvelteKit, Vite, Tailwind CSS, Bun
 - **Backend:** Python 3.12, FastAPI, uv
-- **Data and search:** PostgreSQL with PostGIS, Meilisearch
+- **Data source:** NYC Open Data
+- **Local integration services:** PostgreSQL with PostGIS, Meilisearch
 - **Operations:** Nix, Docker Compose, just, pre-commit, Vercel, GitHub Actions
 - **Checks:** Prettier, ESLint, svelte-check, Ruff, ty, pytest
 
 ## Contributing
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) and the nearest `AGENTS.md` before changing an owned area. Shared contract changes need review from every affected owner.
+Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing the repository. Shared contract changes need review from every affected owner.
 
 ## License
 

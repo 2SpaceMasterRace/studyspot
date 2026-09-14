@@ -6,7 +6,7 @@ Tests live with the code they verify.
 |---|---|---|
 | Frontend components | `src/frontend/src/**/*.spec.ts` | Vitest |
 | Backend API | `src/backend/tests/` | pytest |
-| Data import | `data/tests/` | pytest |
+| Data import | `data/test_ingest.py` | Python tests (planned) |
 | Full system | `tests/e2e/` | Playwright |
 
 Run every currently supported check:
@@ -26,4 +26,4 @@ curl --fail http://localhost:7501/health/live
 just shutdown
 ```
 
-The scaffold does not include placeholder tests. Each product milestone adds meaningful tests for its public behavior. Once the first suites land, a `just test` command and the pre-push gate must run them.
+The data test module is currently only a placeholder. Each product milestone adds meaningful tests for its public behavior. Once the first suites land, a `just test` command and the pre-push gate must run them.
