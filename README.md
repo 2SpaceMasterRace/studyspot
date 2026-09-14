@@ -5,20 +5,22 @@ _I just want somewhere nearby to meet or study, but finding a good café or thir
 StudySpot is an open-source search demo for discovering cafés and other third places across New York City. The goal is to make finding a useful place feel immediate: search by a name, category, or neighborhood and get a small, consistent set of results derived from NYC Open Data.
 
 > [!IMPORTANT]
-> StudySpot is currently a scaffold. The frontend, FastAPI liveness endpoint, local PostgreSQL/PostGIS and Meilisearch services, CI, Vercel deployment, and empty data boundary are in place. Study-spot routes, data ingestion, database loading, indexing, and search behavior are not implemented yet.
+> StudySpot is currently a scaffold. The frontend, FastAPI liveness endpoint, local Turso configuration, Meilisearch service, CI, Vercel deployment, and empty data boundary are in place. Study-spot routes, data ingestion, Turso loading, indexing, and search behavior are not implemented yet.
 
 ## How will it work?
 
 StudySpot is designed as a small modular monolith with two deployed applications and a versioned public-data snapshot:
 
 ```text
-Browser -> SvelteKit -> FastAPI -> normalized NYC Open Data
-                                      -> in-memory search index
+Browser -> SvelteKit -> FastAPI -> Turso
+
+NYC Open Data -> ingest.py -> spots.json -> Turso
+                                      \-> search index
 ```
 
-The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [FastAPI](https://fastapi.tiangolo.com/) service provides the HTTP boundary. The first release will package normalized NYC Open Data with the application and build its runtime search structures from that reproducible snapshot.
+The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [FastAPI](https://fastapi.tiangolo.com/) service provides the HTTP boundary. [Turso](https://turso.tech/) is the selected serving database. The normalized NYC Open Data snapshot remains the reproducible source used to load Turso and rebuild any search index.
 
-Local development uses Docker Compose so the browser app, API, PostgreSQL/PostGIS, and Meilisearch start as one topology. The database and external search engine remain available for integration work, but the first release does not require their state to survive. The frontend and API deploy together on [Vercel](https://vercel.com/) without another hosting provider.
+Local development uses Docker Compose for the browser app, API, and Meilisearch. The backend receives a local `file:` URL and reserves a named volume for its embedded Turso database, so no separate database process or port is required. On [Vercel](https://vercel.com/), FastAPI will connect to Turso Cloud over the network with environment-scoped credentials. The database adapter is not implemented yet.
 
 The shared study-spot summary contract is intentionally small:
 
@@ -41,7 +43,7 @@ The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/s
 
 **Why make this?** Cafés and public gathering places are spread across separate city datasets and listings. StudySpot explores what happens when candidate third places have one predictable shape and one fast search interface.
 
-**Why keep PostgreSQL and PostGIS locally?** They provide the intended path for durable data and advanced geographic queries once StudySpot stores user-generated or non-reproducible state. Public source data does not require that infrastructure for the first release.
+**Why Turso?** It keeps local development lightweight with an embedded database file while giving stateless Vercel functions a managed remote database. Its SQLite-compatible SQL also fits a small, reproducible public dataset without operating another database server.
 
 **Why keep Meilisearch locally?** It provides a realistic integration target for dedicated typo-tolerant search. Its index is derived data, so the first release can build a smaller in-memory index from the packaged dataset instead of operating a permanent search server.
 
@@ -73,7 +75,7 @@ Without Nix, install Bun, Python 3.12, uv, just, pre-commit, Git, and Docker, th
 
 ### Running the complete system
 
-Build and start all four services with live source updates:
+Build and start all three container services with live source updates:
 
 ```shell
 just dev
@@ -91,11 +93,10 @@ Once healthy, the services are available at:
 |---|---|
 | Frontend | <http://localhost:7500> |
 | API liveness | <http://localhost:7501/health/live> |
-| PostgreSQL | `localhost:7502` |
-| Meilisearch | <http://localhost:7503> |
-| Documentation (`just docs`) | <http://localhost:7504> |
+| Meilisearch | <http://localhost:7502> |
+| Documentation (`just docs`) | <http://localhost:7503> |
 
-Follow logs with `just logs`, stop services while preserving local data with `just shutdown`, or remove the local PostgreSQL and Meilisearch volumes with `just clean`.
+Follow logs with `just logs`, stop services while preserving local data with `just shutdown`, or remove the local Turso and Meilisearch volumes with `just clean`.
 
 ### Running one application
 
@@ -115,7 +116,7 @@ The frontend proxies `/api/*` requests to FastAPI during local development.
 
 ### Loading data
 
-The data boundary is scaffolded in [`data/`](data/): `ingest.py` will normalize NYC Open Data into `spots.json`, and `test_ingest.py` will verify the mapping. The importer is not implemented, so `spots.json` currently contains an empty array. Database loading and search indexing remain separate backend concerns.
+The data boundary is scaffolded in [`data/`](data/): `ingest.py` will normalize NYC Open Data into `spots.json`, and `test_ingest.py` will verify the mapping. The importer is not implemented, so `spots.json` currently contains an empty array. Loading that snapshot into Turso and deriving any search index remain separate backend concerns.
 
 ### Checks
 
@@ -149,13 +150,13 @@ Deploy the current revision directly to production only for an explicit manual r
 just deploy-production
 ```
 
-The project uses Vercel Services to deploy the SvelteKit frontend and FastAPI backend together. Feature pull requests target `staging`; release pull requests merge `staging` into `main`. See the [deployment guide](docs/source/deployment.md) for environment configuration, stateful dependencies, and rollback instructions.
+The project uses Vercel Services to deploy the SvelteKit frontend and FastAPI backend together. Feature pull requests target `staging`; release pull requests merge `staging` into `main`. Preview deployments will use the staging Turso database, while production uses a separate database and token. See the [deployment guide](docs/source/deployment.md) for the environment model and rollback behavior.
 
 ## Documentation
 
 The documentation is written in MyST Markdown, built with Sphinx, and rendered with the Furo theme. Sources live in [`docs/source/`](docs/source/).
 
-Run `just docs`, then open <http://localhost:7504>. The command builds the documentation before starting the local server.
+Run `just docs`, then open <http://localhost:7503>. The command builds the documentation before starting the local server.
 
 Documentation from `main` is published to <https://2spacemasterrace.github.io/studyspot/>.
 
@@ -166,7 +167,8 @@ Useful starting points include the [architecture](docs/source/architecture.md), 
 - **Frontend:** Svelte 5, TypeScript, SvelteKit, Vite, Tailwind CSS, Bun
 - **Backend:** Python 3.12, FastAPI, uv
 - **Data source:** NYC Open Data
-- **Local integration services:** PostgreSQL with PostGIS, Meilisearch
+- **Database:** Turso locally and Turso Cloud on Vercel
+- **Search integration:** Meilisearch
 - **Operations:** Nix, Docker Compose, just, pre-commit, Vercel, GitHub Actions
 - **Checks:** Prettier, ESLint, svelte-check, Ruff, ty, pytest
 

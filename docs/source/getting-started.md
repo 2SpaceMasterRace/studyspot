@@ -53,8 +53,18 @@ Use `just --list` as the authoritative list of supported commands.
 |---|---|
 | Frontend | <http://localhost:7500> |
 | API liveness | <http://localhost:7501/health/live> |
-| PostgreSQL | `localhost:7502` |
-| Meilisearch | <http://localhost:7503> |
-| Documentation (`just docs`) | <http://localhost:7504> |
+| Meilisearch | <http://localhost:7502> |
+| Documentation (`just docs`) | <http://localhost:7503> |
 
-Host-facing ports use the consecutive `7500` through `7504` range. The four Compose services occupy `7500` through `7503`; the optional documentation server uses `7504`. Containers retain their conventional internal ports, so service defaults and image health checks remain unchanged. Browser traffic should normally enter through the frontend, which mirrors production's `/api/*` boundary.
+Host-facing ports use the consecutive `7500` through `7503` range. The three Compose services occupy `7500` through `7502`; the optional documentation server uses `7503`. Turso uses an embedded file locally and therefore needs no port. Browser traffic should normally enter through the frontend, which mirrors production's `/api/*` boundary.
+
+## Local database configuration
+
+Compose supplies `TURSO_DATABASE_URL=file:/app/.local/studyspot.db` and mounts the file on a named volume. Native development uses the value in `.env.example`:
+
+```text
+TURSO_DATABASE_URL=file:.local/studyspot.db
+TURSO_AUTH_TOKEN=
+```
+
+No Turso account, CLI, or token is required for local development. The adapter that consumes these values is planned rather than implemented.
