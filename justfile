@@ -30,6 +30,23 @@ check:
     cd src/backend && uv run ty check
     uv run --project docs sphinx-build --fail-on-warning --keep-going --builder html docs/source docs/build/html
 
+# Run fast backend unit tests.
+test:
+    cd src/backend && uv run --frozen pytest -m 'not integration'
+
+# Rebuild the Meilisearch projection from the configured Turso source.
+reindex:
+    docker compose run --build --rm backend uv run --frozen --no-dev python -m studyspot_api.reindex
+
+# Run the real Meilisearch integration suite.
+test-search:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    export COMPOSE_PROJECT_NAME="studyspot-search-test-$$"
+    compose=(docker compose -f compose.search-test.yaml)
+    trap '"${compose[@]}" down --volumes --remove-orphans' EXIT
+    "${compose[@]}" run --build --rm tests
+
 # Start the frontend scaffold.
 dev-frontend:
     cd src/frontend && bun run dev -- --host 127.0.0.1 --port 7500

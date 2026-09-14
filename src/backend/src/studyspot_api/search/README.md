@@ -1,5 +1,6 @@
 # Search boundary
 
-The search ticket will implement querying and ranking for normalized café and public-third-place records here. Turso is the serving database; whether search also needs a rebuildable Meilisearch projection remains an implementation decision.
-
-No search behavior is implemented in this scaffold.
+This boundary queries the rebuildable Meilisearch projection. Search uses the
+ordered fields `name`, `neighborhood`, `category`, `address`, and `borough`,
+with indexing-time prefix search and Meilisearch's default typo tolerance.
+The projection is rebuilt from Turso by `just reindex`.
