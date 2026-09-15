@@ -80,12 +80,22 @@
 				{#if loading}
 					<div class="state-card loading" role="status">Finding great places to study…</div>
 				{:else if !query.trim()}
-					<div class="state-card empty">
-						<p>Start with a name, neighborhood, borough, or university.</p>
-						<div class="suggestions">
-							<button onclick={() => updateQuery('NYU')}>NYU</button><button
-								onclick={() => updateQuery('Brooklyn')}>Brooklyn</button
-							><button onclick={() => updateQuery('Greenwich Village')}>Greenwich Village</button>
+					<div class="empty-state">
+						<div class="empty-icon" aria-hidden="true">✦</div>
+						<div>
+							<p class="empty-title">Where will you focus today?</p>
+							<p class="empty-copy">Search by a place, neighborhood, borough, or university.</p>
+						</div>
+						<div class="suggestions" aria-label="Suggested searches">
+							<button type="button" onclick={() => updateQuery('NYU')}
+								><span>University</span>NYU</button
+							>
+							<button type="button" onclick={() => updateQuery('Brooklyn')}
+								><span>Borough</span>Brooklyn</button
+							>
+							<button type="button" onclick={() => updateQuery('Greenwich Village')}
+								><span>Neighborhood</span>Greenwich Village</button
+							>
 						</div>
 					</div>
 				{:else if results.length === 0}
@@ -220,18 +230,72 @@
 		content: '';
 		animation: spin 0.8s linear infinite;
 	}
+	.empty-state {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		align-items: center;
+		gap: 13px;
+		margin-top: 14px;
+		padding: 18px 20px;
+		border: 1px solid rgb(255 56 92 / 13%);
+		border-radius: 16px;
+		background: rgb(255 255 255 / 68%);
+		box-shadow: 0 12px 30px rgb(34 34 34 / 5%);
+	}
+	.empty-icon {
+		display: grid;
+		width: 38px;
+		height: 38px;
+		place-items: center;
+		border-radius: 12px;
+		color: var(--color-brand);
+		background: #fff0f3;
+		font-size: 19px;
+	}
+	.empty-title,
+	.empty-copy {
+		margin: 0;
+	}
+	.empty-title {
+		font-size: 15px;
+		font-weight: 700;
+	}
+	.empty-copy {
+		margin-top: 3px;
+		color: var(--color-muted);
+		font-size: 13px;
+	}
 	.suggestions {
+		grid-column: 1 / -1;
 		display: flex;
 		flex-wrap: wrap;
-		gap: 8px;
-		margin-top: 14px;
+		gap: 9px;
+		margin-top: 2px;
 	}
 	.suggestions button {
-		border: 1px solid var(--color-border);
+		display: inline-flex;
+		align-items: baseline;
+		gap: 6px;
+		border: 1px solid #e6d8da;
 		border-radius: 999px;
-		padding: 7px 11px;
-		background: white;
+		padding: 8px 12px;
+		color: var(--color-text);
+		background: #fff;
+		font-size: 13px;
 		cursor: pointer;
+		transition:
+			transform 150ms ease,
+			border-color 150ms ease,
+			background 150ms ease;
+	}
+	.suggestions button span {
+		color: var(--color-muted);
+		font-size: 11px;
+	}
+	.suggestions button:hover {
+		border-color: #ff9bae;
+		background: #fff6f7;
+		transform: translateY(-1px);
 	}
 	.result-heading {
 		display: flex;
@@ -333,6 +397,10 @@
 		.result-heading {
 			gap: 10px;
 			font-size: 12px;
+		}
+		.empty-state {
+			align-items: start;
+			padding: 17px;
 		}
 	}
 </style>
