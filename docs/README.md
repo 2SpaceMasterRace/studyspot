@@ -16,4 +16,8 @@ Run the warning-strict documentation check as part of the complete repository ch
 just check
 ```
 
+<<<<<<< HEAD
 Documentation merged into `main` is published to <https://2spacemasterrace.github.io/studyspot/> by GitHub Pages. Forks must configure Pages to use GitHub Actions as its source.
+=======
+Documentation is published alongside the staging app at <https://dev-studyspot-nyu.vercel.app/docs/> by Vercel.
+>>>>>>> origin/staging

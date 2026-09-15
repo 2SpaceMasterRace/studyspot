@@ -1,4 +1,5 @@
 # [StudySpot](https://studyspot-nyu.vercel.app/)
+<<<<<<< HEAD
 
 _I just want somewhere nearby to meet or study, but finding a good café or third place means searching scattered listings and guessing what is actually useful._
 
@@ -9,6 +10,18 @@ StudySpot is an open-source search demo for discovering cafés and other third p
 
 ## How will it work?
 
+=======
+[![Python](https://img.shields.io/badge/python-3.12%2B-blue)](https://python.org)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+
+StudySpot is an open-source search demo for discovering cafés and other third places across New York City. The goal is to make finding a useful place feel immediate: search by a name, category, or neighborhood and get a small, consistent set of results derived from NYC Open Data.
+
+> [!IMPORTANT]
+> StudySpot is currently a scaffold. The frontend, FastAPI liveness endpoint, local Turso configuration, Meilisearch service, CI, Vercel deployment, and empty data boundary are in place. Study-spot routes, data ingestion, Turso loading, indexing, and search behavior are not implemented yet.
+
+## How will it work?
+
+>>>>>>> origin/staging
 StudySpot is designed as a small modular monolith with two deployed applications and a versioned public-data snapshot:
 
 ```text
@@ -39,6 +52,7 @@ The shared study-spot summary contract is intentionally small:
 
 The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/search?q=coffee`. Today, only `GET /health/live` is available.
 
+<<<<<<< HEAD
 ### FAQ
 
 **Why make this?** Cafés and public gathering places are spread across separate city datasets and listings. StudySpot explores what happens when candidate third places have one predictable shape and one fast search interface.
@@ -51,6 +65,8 @@ The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/s
 
 **Does every result have Wi-Fi, outlets, or quiet seating?** Not necessarily. StudySpot presents candidate places to meet or study and only claims amenities explicitly supported by the source data.
 
+=======
+>>>>>>> origin/staging
 ## Development
 
 The simplest setup only requires Git and Docker Compose 2.23 or newer:
@@ -158,7 +174,11 @@ The documentation is written in MyST Markdown, built with Sphinx, and rendered w
 
 Run `just docs`, then open <http://localhost:7503>. The command builds the documentation before starting the local server.
 
+<<<<<<< HEAD
 Documentation from `main` is published to <https://2spacemasterrace.github.io/studyspot/>.
+=======
+Documentation is published alongside the staging app at <https://dev-studyspot-nyu.vercel.app/docs/>.
+>>>>>>> origin/staging
 
 Useful starting points include the [architecture](docs/source/architecture.md), [local development](docs/source/local-development.md), [deployment](docs/source/deployment.md), [testing](docs/source/testing.md), and [contribution guide](CONTRIBUTING.md).
 
