@@ -87,14 +87,20 @@
 							<p class="empty-copy">Search by a place, neighborhood, borough, or university.</p>
 						</div>
 						<div class="suggestions" aria-label="Suggested searches">
-							<button type="button" onclick={() => updateQuery('NYU')}
-								><span>University</span>NYU</button
+							<button
+								type="button"
+								aria-label="Search by university: NYU"
+								onclick={() => updateQuery('NYU')}>NYU</button
 							>
-							<button type="button" onclick={() => updateQuery('Brooklyn')}
-								><span>Borough</span>Brooklyn</button
+							<button
+								type="button"
+								aria-label="Search by borough: Brooklyn"
+								onclick={() => updateQuery('Brooklyn')}>Brooklyn</button
 							>
-							<button type="button" onclick={() => updateQuery('Greenwich Village')}
-								><span>Neighborhood</span>Greenwich Village</button
+							<button
+								type="button"
+								aria-label="Search by neighborhood: Greenwich Village"
+								onclick={() => updateQuery('Greenwich Village')}>Greenwich Village</button
 							>
 						</div>
 					</div>
@@ -274,8 +280,7 @@
 	}
 	.suggestions button {
 		display: inline-flex;
-		align-items: baseline;
-		gap: 6px;
+		align-items: center;
 		border: 1px solid #e6d8da;
 		border-radius: 999px;
 		padding: 8px 12px;
@@ -287,10 +292,6 @@
 			transform 150ms ease,
 			border-color 150ms ease,
 			background 150ms ease;
-	}
-	.suggestions button span {
-		color: var(--color-muted);
-		font-size: 11px;
 	}
 	.suggestions button:hover {
 		border-color: #ff9bae;
