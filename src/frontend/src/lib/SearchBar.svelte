@@ -22,13 +22,8 @@
 		<input
 			id="spot-search"
 			name="q"
-<<<<<<< HEAD
 			value={query}
 			placeholder="Try NYU, Brooklyn, or a café name"
-=======
-			bind:value={query}
-			placeholder="Café, public space, or neighborhood"
->>>>>>> origin/staging
 			autocomplete="off"
 			role="combobox"
 			aria-controls="search-results"

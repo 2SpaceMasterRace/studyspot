@@ -7,8 +7,4 @@
 **/.ruff_cache
 **/.pytest_cache
 **/__pycache__
-<<<<<<< HEAD
-/docs
-=======
->>>>>>> origin/staging
 /tests
