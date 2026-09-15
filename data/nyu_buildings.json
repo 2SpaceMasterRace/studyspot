@@ -7,7 +7,8 @@
     "neighborhood": "Greenwich Village",
     "borough": "Manhattan",
     "latitude": 40.7295,
-    "longitude": -73.9974
+    "longitude": -73.9974,
+    "university": "New York University"
   },
   {
     "id": "nyu-kimmel-center",
@@ -17,7 +18,8 @@
     "neighborhood": "Greenwich Village",
     "borough": "Manhattan",
     "latitude": 40.7301,
-    "longitude": -73.9977
+    "longitude": -73.9977,
+    "university": "New York University"
   },
   {
     "id": "nyu-courant-institute",
@@ -27,7 +29,8 @@
     "neighborhood": "Greenwich Village",
     "borough": "Manhattan",
     "latitude": 40.7286,
-    "longitude": -73.9956
+    "longitude": -73.9956,
+    "university": "New York University"
   },
   {
     "id": "nyu-stern-tisch-hall",
@@ -37,7 +40,8 @@
     "neighborhood": "Greenwich Village",
     "borough": "Manhattan",
     "latitude": 40.7291,
-    "longitude": -73.9965
+    "longitude": -73.9965,
+    "university": "New York University"
   },
   {
     "id": "nyu-silver-center",
@@ -47,7 +51,8 @@
     "neighborhood": "Greenwich Village",
     "borough": "Manhattan",
     "latitude": 40.7301,
-    "longitude": -73.9955
+    "longitude": -73.9955,
+    "university": "New York University"
   },
   {
     "id": "nyu-tandon-dibner-library",
@@ -57,7 +62,8 @@
     "neighborhood": "Downtown Brooklyn",
     "borough": "Brooklyn",
     "latitude": 40.6942,
-    "longitude": -73.9865
+    "longitude": -73.9865,
+    "university": "New York University"
   },
   {
     "id": "nyu-tandon-rogers-hall",
@@ -67,7 +73,8 @@
     "neighborhood": "Downtown Brooklyn",
     "borough": "Brooklyn",
     "latitude": 40.6939,
-    "longitude": -73.9855
+    "longitude": -73.9855,
+    "university": "New York University"
   },
   {
     "id": "nyu-global-center",
@@ -77,7 +84,8 @@
     "neighborhood": "Greenwich Village",
     "borough": "Manhattan",
     "latitude": 40.7294,
-    "longitude": -73.9986
+    "longitude": -73.9986,
+    "university": "New York University"
   },
   {
     "id": "nyu-60-fifth-avenue",
@@ -87,7 +95,8 @@
     "neighborhood": "Greenwich Village",
     "borough": "Manhattan",
     "latitude": 40.7357,
-    "longitude": -73.9944
+    "longitude": -73.9944,
+    "university": "New York University"
   },
   {
     "id": "nyu-paulson-center",
@@ -97,6 +106,7 @@
     "neighborhood": "Greenwich Village",
     "borough": "Manhattan",
     "latitude": 40.7271,
-    "longitude": -73.9967
+    "longitude": -73.9967,
+    "university": "New York University"
   }
 ]
