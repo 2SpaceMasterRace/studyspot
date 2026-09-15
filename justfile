@@ -38,6 +38,17 @@ dev-frontend:
 dev-backend:
     cd src/backend && uv run uvicorn studyspot_api.main:app --app-dir src --host 127.0.0.1 --port 7501 --reload
 
+# Run the backend and data test suites.
+# pytest exits 5 when it collects nothing, which is not a failure here: the data
+# suite arrives with the importer, on a different branch from the API.
+test:
+    cd src/backend && uv run pytest
+    cd data && uv run --project ../src/backend pytest . || [ "$?" -eq 5 ]
+
+# Copy data/spots.json into the local Turso database.
+load-data:
+    cd src/backend && PYTHONPATH=src uv run python -m studyspot_api.spots.loader
+
 # Build and start the complete local system with live source updates.
 dev:
     docker compose up --build --watch

@@ -64,7 +64,7 @@ docker compose down --volumes
 
 ## Health and startup order
 
-Compose starts Meilisearch first and verifies that it is accepting requests before the backend starts. The frontend waits for the backend health endpoint. The future Turso adapter will open its local file in the backend process, so database readiness belongs in the planned API readiness check rather than Compose startup order. A running process is not considered ready until its health check succeeds.
+Compose starts Meilisearch first and verifies that it is accepting requests before the backend starts. The frontend waits for the backend health endpoint. The Turso adapter opens its local file in the backend process, so database readiness belongs in the planned API readiness check rather than Compose startup order. The Compose backend has no copy of `data/spots.json`, so its database is empty and the study-spot routes answer `503 database_unavailable` until a deployment step loads it. A running process is not considered ready until its health check succeeds.
 
 ## Development loop
 

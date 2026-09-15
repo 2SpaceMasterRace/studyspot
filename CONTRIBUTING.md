@@ -111,8 +111,11 @@ errors. Also run the tests relevant to your change. For suites that currently ex
 
 ```shell
 cd src/frontend && bun run test
-cd src/backend && uv run pytest
+just test
 ```
+
+`just test` runs the backend suite in `src/backend/tests/` and the data-import suite in
+`data/`. The pre-push hook runs both `just check` and `just test`.
 
 Use `just start` for a local container smoke test, `just dev` for live source updates, and
 `just nix-check` when changing the Nix environment. See `just --list` for all supported commands.

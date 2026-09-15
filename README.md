@@ -5,7 +5,7 @@
 StudySpot is an open-source search demo for discovering cafés and other third places across New York City. The goal is to make finding a useful place feel immediate: search by a name, category, or neighborhood and get a small, consistent set of results derived from NYC Open Data.
 
 > [!IMPORTANT]
-> StudySpot is currently a scaffold. The frontend, FastAPI liveness endpoint, local Turso configuration, Meilisearch service, CI, Vercel deployment, and empty data boundary are in place. Study-spot routes, data ingestion, Turso loading, indexing, and search behavior are not implemented yet.
+> StudySpot is early but no longer empty. The frontend, FastAPI service, NYC Open Data importer, Turso adapter and loader, study-spot listing and detail routes, Meilisearch service, CI, and Vercel deployment are in place. Indexing and search behavior are not implemented yet.
 
 ## How will it work?
 
@@ -20,24 +20,25 @@ NYC Open Data -> ingest.py -> spots.json -> Turso
 
 The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [FastAPI](https://fastapi.tiangolo.com/) service provides the HTTP boundary. [Turso](https://turso.tech/) is the selected serving database. The normalized NYC Open Data snapshot remains the reproducible source used to load Turso and rebuild any search index.
 
-Local development uses Docker Compose for the browser app, API, and Meilisearch. The backend receives a local `file:` URL and reserves a named volume for its embedded Turso database, so no separate database process or port is required. On [Vercel](https://vercel.com/), FastAPI will connect to Turso Cloud over the network with environment-scoped credentials. The database adapter is not implemented yet.
+Local development uses Docker Compose for the browser app, API, and Meilisearch. The backend receives a local `file:` URL and reserves a named volume for its embedded Turso database, so no separate database process or port is required. On [Vercel](https://vercel.com/), FastAPI connects to Turso Cloud over the network with environment-scoped credentials. Both modes sit behind one repository interface.
 
 The shared study-spot summary contract is intentionally small:
 
 ```json
 {
-  "id": "string",
-  "name": "string",
-  "category": "cafe",
-  "address": "string",
-  "neighborhood": "string",
-  "borough": "string",
-  "latitude": 40.7128,
-  "longitude": -74.006
+  "id": "facdb:eec118768e15a5e03d3354abda7b00da",
+  "name": "125th Street Library",
+  "category": "library",
+  "address": "224 East 125 Street, New York, NY 10035",
+  "neighborhood": "East Harlem (North)",
+  "borough": "Manhattan",
+  "latitude": 40.803027,
+  "longitude": -73.934853,
+  "university": "Touro University - Harlem"
 }
 ```
 
-The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/search?q=coffee`. Today, only `GET /health/live` is available.
+`GET /spots` and `GET /spots/{id}` are available alongside `GET /health/live`. `GET /spots` pages with `limit` and `offset` and filters on `name`, `neighborhood`, `borough`, and `university`. `GET /spots/search?q=coffee` is still planned. See the [HTTP API guide](docs/source/api.md).
 
 ## Development
 
@@ -104,7 +105,13 @@ The frontend proxies `/api/*` requests to FastAPI during local development.
 
 ### Loading data
 
-The data boundary is scaffolded in [`data/`](data/): `ingest.py` will normalize NYC Open Data into `spots.json`, and `test_ingest.py` will verify the mapping. The importer is not implemented, so `spots.json` currently contains an empty array. Loading that snapshot into Turso and deriving any search index remain separate backend concerns.
+The data boundary lives in [`data/`](data/): `ingest.py` normalizes NYC Open Data into `spots.json`, and `test_ingest.py` verifies the mapping. Copy that snapshot into the local Turso database before using the study-spot routes:
+
+```shell
+just load-data
+```
+
+Regenerate the snapshot from NYC Open Data with `just ingest`. Deriving a search index remains a separate backend concern.
 
 ### Checks
 
@@ -114,7 +121,13 @@ Verify the toolchain, Docker daemon, Compose configuration, formatting, linting,
 just check
 ```
 
-Run `just nix-check` to validate the pinned development environment. Tests will be added beside the behavior they verify; the scaffold deliberately contains no placeholder test suite.
+Run the backend and data test suites:
+
+```shell
+just test
+```
+
+Run `just nix-check` to validate the pinned development environment. Tests live beside the behavior they verify.
 
 ## Deployment
 

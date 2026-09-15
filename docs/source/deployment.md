@@ -1,6 +1,6 @@
 # Deployment
 
-StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. A backend service rewrite removes the public `/api` prefix before FastAPI route matching, so `/api/health/live` reaches the application's `/health/live` endpoint. Turso Cloud is the selected production database, but the deployed scaffold does not query it yet.
+StudySpot deploys the SvelteKit frontend and FastAPI application as one Vercel project. Requests to `/` use the frontend service, while `/api/*` uses FastAPI. A backend service rewrite removes the public `/api` prefix before FastAPI route matching, so `/api/health/live` reaches the application's `/health/live` endpoint. Turso Cloud is the production database. The deployed API queries it, but no deployment step loads it yet; see [Data and search state](#data-and-search-state).
 
 Vercel's Git integration is the only automatic deployment path. GitHub Actions independently validates the repository, Compose topology, documentation, and Nix flake; it does not build or upload a duplicate Vercel deployment.
 
@@ -72,7 +72,13 @@ nix run . -- deploy-production
 
 ## Data and search state
 
-The deployed scaffold does not yet import NYC Open Data records, consume `data/spots.json`, load Turso, or build runtime search structures. The planned implementation will normalize café and public-third-place records into that reproducible dataset and derive Turso serving state and any search projection from it.
+`data/spots.json` is generated and committed, and the backend loader copies it into a Turso database. Nothing loads the hosted databases yet.
+
+```{warning}
+`data/spots.json` sits at the repository root, while the backend's Vercel service root and Docker build context are both `src/backend/`. The deployed backend therefore cannot see the snapshot, and `just load-data` only populates a local checkout. Until a deployment step publishes the snapshot into `studyspot-staging` and `studyspot-production`, the study-spot routes answer `503 database_unavailable` in Compose, Preview, and Production. Wiring that step is repository-integration work and is tracked separately from the study-spot API.
+```
+
+Runtime search structures are still unbuilt.
 
 The local Turso file and hosted Turso databases use the same schema and query contract but different transports. Meilisearch remains part of the local Compose topology for integration work and is not a current production dependency. While every record comes from the normalized public snapshot, either Turso environment can be cleared and reloaded. Once StudySpot stores corrections, favorites, accounts, import cursors, or other non-reproducible state, backups and backward-compatible migrations become release requirements.
 

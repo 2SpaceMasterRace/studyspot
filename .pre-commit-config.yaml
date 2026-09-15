@@ -21,3 +21,10 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-push]
+
+      - id: repository-tests
+        name: repository tests
+        entry: just test
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

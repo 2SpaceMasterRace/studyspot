@@ -72,13 +72,13 @@ The package delegates to the repository's `justfile`, so Nix and non-Nix develop
 The goal is behavioral parity rather than identical infrastructure:
 
 - the same application source and dependency locks
-- the same normalized `data/spots.json` snapshot once the importer populates it
+- the same normalized `data/spots.json` snapshot
 - the same Turso repository interface, schema, and query contract
 - the same HTTP routes and response contracts
 - the same data mapping and search-ranking behavior
 - the same liveness and readiness semantics
 
-The infrastructure differs only where the runtime requires it: local FastAPI will open an embedded Turso file, while stateless Vercel functions will connect to Turso Cloud over the network. The planned adapter hides that transport difference and must pass the same tests in both modes. Meilisearch remains a local integration target; no permanent production search service is required by the current scaffold.
+The infrastructure differs only where the runtime requires it: local FastAPI opens an embedded Turso file, while stateless Vercel functions connect to Turso Cloud over the network. The adapter hides that transport difference and passes the same contract tests in both modes. Meilisearch remains a local integration target; no permanent production search service is required by the current scaffold.
 
 The backend receives these Compose defaults:
 
@@ -87,4 +87,4 @@ TURSO_DATABASE_URL=file:/app/.local/studyspot.db
 TURSO_AUTH_TOKEN=
 ```
 
-To exercise the future remote adapter deliberately, set a Turso Cloud URL and token in an ignored `.env` file before starting Compose. Do not use the production token locally. The current scaffold does not query either database mode yet.
+To exercise the remote adapter deliberately, set a Turso Cloud URL and token in an ignored `.env` file before starting Compose. Do not use the production token locally.

@@ -23,7 +23,7 @@ DEFAULT_LIMIT = 20
 MAX_LIMIT = 100
 
 #: Filter values are trimmed, must not be blank, and are bounded.
-FilterText = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=150)]
+FilterText = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=120)]
 
 
 class Borough(StrEnum):

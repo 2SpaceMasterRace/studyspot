@@ -55,3 +55,6 @@ jobs:
 
       - name: Run repository checks
         run: just check
+
+      - name: Run tests
+        run: just test

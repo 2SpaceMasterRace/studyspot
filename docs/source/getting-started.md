@@ -67,4 +67,13 @@ TURSO_DATABASE_URL=file:.local/studyspot.db
 TURSO_AUTH_TOKEN=
 ```
 
-No Turso account, CLI, or token is required for local development. The adapter that consumes these values is planned rather than implemented.
+No Turso account, CLI, or token is required for local development.
+
+Populate the local database before using the study-spot routes:
+
+```shell
+just load-data
+curl --fail 'http://localhost:7501/spots?limit=5'
+```
+
+The loader copies `data/spots.json` into the embedded database file and is safe to re-run.
