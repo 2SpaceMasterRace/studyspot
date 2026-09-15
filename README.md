@@ -146,7 +146,7 @@ The documentation is written in MyST Markdown, built with Sphinx, and rendered w
 
 Run `just docs`, then open <http://localhost:7503>. The command builds the documentation before starting the local server.
 
-Documentation from `main` is published to <https://2spacemasterrace.github.io/studyspot/>.
+Documentation is published alongside the staging app at <https://dev-studyspot-nyu.vercel.app/docs/>.
 
 Useful starting points include the [architecture](docs/source/architecture.md), [local development](docs/source/local-development.md), [deployment](docs/source/deployment.md), [testing](docs/source/testing.md), and [contribution guide](CONTRIBUTING.md).
 

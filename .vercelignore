@@ -7,5 +7,4 @@
 **/.ruff_cache
 **/.pytest_cache
 **/__pycache__
-/docs
 /tests

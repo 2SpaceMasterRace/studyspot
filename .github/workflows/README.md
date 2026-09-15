@@ -2,7 +2,7 @@
 
 - `ci.yml` installs locked dependencies and runs `just check` on every pull request and push to `staging` or `main`.
 - `compose.yml` builds the four-service local topology, waits for healthy containers, and checks the frontend and API liveness endpoint.
-- `docs.yml` publishes the warning-free Sphinx build from `main` to GitHub Pages; pull requests are already covered by `just check` in `ci.yml`.
+- `ci.yml` builds the warning-free Sphinx documentation as part of `just check`; Vercel publishes it with the staging app at `/docs/`.
 - `nix.yml` evaluates the pinned Nix development shell.
 
 Vercel's Git integration is the only automatic deployment path. It creates a Preview deployment for every pull request and branch push, and deploys `main` to production. GitHub Actions does not need a Vercel token, project ID, or team ID.
