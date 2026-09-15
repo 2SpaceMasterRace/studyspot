@@ -2,11 +2,18 @@
 	type Props = {
 		query?: string;
 		resultCount?: number;
+		activeDescendant?: string;
 		onQueryChange?: (query: string) => void;
 		onKeydown?: (event: KeyboardEvent) => void;
 	};
 
-	let { query = '', resultCount = 0, onQueryChange, onKeydown }: Props = $props();
+	let {
+		query = '',
+		resultCount = 0,
+		activeDescendant = '',
+		onQueryChange,
+		onKeydown
+	}: Props = $props();
 </script>
 
 <div class="search" role="search">
@@ -21,6 +28,8 @@
 			role="combobox"
 			aria-controls="search-results"
 			aria-expanded={resultCount > 0}
+			aria-autocomplete="list"
+			aria-activedescendant={activeDescendant || undefined}
 			oninput={(event) => onQueryChange?.(event.currentTarget.value)}
 			onkeydown={onKeydown}
 		/>

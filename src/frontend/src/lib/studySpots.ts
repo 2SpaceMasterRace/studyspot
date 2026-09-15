@@ -92,6 +92,13 @@ export const studySpots: StudySpot[] = [
 
 const normalize = (value: string) => value.trim().toLocaleLowerCase();
 
+const initialism = (value: string) =>
+	value
+		.split(/[^\p{L}\p{N}]+/u)
+		.filter(Boolean)
+		.map((word) => word[0])
+		.join('');
+
 export function searchStudySpots(query: string): StudySpot[] {
 	const term = normalize(query);
 	if (!term) return studySpots;
@@ -102,7 +109,8 @@ export function searchStudySpots(query: string): StudySpot[] {
 				[spot.name, 0],
 				[spot.neighborhood, 1],
 				[spot.borough, 2],
-				[spot.university, 3]
+				[spot.university, 3],
+				[initialism(spot.university), 3]
 			];
 			const match = fields
 				.map(([value, priority]) => ({ value: normalize(value), priority }))

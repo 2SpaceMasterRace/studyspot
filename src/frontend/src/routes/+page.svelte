@@ -20,6 +20,11 @@
 		selectedSpot = null;
 	}
 
+	function chooseSuggestion(value: string) {
+		updateQuery(value);
+		requestAnimationFrame(() => document.getElementById('spot-search')?.focus());
+	}
+
 	function select(spot: StudySpot) {
 		selectedSpot = spot;
 		query = spot.name;
@@ -27,17 +32,22 @@
 	}
 
 	function navigate(event: KeyboardEvent) {
+		if (event.key === 'Escape') {
+			updateQuery('');
+			return;
+		}
+
+		if (!query.trim() || results.length === 0) return;
+
 		if (event.key === 'ArrowDown') {
 			event.preventDefault();
-			activeIndex = Math.min(activeIndex + 1, results.length - 1);
+			activeIndex = (activeIndex + 1) % results.length;
 		} else if (event.key === 'ArrowUp') {
 			event.preventDefault();
-			activeIndex = Math.max(activeIndex - 1, 0);
-		} else if (event.key === 'Enter' && activeIndex >= 0) {
+			activeIndex = activeIndex <= 0 ? results.length - 1 : activeIndex - 1;
+		} else if (event.key === 'Enter') {
 			event.preventDefault();
-			select(results[activeIndex]);
-		} else if (event.key === 'Escape') {
-			updateQuery('');
+			select(results[activeIndex >= 0 ? activeIndex : 0]);
 		}
 	}
 </script>
@@ -72,7 +82,8 @@
 			<div class="search-area">
 				<SearchBar
 					{query}
-					resultCount={results.length}
+					resultCount={query.trim() ? results.length : 0}
+					activeDescendant={activeIndex >= 0 ? `search-result-${results[activeIndex]?.id}` : ''}
 					onQueryChange={updateQuery}
 					onKeydown={navigate}
 				/>
@@ -81,26 +92,35 @@
 					<div class="state-card loading" role="status">Finding great places to study…</div>
 				{:else if !query.trim()}
 					<div class="empty-state">
-						<div class="empty-icon" aria-hidden="true">✦</div>
+						<div class="empty-icon" aria-hidden="true"><span>⌁</span></div>
 						<div>
-							<p class="empty-title">Where will you focus today?</p>
-							<p class="empty-copy">Search by a place, neighborhood, borough, or university.</p>
+							<p class="empty-kicker">QUICK DISCOVERY</p>
 						</div>
 						<div class="suggestions" aria-label="Suggested searches">
 							<button
 								type="button"
 								aria-label="Search by university: NYU"
-								onclick={() => updateQuery('NYU')}>NYU</button
+								onclick={() => chooseSuggestion('NYU')}>NYU</button
+							>
+							<button
+								type="button"
+								aria-label="Search by university: Columbia"
+								onclick={() => chooseSuggestion('Columbia')}>Columbia</button
 							>
 							<button
 								type="button"
 								aria-label="Search by borough: Brooklyn"
-								onclick={() => updateQuery('Brooklyn')}>Brooklyn</button
+								onclick={() => chooseSuggestion('Brooklyn')}>Brooklyn</button
+							>
+							<button
+								type="button"
+								aria-label="Search by borough: Manhattan"
+								onclick={() => chooseSuggestion('Manhattan')}>Manhattan</button
 							>
 							<button
 								type="button"
 								aria-label="Search by neighborhood: Greenwich Village"
-								onclick={() => updateQuery('Greenwich Village')}>Greenwich Village</button
+								onclick={() => chooseSuggestion('Greenwich Village')}>Greenwich Village</button
 							>
 						</div>
 					</div>
@@ -115,10 +135,13 @@
 							>Use ↑ ↓ and Enter</span
 						>
 					</div>
-					<ul id="search-results" aria-label="Search results">
+					<ul id="search-results" role="listbox" aria-label="Search results">
 						{#each results as spot, index (spot.id)}
 							<li>
 								<button
+									id={`search-result-${spot.id}`}
+									role="option"
+									aria-selected={activeIndex === index}
 									class:active={activeIndex === index}
 									onclick={() => select(spot)}
 									onmouseenter={() => (activeIndex = index)}
@@ -243,10 +266,27 @@
 		gap: 13px;
 		margin-top: 14px;
 		padding: 18px 20px;
+		position: relative;
+		overflow: hidden;
 		border: 1px solid rgb(255 56 92 / 13%);
 		border-radius: 16px;
 		background: rgb(255 255 255 / 68%);
 		box-shadow: 0 12px 30px rgb(34 34 34 / 5%);
+	}
+	.empty-state::after {
+		position: absolute;
+		top: -58px;
+		right: -38px;
+		width: 134px;
+		height: 134px;
+		border-radius: 50%;
+		background: rgb(255 56 92 / 6%);
+		content: '';
+		pointer-events: none;
+	}
+	.empty-state > * {
+		position: relative;
+		z-index: 1;
 	}
 	.empty-icon {
 		display: grid;
@@ -256,20 +296,19 @@
 		border-radius: 12px;
 		color: var(--color-brand);
 		background: #fff0f3;
-		font-size: 19px;
+		font-size: 26px;
+		line-height: 1;
 	}
-	.empty-title,
-	.empty-copy {
-		margin: 0;
+	.empty-icon span {
+		display: block;
+		transform: rotate(90deg);
 	}
-	.empty-title {
-		font-size: 15px;
-		font-weight: 700;
-	}
-	.empty-copy {
-		margin-top: 3px;
-		color: var(--color-muted);
-		font-size: 13px;
+	.empty-kicker {
+		margin: 0 0 4px;
+		color: var(--color-brand-hover);
+		font-size: 12px;
+		font-weight: 750;
+		letter-spacing: 0.1em;
 	}
 	.suggestions {
 		grid-column: 1 / -1;
@@ -283,7 +322,7 @@
 		align-items: center;
 		border: 1px solid #e6d8da;
 		border-radius: 999px;
-		padding: 8px 12px;
+		padding: 8px 13px;
 		color: var(--color-text);
 		background: #fff;
 		font-size: 13px;
