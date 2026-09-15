@@ -2,8 +2,6 @@
 
 Read the repository's [contribution guide](https://github.com/2SpaceMasterRace/studyspot/blob/main/CONTRIBUTING.md) before editing the project.
 
-
-
 ## Branch workflow
 
 1. Branch from the latest `staging` revision.

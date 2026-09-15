@@ -3,6 +3,10 @@
 Thank you for taking the time to contribute. StudySpot welcomes bug fixes, features,
 documentation improvements, tests, and code review.
 
+1. Confirm the ticket's public contract and definition of done.
+2. Run `just setup` from the repository root.
+3. Create a short-lived branch from `staging` for one ticket.
+
 Before starting, confirm the issue's public contract and definition of done. Shared contract
 or root configuration changes affect multiple parts of the project, so ask the affected owners
 to review them.
@@ -108,6 +112,10 @@ just check
 This verifies the toolchain and Compose configuration, checks and builds the frontend, formats,
 lints, and type-checks the backend, and builds the Sphinx documentation with warnings treated as
 errors. Also run the tests relevant to your change. For suites that currently exist, use:
+
+Never commit `.env` files or credentials. Copy `.env.example` to `.env` only when you need to override the safe local Compose defaults.
+
+Open feature pull requests into `staging`. After the shared staging deployment is verified, open a release pull request from `staging` into `main`. Do not push feature work directly to either long-lived branch. If an emergency fix lands on `main`, merge it back into `staging` immediately.
 
 ```shell
 cd src/frontend && bun run test
