@@ -101,11 +101,15 @@ Follow logs with `just logs`, stop services while preserving local data with `ju
 
 ### Running one application
 
-Run the frontend development server:
+For frontend-only development, install the locked JavaScript dependencies first, then run the development server:
 
 ```shell
-just dev-frontend
+cd src/frontend
+bun install --frozen-lockfile
+bun run dev -- --host 127.0.0.1 --port 7500
 ```
+
+`just setup` runs the same dependency installation along with the backend, documentation, and Git-hook setup.
 
 Run the backend development server:
 
