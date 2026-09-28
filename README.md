@@ -5,7 +5,7 @@
 StudySpot is an open-source search demo for discovering cafés and other third places across New York City. The goal is to make finding a useful place feel immediate: search by a name, category, or neighborhood and get a small, consistent set of results derived from NYC Open Data.
 
 > [!IMPORTANT]
-> StudySpot is currently a scaffold. The frontend, FastAPI liveness endpoint, local Turso configuration, Meilisearch service, CI, Vercel deployment, and empty data boundary are in place. Study-spot routes, data ingestion, Turso loading, indexing, and search behavior are not implemented yet.
+> StudySpot has a working search API and a frontend for text, distance, and Open now filtering. The NYC Open Data importer is still a placeholder and `data/spots.json` is empty, so the application needs a populated snapshot before it can return real spots.
 
 ## How will it work?
 
@@ -37,7 +37,7 @@ The shared study-spot summary contract is intentionally small:
 }
 ```
 
-The planned public routes are `GET /spots`, `GET /spots/{id}`, and `GET /spots/search?q=coffee`. Today, only `GET /health/live` is available.
+The implemented routes are `GET /health/live`, `GET /spots/search?q=coffee`, and `POST /spots/search` for combined filters. `GET /spots` and `GET /spots/{id}` remain planned.
 
 ## Development
 
@@ -104,7 +104,7 @@ The frontend proxies `/api/*` requests to FastAPI during local development.
 
 ### Loading data
 
-The data boundary is scaffolded in [`data/`](data/): `ingest.py` will normalize NYC Open Data into `spots.json`, and `test_ingest.py` will verify the mapping. The importer is not implemented, so `spots.json` currently contains an empty array. Loading that snapshot into Turso and deriving any search index remain separate backend concerns.
+The data boundary is scaffolded in [`data/`](data/): `ingest.py` will normalize NYC Open Data into `spots.json`, and `test_ingest.py` will verify the mapping. The importer is not implemented, so `spots.json` currently contains an empty array. Once populated, `data/enrich_hours.py` can add unambiguous OpenStreetMap hours without replacing the NYC Open Data spot records. Run `just refresh-data` to load the snapshot into Turso and rebuild Meilisearch.
 
 ### Checks
 

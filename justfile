@@ -33,10 +33,18 @@ check:
 # Run fast backend unit tests.
 test:
     cd src/backend && uv run --frozen pytest -m 'not integration'
+    PYTHONPATH=. uv run --project src/backend --frozen pytest data/test_enrich_hours.py
 
 # Rebuild the Meilisearch projection from the configured Turso source.
 reindex:
     docker compose run --build --rm backend uv run --frozen --no-dev python -m studyspot_api.reindex
+
+# Load the normalized source snapshot into the local Turso database.
+load-data:
+    docker compose run --build --rm backend uv run --frozen --no-dev python -m studyspot_api.load_snapshot /app/data/spots.json
+
+# Refresh local Turso records, then rebuild the search projection.
+refresh-data: load-data reindex
 
 # Run the real Meilisearch integration suite.
 test-search:

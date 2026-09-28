@@ -8,6 +8,7 @@ dependencies = [
     "fastapi>=0.141.1",
     "httpx>=0.28.1",
     "libsql>=0.1.11",
+    "opening-hours-py>=2.1.4",
     "pyturso>=0.1.0",
     "uvicorn>=0.52.4",
 ]

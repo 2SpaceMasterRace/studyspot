@@ -28,4 +28,6 @@ Packing the three running processes into one container would couple their failur
 
 ## Current capability
 
-The API currently exposes only `/health/live`. Product routes, data ingestion, the Turso adapter and loader, and search remain owned by their corresponding implementation milestones.
+The API exposes liveness and text and filtered search. The Turso repository,
+snapshot loader, and Meilisearch projection are implemented; NYC Open Data
+ingestion and real records remain a separate data milestone.

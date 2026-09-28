@@ -109,3 +109,41 @@ def test_reindex_and_search(tmp_path, monkeypatch):
         execute("DELETE FROM spots")
         reindex(0)
         assert documents() == []
+
+        # More than one page of relevant text hits must be filtered in
+        # Meilisearch before the API's 20-result limit is applied.
+        for number in range(25):
+            execute(
+                "INSERT INTO spots VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (f"far-{number:02}", "Coffee", "cafe", "A", "N", "Manhattan", 40.70, -74.05),
+            )
+        for identifier in ("open-near", "closed-near"):
+            execute(
+                "INSERT INTO spots VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (identifier, "Coffee Study", "cafe", "A", "N", "Manhattan", 40.73, -73.99),
+            )
+        execute(
+            "INSERT INTO spot_hours VALUES (?, ?, ?)", ("open-near", "24/7", "America/New_York")
+        )
+        execute(
+            "INSERT INTO spot_hours VALUES (?, ?, ?)",
+            ("closed-near", "24/7 off", "America/New_York"),
+        )
+        reindex(27)
+        with TestClient(create_app()) as api:
+            unfiltered = api.get("/spots/search", params={"q": "coffee"}).json()
+            assert len(unfiltered) == 20
+            assert "open-near" not in {spot["id"] for spot in unfiltered}
+            response = api.post(
+                "/spots/search",
+                json={
+                    "q": "coffee",
+                    "latitude": 40.73,
+                    "longitude": -73.99,
+                    "radius_miles": 0.2,
+                    "open_now": True,
+                },
+            )
+            assert response.status_code == 200, response.text
+            assert [spot["id"] for spot in response.json()] == ["open-near"]
+            assert response.json()[0]["distance_miles"] == 0

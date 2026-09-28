@@ -4,7 +4,8 @@ from unittest.mock import Mock
 
 import pytest
 
-from studyspot_api.spots.model import StudySpotSummary
+from studyspot_api.spots.hours import SpotOpeningHours
+from studyspot_api.spots.model import StudySpotRecord, StudySpotSummary
 from studyspot_api.spots.repository import SCHEMA, StudySpotRepository, _row_to_summary
 
 
@@ -74,3 +75,25 @@ def test_schema_failure_closes_connection(monkeypatch):
     with pytest.raises(RuntimeError, match="schema failure"):
         StudySpotRepository("file:unused")
     connection.close.assert_called_once()
+
+
+def test_replacing_snapshot_replaces_spots_and_hours(tmp_path: Path) -> None:
+    with StudySpotRepository(f"file:{tmp_path / 'spots.db'}") as repository:
+        first = StudySpotRecord(
+            id="first",
+            name="First Cafe",
+            category="cafe",
+            address="A",
+            neighborhood="N",
+            borough="Manhattan",
+            latitude=40.7,
+            longitude=-73.9,
+            opening_hours=SpotOpeningHours(expression="24/7"),
+        )
+        second = first.model_copy(update={"id": "second", "opening_hours": None})
+        assert repository.replace([first, second]) == 2
+        assert len(repository.all()) == 2
+        assert set(repository.hours()) == {"first"}
+        repository.replace([second])
+        assert [spot.id for spot in repository.all()] == ["second"]
+        assert repository.hours() == {}

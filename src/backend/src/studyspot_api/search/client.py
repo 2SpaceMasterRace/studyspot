@@ -11,6 +11,7 @@ from ..spots.model import StudySpotSummary
 SEARCHABLE_ATTRIBUTES = ["name", "neighborhood", "category", "address", "borough"]
 INDEX_SETTINGS: dict[str, Any] = {
     "searchableAttributes": SEARCHABLE_ATTRIBUTES,
+    "filterableAttributes": ["_geo", "id"],
     "prefixSearch": "indexingTime",
     "typoTolerance": {
         "enabled": True,
@@ -66,10 +67,13 @@ class MeilisearchClient:
             )
             raise MeilisearchError("Meilisearch request failed", status_code) from error
 
-    async def search(self, query: str, limit: int = 20) -> list[StudySpotSummary]:
-        payload = await self._request(
-            "POST", f"/indexes/{self.index}/search", json={"q": query, "limit": limit}
-        )
+    async def search(
+        self, query: str, limit: int = 20, filters: list[str] | None = None
+    ) -> list[StudySpotSummary]:
+        request: dict[str, Any] = {"q": query, "limit": limit}
+        if filters:
+            request["filter"] = filters
+        payload = await self._request("POST", f"/indexes/{self.index}/search", json=request)
         return [StudySpotSummary(**hit) for hit in payload.get("hits", [])]
 
     async def configure(self) -> None:
@@ -88,7 +92,13 @@ class MeilisearchClient:
     async def replace_documents(self, documents: Iterable[StudySpotSummary]) -> int:
         delete = await self._request("DELETE", f"/indexes/{self.index}/documents")
         await self.wait_for_task(delete["taskUid"])
-        payload = [document.model_dump() for document in documents]
+        payload = [
+            {
+                **document.model_dump(),
+                "_geo": {"lat": document.latitude, "lng": document.longitude},
+            }
+            for document in documents
+        ]
         if not payload:
             return 0
         task = await self._request("POST", f"/indexes/{self.index}/documents", json=payload)

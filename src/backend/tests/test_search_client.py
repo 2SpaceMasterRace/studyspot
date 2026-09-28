@@ -48,6 +48,7 @@ async def test_configure_and_full_replacement():
         if method == "POST" and path == "/indexes/spots/documents"
     )
     assert b'"id":"stable-id"' in document_call
+    assert b'"_geo":{"lat":1.0,"lng":2.0}' in document_call
 
 
 @pytest.mark.anyio
@@ -61,6 +62,7 @@ async def test_failed_task_is_reported():
 
 
 def test_settings_contract():
+    assert INDEX_SETTINGS["filterableAttributes"] == ["_geo", "id"]
     assert INDEX_SETTINGS["prefixSearch"] == "indexingTime"
     assert INDEX_SETTINGS["typoTolerance"]["minWordSizeForTypos"] == {"oneTypo": 5, "twoTypos": 9}
 

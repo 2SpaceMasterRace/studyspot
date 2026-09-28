@@ -10,8 +10,6 @@
 		event.preventDefault();
 
 		const normalizedQuery = query.trim();
-		if (!normalizedQuery) return;
-
 		onSearch?.(normalizedQuery);
 	}
 </script>

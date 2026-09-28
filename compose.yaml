@@ -54,6 +54,7 @@ services:
       - "127.0.0.1:7501:8000"
     volumes:
       - turso-data:/app/.local
+      - ./data:/app/data:ro
     command:
       - uv
       - run

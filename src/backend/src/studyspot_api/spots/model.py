@@ -2,6 +2,8 @@
 
 from pydantic import BaseModel, ConfigDict
 
+from .hours import SpotOpeningHours
+
 
 class StudySpotSummary(BaseModel):
     """The eight fields shared by Turso, Meilisearch, and the HTTP API."""
@@ -16,3 +18,9 @@ class StudySpotSummary(BaseModel):
     borough: str
     latitude: float
     longitude: float
+
+
+class StudySpotRecord(StudySpotSummary):
+    """A normalized source record; hours may be unavailable."""
+
+    opening_hours: SpotOpeningHours | None = None
