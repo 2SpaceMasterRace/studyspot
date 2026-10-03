@@ -47,6 +47,18 @@ just dev
 
 Use `just --list` as the authoritative list of supported commands.
 
+### Frontend-only setup
+
+To run only the Svelte frontend, install its locked dependencies before starting Vite:
+
+```shell
+cd src/frontend
+bun install --frozen-lockfile
+bun run dev -- --host 127.0.0.1 --port 7500
+```
+
+`just setup` runs this command as part of the full repository setup.
+
 ## Local addresses
 
 | Service | Address |

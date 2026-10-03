@@ -1,42 +1,51 @@
 <script lang="ts">
 	type Props = {
-		onSearch?: (query: string) => void;
+		query?: string;
+		resultCount?: number;
+		activeDescendant?: string;
+		onQueryChange?: (query: string) => void;
+		onKeydown?: (event: KeyboardEvent) => void;
 	};
 
-	let { onSearch }: Props = $props();
-	let query = $state('');
-
-	function handleSubmit(event: SubmitEvent): void {
-		event.preventDefault();
-
-		const normalizedQuery = query.trim();
-		onSearch?.(normalizedQuery);
-	}
+	let {
+		query = '',
+		resultCount = 0,
+		activeDescendant = '',
+		onQueryChange,
+		onKeydown
+	}: Props = $props();
 </script>
 
-<form role="search" onsubmit={handleSubmit}>
+<div class="search" role="search">
 	<label for="spot-search">
 		<span>Where</span>
 		<input
 			id="spot-search"
 			name="q"
-			bind:value={query}
-			placeholder="Café, public space, or neighborhood"
+			value={query}
+			placeholder="Try NYU, Brooklyn, or a café name"
 			autocomplete="off"
+			role="combobox"
+			aria-controls="search-results"
+			aria-expanded={resultCount > 0}
+			aria-autocomplete="list"
+			aria-activedescendant={activeDescendant || undefined}
+			oninput={(event) => onQueryChange?.(event.currentTarget.value)}
+			onkeydown={onKeydown}
 		/>
 	</label>
 
-	<button type="submit">
+	<div class="search-icon" aria-hidden="true">
 		<svg viewBox="0 0 24 24" aria-hidden="true">
 			<circle cx="11" cy="11" r="6.5"></circle>
 			<path d="m16 16 4 4"></path>
 		</svg>
 		<span>Search</span>
-	</button>
-</form>
+	</div>
+</div>
 
 <style>
-	form {
+	.search {
 		display: grid;
 		grid-template-columns: 1fr auto;
 		width: min(760px, 100%);
@@ -72,7 +81,7 @@
 		font-size: 14px;
 	}
 
-	button {
+	.search-icon {
 		display: flex;
 		min-width: 132px;
 		align-items: center;
@@ -84,12 +93,6 @@
 		background: var(--color-brand);
 		font-size: 15px;
 		font-weight: 700;
-		cursor: pointer;
-		transition: background 160ms ease;
-	}
-
-	button:hover {
-		background: var(--color-brand-hover);
 	}
 
 	svg {
@@ -101,7 +104,7 @@
 	}
 
 	@media (max-width: 560px) {
-		form {
+		.search {
 			grid-template-columns: 1fr;
 		}
 
@@ -109,7 +112,7 @@
 			min-height: 64px;
 		}
 
-		button {
+		.search-icon {
 			min-height: 50px;
 		}
 	}
