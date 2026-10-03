@@ -3,6 +3,10 @@
 Thank you for taking the time to contribute. StudySpot welcomes bug fixes, features,
 documentation improvements, tests, and code review.
 
+1. Confirm the ticket's public contract and definition of done.
+2. Run `just setup` from the repository root.
+3. Create a short-lived branch from `staging` for one ticket.
+
 Before starting, confirm the issue's public contract and definition of done. Shared contract
 or root configuration changes affect multiple parts of the project, so ask the affected owners
 to review them.
@@ -109,6 +113,10 @@ This verifies the toolchain and Compose configuration, checks and builds the fro
 lints, and type-checks the backend, and builds the Sphinx documentation with warnings treated as
 errors. Also run the tests relevant to your change. For suites that currently exist, use:
 
+Never commit `.env` files or credentials. Copy `.env.example` to `.env` only when you need to override the safe local Compose defaults.
+
+Open feature pull requests into `staging`. After the shared staging deployment is verified, open a release pull request from `staging` into `main`. Do not push feature work directly to either long-lived branch. If an emergency fix lands on `main`, merge it back into `staging` immediately.
+
 ```shell
 cd src/frontend && bun run test
 cd src/backend && uv run pytest
@@ -178,10 +186,9 @@ or perform a duplicate deployment.
 
 | Check or workflow | What it does | When it runs |
 |---|---|---|
-| `Repository checks` | Installs locked dependencies and runs `just check` | Every pull request and pushes to `staging` or `main` |
+| `Repository checks` | Installs locked dependencies and runs `just check`, including a warning-strict Sphinx build | Every pull request and pushes to `staging` or `main` |
 | `Container smoke test` | Builds the Compose services, waits for health checks, and probes the frontend and API | Every pull request and pushes to `staging` or `main` |
 | `Nix flake` | Evaluates the pinned Nix development environment | Every pull request and pushes to `staging` or `main` |
-| `Documentation` | Builds warning-strict Sphinx docs and publishes them to GitHub Pages | Documentation changes merged to `main`, or manual dispatch |
 | `Vercel` | Creates application deployments through the repository's Git integration | Pull requests and configured branch deployments |
 
 `Repository checks`, `Container smoke test`, `Nix flake`, and `Vercel` are protected-branch
@@ -193,7 +200,7 @@ The deployment flow is:
 - feature pull requests receive isolated Vercel Preview deployments;
 - pushes to `staging` update the shared staging deployment;
 - release pull requests merge `staging` into `main`; and
-- pushes to `main` update production and publish changed documentation to GitHub Pages.
+- pushes to `staging` update the developer app and its documentation at `/docs/`.
 
 Preview and staging deployments use staging services and credentials; production uses separate
 Turso configuration. Never copy production secrets into a feature environment. For an explicit
