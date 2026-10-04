@@ -1,6 +1,8 @@
 # Turso database
 
-Turso is StudySpot's selected serving database. The connection configuration and local volume are scaffolded, but the Python adapter, schema, loader, migrations, and queries are not implemented yet.
+Turso is StudySpot's source of truth for serving records. The backend creates
+the minimal `spots` schema on connection and uses `pyturso` for local `file:`
+URLs and `libsql` for hosted URLs behind one repository interface.
 
 ## Environment model
 
@@ -21,7 +23,9 @@ Follow Turso's current [Python SDK guidance](https://docs.turso.tech/sdk/python/
 - use the `libsql` package for remote access to the Turso Cloud libSQL databases from stateless Vercel functions; and
 - keep both behind one StudySpot repository interface.
 
-The adapter will interpret a local `file:` URL as a filesystem path for `turso.connect()` and pass a hosted URL plus token to `libsql.connect()`. Do not add either dependency until working database behavior uses it. When the adapter lands, run the same schema and query contract tests against a temporary local database and the remote adapter boundary.
+The adapter interprets a local `file:` URL as a filesystem path for
+`turso.connect()` and passes a hosted URL plus token to `libsql.connect()`.
+Connections are closed deterministically by the repository context manager.
 
 The application configuration has exactly two database variables:
 
@@ -39,6 +43,8 @@ NYC Open Data -> data/ingest.py -> data/spots.json -> Turso loader -> spots tabl
                                                               \-> search projection
 ```
 
-`data/spots.json` is the reproducible normalized snapshot. Turso is the serving projection used by API queries. Any Meilisearch index is another projection, not an independent source of truth.
+`data/spots.json` is the reproducible normalized snapshot. Turso is the
+source used by reindexing. Meilisearch is a rebuildable projection, not an
+independent source of truth.
 
 Normal Compose shutdown preserves the local database volume. `just clean` deletes it. That is safe while all records can be rebuilt from `spots.json`. If StudySpot later stores favorites, corrections, accounts, or import cursors, backups and migration compatibility become release requirements.

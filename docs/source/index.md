@@ -3,7 +3,7 @@
 StudySpot is an instant search demo for cafés and other New York City third places derived from NYC Open Data. This documentation explains how to develop, operate, and extend the system without obscuring which product capabilities are still planned.
 
 ```{important}
-The service topology, API liveness endpoint, and empty data scaffold are implemented. Study-spot routes, data ingestion, storage loading, and real search behavior remain planned work.
+The service topology, API liveness endpoint, text and filtered search, and empty data scaffold are implemented. NYC Open Data ingestion and real spot records remain planned work.
 ```
 
 ```{toctree}

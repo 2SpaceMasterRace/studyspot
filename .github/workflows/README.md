@@ -12,6 +12,7 @@ Configure the `staging` and `main` branches to require these checks before mergi
 - `Repository checks`
 - `Container smoke test`
 - `Nix flake`
+- `Search integration`
 - `Vercel`
 
 Require resolved conversations and disable force pushes and branch deletion. GitHub does not permit pull-request authors to approve their own work, so a solo maintainer must use zero required approvals. Teams with an independent reviewer can require one or more approvals.
