@@ -25,6 +25,11 @@ Point it at a specific snapshot or database with flags::
 
     ... python -m studyspot_api.spots.store --spots data/spots.json
     ... python -m studyspot_api.spots.store --database-url file:.local/studyspot.db
+
+The default snapshot is discovered in the module's ancestor directories when
+loading, so imports and CLI help also work outside a repository checkout.
+Container or installed-package users can pass ``--spots`` or set
+``STUDYSPOT_SPOTS_PATH`` to their mounted snapshot.
 """
 
 from __future__ import annotations
@@ -120,9 +125,6 @@ ON CONFLICT(id) DO UPDATE SET
 
 _COLUMNS = ("id", "name", "category", "address", "neighborhood", "borough", "latitude", "longitude")
 
-# Repo-root default: this file is src/backend/src/studyspot_api/spots/store.py.
-_DEFAULT_SPOTS_PATH = Path(__file__).resolve().parents[5] / "data" / "spots.json"
-
 SPOTS_PATH_ENV = "STUDYSPOT_SPOTS_PATH"
 
 
@@ -157,9 +159,17 @@ def load_spots(conn: libsql.Connection, spots: Iterable[dict[str, Any]]) -> int:
 
 
 def default_spots_path() -> Path:
-    """Return the snapshot path from the environment or the repo default."""
+    """Return an override or discover the nearest ancestor's snapshot lazily."""
     override = os.environ.get(SPOTS_PATH_ENV)
-    return Path(override) if override else _DEFAULT_SPOTS_PATH
+    if override:
+        return Path(override)
+    for parent in Path(__file__).resolve().parents:
+        snapshot = parent / "data" / "spots.json"
+        if snapshot.is_file():
+            return snapshot
+    raise FileNotFoundError(
+        f"Could not find data/spots.json; pass --spots or set {SPOTS_PATH_ENV}."
+    )
 
 
 def load_from_file(
@@ -180,7 +190,7 @@ def _parse_args(argv: Sequence[str] | None) -> argparse.Namespace:
         "--spots",
         type=Path,
         default=None,
-        help=f"Path to spots.json (default: ${SPOTS_PATH_ENV} or {_DEFAULT_SPOTS_PATH}).",
+        help=f"Path to spots.json (default: ${SPOTS_PATH_ENV} or an ancestor's data/spots.json).",
     )
     parser.add_argument(
         "--database-url",

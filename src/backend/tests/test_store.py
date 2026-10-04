@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from types import ModuleType
 
 import pytest
 
@@ -101,3 +102,68 @@ def test_read_spots_rejects_non_array(tmp_path: Path) -> None:
     bad.write_text(json.dumps({"not": "a list"}), encoding="utf-8")
     with pytest.raises(ValueError, match="JSON array"):
         store.read_spots(bad)
+
+
+@pytest.fixture
+def shallow_store() -> ModuleType:
+    """Load the real module with the shallow path used by the Docker image."""
+    module = ModuleType("container_store")
+    module.__file__ = "/app/src/studyspot_api/spots/store.py"
+    source = Path(store.__file__).read_text(encoding="utf-8")
+    exec(compile(source, module.__file__, "exec"), module.__dict__)
+    return module
+
+
+def test_store_imports_in_shallow_layout(shallow_store: ModuleType) -> None:
+    assert callable(shallow_store.connect)
+
+
+def test_cli_help_does_not_require_snapshot(
+    shallow_store: ModuleType, capsys: pytest.CaptureFixture[str]
+) -> None:
+    with pytest.raises(SystemExit) as error:
+        shallow_store.main(["--help"])
+    assert error.value.code == 0
+    assert "--spots" in capsys.readouterr().out
+
+
+def test_snapshot_override_in_shallow_layout(
+    shallow_store: ModuleType, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv(store.SPOTS_PATH_ENV, "mounted/spots.json")
+    assert shallow_store.default_spots_path() == Path("mounted/spots.json")
+
+
+def test_explicit_snapshot_in_shallow_layout(
+    shallow_store: ModuleType, tmp_path: Path, local_db_url: str, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv(store.SPOTS_PATH_ENV, str(tmp_path / "missing-override.json"))
+    snapshot = tmp_path / "spots.json"
+    snapshot.write_text(json.dumps(SAMPLE_SPOTS), encoding="utf-8")
+    assert shallow_store.load_from_file(snapshot, local_db_url) == len(SAMPLE_SPOTS)
+
+
+def test_default_snapshot_finds_nearest_ancestor(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.delenv(store.SPOTS_PATH_ENV, raising=False)
+    snapshot = tmp_path / "backend" / "data" / "spots.json"
+    snapshot.parent.mkdir(parents=True)
+    snapshot.write_text("[]", encoding="utf-8")
+    outer_snapshot = tmp_path / "data" / "spots.json"
+    outer_snapshot.parent.mkdir()
+    outer_snapshot.write_text("[]", encoding="utf-8")
+    monkeypatch.setattr(store, "__file__", str(tmp_path / "backend" / "src" / "store.py"))
+    elsewhere = tmp_path / "elsewhere"
+    elsewhere.mkdir()
+    monkeypatch.chdir(elsewhere)
+    assert store.default_spots_path() == snapshot
+
+
+def test_missing_default_snapshot_has_actionable_error(
+    shallow_store: ModuleType, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.delenv(store.SPOTS_PATH_ENV, raising=False)
+    monkeypatch.setattr(Path, "is_file", lambda self: False)
+    with pytest.raises(FileNotFoundError, match="--spots.*STUDYSPOT_SPOTS_PATH"):
+        shallow_store.default_spots_path()
