@@ -3,6 +3,7 @@
   "services": {
     "frontend": {
       "root": "src/frontend/",
+      "framework": "sveltekit-1",
       "buildCommand": "if [ \"$VERCEL_GIT_COMMIT_REF\" = \"staging\" ]; then LC_ALL=C.UTF-8 LANG=C.UTF-8 uv run --project ../../docs sphinx-build --fail-on-warning --keep-going --builder html ../../docs/source static/docs; fi; bun run build"
     },
     "backend": {
