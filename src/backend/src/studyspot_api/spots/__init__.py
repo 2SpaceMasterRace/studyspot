@@ -1,1 +1,1 @@
-"""Study-spot data access: schema, loader, and (later) API repository."""
+"""Study-spot data models and Turso repository."""

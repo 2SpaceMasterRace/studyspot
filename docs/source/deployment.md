@@ -45,6 +45,12 @@ The current Vercel project has both aliases assigned, but Deployment Protection 
 
 No database secret belongs in GitHub Actions because Vercel injects runtime values. All Preview deployments may share the rebuildable staging dataset while the API is read-only. Before adding user-generated writes, give ephemeral previews isolated databases or read-only credentials and keep staging separate from production.
 
+Hosted reindexing is operator- or CI-initiated. Set `TURSO_DATABASE_URL`,
+`TURSO_AUTH_TOKEN`, `MEILISEARCH_URL`, and optionally
+`MEILISEARCH_API_KEY`/`MEILISEARCH_INDEX`, then run `just reindex`. The API
+does not require Meilisearch at startup, but search returns 503 while the
+configured service is unavailable.
+
 After making staging public, verify both boundaries and require an exact HTTP 200 rather than accepting redirects:
 
 ```shell
@@ -72,7 +78,8 @@ nix run . -- deploy-production
 
 ## Data and search state
 
-The deployed scaffold does not yet import NYC Open Data records, consume `data/spots.json`, load Turso, or build runtime search structures. The planned implementation will normalize café and public-third-place records into that reproducible dataset and derive Turso serving state and any search projection from it.
+The deployed application reads Turso-backed records and searches the derived
+Meilisearch projection. It does not import data or reindex during startup.
 
 The local Turso file and hosted Turso databases use the same schema and query contract but different transports. Meilisearch remains part of the local Compose topology for integration work and is not a current production dependency. While every record comes from the normalized public snapshot, either Turso environment can be cleared and reloaded. Once StudySpot stores corrections, favorites, accounts, import cursors, or other non-reproducible state, backups and backward-compatible migrations become release requirements.
 

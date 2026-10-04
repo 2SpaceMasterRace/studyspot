@@ -1,0 +1,22 @@
+services:
+  meilisearch:
+    image: getmeili/meilisearch:v1.45.1
+    environment:
+      MEILI_NO_ANALYTICS: "true"
+      MEILI_MASTER_KEY: studyspot-integration-key
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "--silent", "http://localhost:7700/health"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  tests:
+    platform: linux/amd64
+    build:
+      context: ./src/backend
+      target: test
+    environment:
+      MEILISEARCH_URL: http://meilisearch:7700
+      MEILISEARCH_API_KEY: studyspot-integration-key
+    depends_on:
+      meilisearch:
+        condition: service_healthy

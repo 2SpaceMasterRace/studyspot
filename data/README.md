@@ -13,17 +13,29 @@ NYC Open Data (Socrata SODA) -> ingest.py -> spots.json
   appends a small hand-maintained list of NYU buildings, and writes
   `spots.json`.
 - `spots.json` is the canonical generated dataset consumed by the application.
-- `nyu_buildings.json` is the hand-maintained list of NYU buildings, kept as
-  data (not hardcoded in `ingest.py`) so it can be edited without touching code.
-- `test_ingest.py` covers the mapping and validation logic.
+- `test_ingest.py` is the placeholder for mapping and validation tests.
+- `enrich_hours.py` optionally matches saved OpenStreetMap Overpass records to
+  existing spots by name and distance; `test_enrich_hours.py` covers the matching rules.
 
 Every spot contains `id`, `name`, `category`, `address`, `neighborhood`,
 `borough`, `latitude`, `longitude`, and `university`.
 
-`university` is set only for records taken from the hand-maintained campus
-list. It is never inferred: being near a campus is not an affiliation, and an
-earlier draft that assigned the nearest campus within 500 m produced results
-such as a cafe labelled with a hospital's nursing school.
+The NYC Open Data importer and real records are not implemented yet. `spots.json` is
+therefore an empty JSON array. Run that importer before hours enrichment. To enrich a
+populated snapshot, save an Overpass JSON response containing `name`, `opening_hours`,
+and coordinates, then run:
+
+```shell
+uv run --project src/backend python data/enrich_hours.py --input overpass.json
+```
+
+The enrichment step fills only a missing `opening_hours` field when exactly one OSM
+place has the same normalized name within 50 meters. It records the OSM source URL,
+leaves ambiguous or invalid hours unknown, and keeps all existing NYC Open Data spot
+fields. Enriched snapshots include OpenStreetMap data, which is available under the
+[Open Database License](https://www.openstreetmap.org/copyright); keep the attribution
+and source links when sharing the snapshot. Turso files and search indexes do not
+belong here; `just load-data` copies a populated snapshot into Turso.
 
 ## Regenerating the dataset
 
