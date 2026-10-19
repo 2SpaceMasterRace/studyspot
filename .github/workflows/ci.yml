@@ -16,7 +16,32 @@ jobs:
   check:
     name: Repository checks
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
+
+    # The test suite runs against a real Postgres rather than a substitute,
+    # because the schema relies on Postgres behaviour: "C" collation for
+    # deterministic paging, expression indexes for the case-insensitive filters,
+    # and check constraints the loader depends on the database to enforce.
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: studyspot
+          POSTGRES_PASSWORD: studyspot
+          POSTGRES_DB: studyspot
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready --username=studyspot --dbname=studyspot"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://studyspot:studyspot@localhost:5432/studyspot
+      # pytest-django creates and drops its own test database, so the suite
+      # never touches the one named above.
+      DJANGO_DEBUG: "true"
 
     steps:
       - name: Check out repository
@@ -39,11 +64,11 @@ jobs:
       - name: Install just
         uses: extractions/setup-just@v4
         with:
-          just-version: 1.21.0
+          just-version: 1.59.0
 
       - name: Install frontend dependencies
         working-directory: src/frontend
-        run: bun ci
+        run: bun install --frozen-lockfile
 
       - name: Install backend dependencies
         working-directory: src/backend
@@ -58,3 +83,39 @@ jobs:
 
       - name: Run tests
         run: just test
+
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.16.6
+          terraform_wrapper: false
+
+      - name: Check formatting
+        run: terraform -chdir=infra/terraform fmt -check -recursive
+
+      # `validate` evaluates filebase64sha256(var.lambda_package_path), so the
+      # file has to exist even though nothing is deployed from this job. Its
+      # contents are irrelevant; only the path is.
+      - name: Create a placeholder deployment package
+        run: |
+          mkdir -p infra/build
+          : > infra/build/placeholder
+          (cd infra/build && zip --quiet studyspot-api.zip placeholder)
+
+      # No AWS credentials are needed or wanted here. `init -backend=false`
+      # downloads the providers so that `validate` can check resource arguments
+      # and types without touching an account or reading state.
+      - name: Initialize without a backend
+        run: terraform -chdir=infra/terraform init -backend=false
+
+      - name: Validate
+        run: terraform -chdir=infra/terraform validate

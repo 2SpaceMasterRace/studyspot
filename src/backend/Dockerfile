@@ -10,8 +10,13 @@ WORKDIR /app
 COPY pyproject.toml uv.lock README.md ./
 RUN uv sync --frozen --no-dev --no-install-project
 
-COPY src ./src
+COPY studyspot ./studyspot
+COPY spots ./spots
+COPY manage.py handler.py ./
 
 EXPOSE 8000
 
-CMD ["uv", "run", "--frozen", "uvicorn", "studyspot_api.main:app", "--app-dir", "src", "--host", "0.0.0.0", "--port", "8000"]
+# compose.yaml replaces this to run migrations first. On its own, this is the
+# development server: a production container would want gunicorn, which the AWS
+# deployment does not need because Lambda invokes the ASGI application directly.
+CMD ["uv", "run", "--frozen", "python", "manage.py", "runserver", "0.0.0.0:8000"]

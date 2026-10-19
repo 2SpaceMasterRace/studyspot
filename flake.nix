@@ -13,6 +13,17 @@
         "x86_64-linux"
       ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
+
+      # Terraform has been under the BUSL since 2023, so nixpkgs marks it
+      # unfree. Permitted for that one package rather than by setting
+      # allowUnfree globally, which would silently permit anything else later.
+      pkgsFor =
+        system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfreePredicate = package: nixpkgs.lib.getName package == "terraform";
+        };
+
       toolchainFor =
         pkgs: with pkgs; [
           bun
@@ -24,13 +35,19 @@
           pre-commit
           python312
           uv
+
+          # Deploying to AWS: see infra/README.md. Pinned here for the same
+          # reason as everything above, so that `just aws-apply` behaves the
+          # same for everyone who runs it.
+          awscli2
+          terraform
         ];
     in
     {
       devShells = forAllSystems (
         system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = pkgsFor system;
         in
         {
           default = pkgs.mkShellNoCC {
@@ -43,7 +60,7 @@
       packages = forAllSystems (
         system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = pkgsFor system;
         in
         {
           default = pkgs.writeShellApplication {
@@ -70,7 +87,7 @@
       checks = forAllSystems (
         system:
         let
-          pkgs = import nixpkgs { inherit system; };
+          pkgs = pkgsFor system;
         in
         {
           toolchain = pkgs.runCommand "studyspot-toolchain" {
@@ -81,6 +98,8 @@
               just
               python312
               uv
+              awscli2
+              terraform
             ];
           } ''
             bun --version
@@ -89,6 +108,8 @@
             just --version
             python3.12 --version
             uv --version
+            aws --version
+            terraform version
             touch "$out"
           '';
         }

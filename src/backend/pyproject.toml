@@ -5,10 +5,19 @@ description = "StudySpot HTTP API"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi>=0.141.1",
-    "libsql>=0.1.11",
-    "pyturso>=0.7.2",
-    "uvicorn>=0.52.4",
+    # Held to the 5.2 LTS series rather than tracking the latest Django. 5.2 is
+    # supported until April 2028; 6.x releases are superseded roughly every
+    # eight months, and the wider ecosystem lags them.
+    "django>=5.2.7,<6.0",
+    "djangorestframework>=3.16.1",
+    "dj-database-url>=3.0.1",
+    "psycopg[binary]>=3.2.10",
+    # Translates the Lambda function URL's event into the ASGI call Django
+    # expects. See handler.py.
+    "mangum>=0.19.0",
+    # Serves the admin and DRF static files from the application itself, so
+    # neither Lambda nor Vercel needs a second origin for them.
+    "whitenoise>=6.11.0",
 ]
 
 [tool.ruff]
@@ -16,18 +25,47 @@ target-version = "py312"
 line-length = 100
 
 [tool.ruff.lint]
-select = ["E4", "E7", "E9", "F", "I", "UP", "B", "SIM"]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "SIM", "DJ"]
+
+[tool.ruff.lint.per-file-ignores]
+# Generated migrations are not written to this project's style.
+"spots/migrations/*" = ["E501"]
+
+# DJ001 advises against null=True on text fields, to avoid having both NULL and
+# "" mean "no value". Here the distinction is the contract: address,
+# neighborhood and university are null in the published API for the records NYC
+# Open Data does not supply them for, and an empty string would assert that the
+# source gave us a blank value rather than none at all. See StudySpot's
+# docstring.
+"spots/models.py" = ["DJ001"]
+
+[[tool.ty.overrides]]
+# Django builds `objects`, `DoesNotExist` and `_meta` onto every model from the
+# ModelBase metaclass, and types QuerySet as generic only in stubs. ty has no
+# Django plugin and so reports all of that as missing attributes; mypy needs
+# django-stubs for the same reason. Scoped to the app that defines models, so
+# unresolved-attribute keeps working everywhere else.
+#
+# Revisit when ty gains Django support. The alternative is mypy with
+# django-stubs, which would type-check the ORM properly rather than ignoring it.
+include = ["spots/**"]
+
+[tool.ty.overrides.rules]
+unresolved-attribute = "ignore"
+invalid-type-form = "ignore"
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
-pythonpath = ["src"]
+# studyspot.settings_test supplies the debug and secret-key values the real
+# settings module requires, then defers to it. See its docstring.
+DJANGO_SETTINGS_MODULE = "studyspot.settings_test"
+testpaths = ["spots"]
 addopts = ["-ra", "--strict-markers"]
 
 [dependency-groups]
 dev = [
-    "httpx>=0.28.1",
     "pre-commit>=4.6.2",
     "pytest>=9.1.1",
+    "pytest-django>=4.11.1",
     "ruff>=0.16.7",
     "ty>=0.0.80",
 ]

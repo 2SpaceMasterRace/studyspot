@@ -1,10 +1,21 @@
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
-import adapter from '@sveltejs/adapter-vercel';
+import vercelAdapter from '@sveltejs/adapter-vercel';
+import staticAdapter from '@sveltejs/adapter-static';
 import { sveltekit } from '@sveltejs/kit/vite';
 
 const apiProxyTarget = process.env.API_PROXY_TARGET ?? 'http://localhost:7501';
+
+// Two deployments, one build. Vercel keeps its own adapter; the AWS deployment
+// serves the same app as prerendered files from S3 behind CloudFront, which
+// needs no server at all because every route sets `prerender = true`.
+//
+// `DEPLOY_TARGET=aws bun run build` produces the S3 upload. The fallback is
+// 404.html rather than index.html so that a missing key is a 404 instead of the
+// homepage served under the wrong URL.
+const adapter =
+	process.env.DEPLOY_TARGET === 'aws' ? staticAdapter({ fallback: '404.html' }) : vercelAdapter();
 
 export default defineConfig({
 	plugins: [
@@ -15,7 +26,7 @@ export default defineConfig({
 				runes: ({ filename }) =>
 					filename.split(/[/\\]/).includes('node_modules') ? undefined : true
 			},
-			adapter: adapter()
+			adapter
 		})
 	],
 	server: {

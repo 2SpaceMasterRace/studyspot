@@ -8,3 +8,6 @@
 **/.pytest_cache
 **/__pycache__
 /tests
+
+# AWS infrastructure is deployed with Terraform, not uploaded to Vercel.
+infra/

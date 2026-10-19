@@ -8,7 +8,6 @@
     "backend": {
       "root": "src/backend/",
       "entrypoint": "main:app",
-      "framework": "fastapi",
       "rewrites": [
         {
           "source": "/api/:path*",

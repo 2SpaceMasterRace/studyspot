@@ -43,27 +43,22 @@ services:
     build:
       context: ./src/backend
     environment:
-      TURSO_DATABASE_URL: ${TURSO_DATABASE_URL:-file:/app/.local/studyspot.db}
-      TURSO_AUTH_TOKEN: ${TURSO_AUTH_TOKEN:-}
+      DATABASE_URL: ${DATABASE_URL:-postgresql://studyspot:studyspot@postgres:5432/studyspot}
+      DJANGO_DEBUG: "true"
       MEILISEARCH_URL: http://meilisearch:7700
     ports:
       - "127.0.0.1:7501:8000"
-    volumes:
-      - turso-data:/app/.local
+    # Migrations run before the server so that `docker compose up` on a fresh
+    # volume serves a working API rather than 503s until someone remembers.
     command:
-      - uv
-      - run
-      - --frozen
-      - uvicorn
-      - studyspot_api.main:app
-      - --app-dir
-      - src
-      - --host
-      - 0.0.0.0
-      - --port
-      - "8000"
-      - --reload
+      - sh
+      - -c
+      - |
+        uv run --frozen python manage.py migrate --no-input
+        exec uv run --frozen python manage.py runserver 0.0.0.0:8000
     depends_on:
+      postgres:
+        condition: service_healthy
       meilisearch:
         condition: service_healthy
     healthcheck:
@@ -75,18 +70,42 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
-      start_period: 10s
+      start_period: 15s
     develop:
       watch:
         - action: sync
-          path: ./src/backend/src
-          target: /app/src
+          path: ./src/backend/studyspot
+          target: /app/studyspot
+        - action: sync
+          path: ./src/backend/spots
+          target: /app/spots
         - action: rebuild
           path: ./src/backend/pyproject.toml
         - action: rebuild
           path: ./src/backend/uv.lock
         - action: rebuild
           path: ./src/backend/Dockerfile
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: studyspot
+      POSTGRES_PASSWORD: studyspot
+      POSTGRES_DB: studyspot
+    # Published so that `just dev-backend` and `just test` outside Compose reach
+    # the same database the containers use.
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      # The database name is given explicitly: without it pg_isready checks the
+      # user's default database, which during initialization is not yet ready.
+      test: ["CMD-SHELL", "pg_isready --username=studyspot --dbname=studyspot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
 
   meilisearch:
     image: getmeili/meilisearch:v1.45.1
@@ -105,5 +124,5 @@ services:
       start_period: 10s
 
 volumes:
-  turso-data:
+  postgres-data:
   meilisearch-data:
