@@ -5,22 +5,22 @@
 StudySpot is an open-source search demo for discovering cafés and other third places across New York City. The goal is to make finding a useful place feel immediate: search by a name, category, or neighborhood and get a small, consistent set of results derived from NYC Open Data.
 
 > [!IMPORTANT]
-> StudySpot is early but no longer empty. The frontend, FastAPI service, NYC Open Data importer, Turso adapter and loader, study-spot listing and detail routes, Meilisearch service, CI, and Vercel deployment are in place. Indexing and search behavior are not implemented yet.
+> StudySpot is early but no longer empty. The frontend, the Django API, the shared study-spot model and its migrations, the dataset loader, the listing and detail routes, the Meilisearch service, CI, and both deployment targets are in place. The NYC Open Data importer is still a placeholder, so `data/spots.json` is an empty array; indexing and search behavior are not implemented yet.
 
 ## How will it work?
 
 StudySpot is designed as a small modular monolith with two deployed applications and a versioned public-data snapshot:
 
 ```text
-Browser -> SvelteKit -> FastAPI -> Turso
+Browser -> SvelteKit -> Django REST Framework -> Postgres
 
-NYC Open Data -> ingest.py -> spots.json -> Turso
+NYC Open Data -> ingest.py -> spots.json -> Postgres
                                       \-> search index
 ```
 
-The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [FastAPI](https://fastapi.tiangolo.com/) service provides the HTTP boundary. [Turso](https://turso.tech/) is the selected serving database. The normalized NYC Open Data snapshot remains the reproducible source used to load Turso and rebuild any search index.
+The [Svelte 5](https://svelte.dev/) frontend owns the search experience. A [Django](https://www.djangoproject.com/) application with [Django REST Framework](https://www.django-rest-framework.org/) provides the HTTP boundary, and one model defines the study spot that the routes, the loader, and any future search projection all share. [Postgres](https://www.postgresql.org/) is the serving database. The normalized NYC Open Data snapshot remains the reproducible source used to load it and to rebuild any search index.
 
-Local development uses Docker Compose for the browser app, API, and Meilisearch. The backend receives a local `file:` URL and reserves a named volume for its embedded Turso database, so no separate database process or port is required. On [Vercel](https://vercel.com/), FastAPI connects to Turso Cloud over the network with environment-scoped credentials. Both modes sit behind one repository interface.
+Local development uses Docker Compose for the browser app, API, Postgres, and Meilisearch. The same Postgres is published on `127.0.0.1:5432`, so a backend run outside Compose uses the same database as one run inside it. Deployments run the same application against the same schema: on [AWS](https://aws.amazon.com/) the API is a Lambda function behind CloudFront with an RDS Postgres instance in private subnets, and on [Vercel](https://vercel.com/) it is a Python service — which has no database until the RDS instance is made publicly reachable.
 
 The shared study-spot summary contract is intentionally small:
 
@@ -38,7 +38,7 @@ The shared study-spot summary contract is intentionally small:
 }
 ```
 
-`GET /spots` and `GET /spots/{id}` are available alongside `GET /health/live`. `GET /spots` pages with `limit` and `offset` and filters on `name`, `neighborhood`, `borough`, and `university`. `GET /spots/search?q=coffee` is still planned. See the [HTTP API guide](docs/source/api.md).
+`GET /spots` and `GET /spots/{id}` are available alongside `GET /health/live`, none of them with a trailing slash. `GET /spots` pages with `limit` and `offset` and filters on `name`, `neighborhood`, `borough`, and `university`. `GET /spots/search?q=coffee` is still planned. See the [HTTP API guide](docs/source/api.md).
 
 ## Development
 
@@ -64,7 +64,7 @@ Without Nix, install Bun, Python 3.12, uv, just, pre-commit, Git, and Docker, th
 
 ### Running the complete system
 
-Build and start all three container services with live source updates:
+Build and start all four container services with live source updates:
 
 ```shell
 just dev
@@ -84,8 +84,9 @@ Once healthy, the services are available at:
 | API liveness | <http://localhost:7501/health/live> |
 | Meilisearch | <http://localhost:7502> |
 | Documentation (`just docs`) | <http://localhost:7503> |
+| Postgres | `127.0.0.1:5432` |
 
-Follow logs with `just logs`, stop services while preserving local data with `just shutdown`, or remove the local Turso and Meilisearch volumes with `just clean`.
+The backend applies its migrations before it starts serving, so a fresh checkout gets a working schema without a separate step. Follow logs with `just logs`, stop services while preserving local data with `just shutdown`, or remove the Postgres and Meilisearch volumes with `just clean`.
 
 ### Running one application
 
@@ -95,23 +96,25 @@ Run the frontend development server:
 just dev-frontend
 ```
 
-Run the backend development server:
+Run the backend development server, which needs only the database:
 
 ```shell
+just start-db
+just migrate
 just dev-backend
 ```
 
-The frontend proxies `/api/*` requests to FastAPI during local development.
+`just start-db` starts the Postgres container alone and waits for it; `just migrate` brings the schema up to date, and `just makemigrations` generates a migration after a model change. The frontend proxies `/api/*` requests to the Django API during local development.
 
 ### Loading data
 
-The data boundary lives in [`data/`](data/): `ingest.py` normalizes NYC Open Data into `spots.json`, and `test_ingest.py` verifies the mapping. Copy that snapshot into the local Turso database before using the study-spot routes:
+The data boundary lives in [`data/`](data/): `ingest.py` normalizes NYC Open Data into `spots.json`, and `test_ingest.py` verifies the mapping. Both are still placeholders, and the real importer lands on its own branch. Copy the snapshot into the local database before using the study-spot routes:
 
 ```shell
 just load-data
 ```
 
-Regenerate the snapshot from NYC Open Data with `just ingest`. Deriving a search index remains a separate backend concern.
+The loader validates every record against the shared model and replaces the table's contents in one transaction, so it is safe to re-run and the table can only ever hold records the API can serve. Deriving a search index remains a separate backend concern.
 
 ### Checks
 
@@ -121,37 +124,38 @@ Verify the toolchain, Docker daemon, Compose configuration, formatting, linting,
 just check
 ```
 
-Run the backend and data test suites:
+Run the backend and data test suites, which need the database running:
 
 ```shell
+just start-db
 just test
 ```
+
+The suites run against a real Postgres because the schema depends on Postgres behaviour; pytest-django creates and drops its own test database, so loaded data is left alone.
 
 Run `just nix-check` to validate the pinned development environment. Tests live beside the behavior they verify.
 
 ## Deployment
 
-Vercel's Git integration owns normal deployments:
+There are two targets, and one revision deploys to both.
+
+**Vercel** owns the automatic path through its Git integration:
 
 - feature pull requests receive isolated Preview deployments;
 - pushes to `staging` update the shared staging deployment; and
 - pushes to `main` update production.
 
-The Vercel deployment status is a required pull-request check. GitHub Actions runs repository, container, documentation, and Nix checks, but does not perform a second deployment.
+Vercel Services deploy the SvelteKit frontend and the Django application together, splitting on the same `/api/*` boundary the frontend proxy uses locally. The Vercel deployment status is a required pull-request check. Create an out-of-band preview with `just deploy-preview`, or release manually with `just deploy-production`.
 
-Create an out-of-band Vercel preview deployment with:
-
-```shell
-just deploy-preview
-```
-
-Deploy the current revision directly to production only for an explicit manual release or recovery:
+**AWS** is the deployment that has a database: CloudFront in front of S3 for the prerendered frontend and a Lambda function for the API, with RDS Postgres in private subnets. It is Terraform in [`infra/`](infra/), applied deliberately from a checkout rather than from CI, which would need long-lived AWS credentials in the repository:
 
 ```shell
-just deploy-production
+just aws-init aws-build aws-apply aws-migrate aws-load aws-frontend aws-verify
 ```
 
-The project uses Vercel Services to deploy the SvelteKit frontend and FastAPI backend together. Feature pull requests target `staging`; release pull requests merge `staging` into `main`. Preview deployments will use the staging Turso database, while production uses a separate database and token. See the [deployment guide](docs/source/deployment.md) for the environment model and rollback behavior.
+Because the RDS instance has no public endpoint, migrations and data loads run as Lambda invocations, and the Vercel deployment has no database: it serves the frontend and `/api/health/live`, while `/api/spots` answers `503`. [`infra/README.md`](infra/README.md) covers the stack, what it costs, and how to stop the database when it is not in use.
+
+GitHub Actions runs repository, container, documentation, Nix, and Terraform checks, and performs no deployment of its own. Feature pull requests target `staging`; release pull requests merge `staging` into `main`. See the [deployment guide](docs/source/deployment.md) for the environment model and rollback behavior.
 
 ## Documentation
 
@@ -166,12 +170,13 @@ Useful starting points include the [architecture](docs/source/architecture.md), 
 ## Technology
 
 - **Frontend:** Svelte 5, TypeScript, SvelteKit, Vite, Tailwind CSS, Bun
-- **Backend:** Python 3.12, FastAPI, uv
+- **Backend:** Python 3.12, Django 5.2, Django REST Framework, uv
 - **Data source:** NYC Open Data
-- **Database:** Turso locally and Turso Cloud on Vercel
+- **Database:** Postgres — a container locally, Amazon RDS on AWS
 - **Search integration:** Meilisearch
-- **Operations:** Nix, Docker Compose, just, pre-commit, Vercel, GitHub Actions
-- **Checks:** Prettier, ESLint, svelte-check, Ruff, ty, pytest
+- **Deployment:** Vercel, and AWS (CloudFront, S3, Lambda, RDS) with Terraform
+- **Operations:** Nix, Docker Compose, just, pre-commit, GitHub Actions
+- **Checks:** Prettier, ESLint, svelte-check, Ruff, ty, pytest, Django system checks, `terraform validate`
 
 ## Contributing
 

@@ -12,11 +12,13 @@ NYC Open Data -> ingest.py -> spots.json
 
 The first dataset will showcase cafés and other public third places where students might meet
 or study. A spot will contain `id`, `name`, `category`, `address`, `neighborhood`, `borough`,
-`latitude`, and `longitude`.
+`latitude`, and `longitude`, plus `university` for records taken from a curated campus list. A
+field outside that set makes the loader fail rather than disappear silently.
 
 The importer, tests, and real records are not implemented yet. `spots.json` is therefore an
-empty JSON array. Turso migrations, local database files, and search indexes do not belong
-here; the backend loader will copy the normalized dataset into the Turso serving database.
+empty JSON array. Database migrations, local database files, and search indexes do not belong
+here; the backend's `load_spots` management command copies this snapshot into the Postgres
+serving table, replacing its contents in one transaction.
 
 StudySpot treats these records as candidate gathering and study locations. It must not claim
 that a location has Wi-Fi, outlets, seating, or a quiet environment unless NYC Open Data

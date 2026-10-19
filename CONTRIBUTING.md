@@ -25,10 +25,15 @@ studyspot/
 │   ├── source/                  # MyST Markdown and Sphinx configuration
 │   ├── pyproject.toml
 │   └── uv.lock
+├── infra/                       # AWS deployment: Terraform and its helper scripts
+│   ├── terraform/
+│   ├── scripts/
+│   └── README.md
 ├── src/
-│   ├── backend/                 # FastAPI application and backend tests
-│   │   ├── src/studyspot_api/
-│   │   ├── tests/
+│   ├── backend/                 # Django application, its tests, and both entry points
+│   │   ├── studyspot/           # Settings, URLs, health, error envelope, middleware
+│   │   ├── spots/               # Model, routes, serializers, migrations, loader, tests
+│   │   ├── manage.py
 │   │   ├── pyproject.toml
 │   │   └── uv.lock
 │   └── frontend/                # SvelteKit application and frontend tests
@@ -37,15 +42,15 @@ studyspot/
 │       ├── package.json
 │       └── bun.lock
 ├── tests/e2e/                   # Full browser-to-API tests
-├── compose.yaml                 # Local frontend, API, and Meilisearch services
+├── compose.yaml                 # Local frontend, API, Postgres, and Meilisearch services
 ├── flake.nix                    # Pinned Nix development environment
 ├── justfile                     # Canonical development commands
 └── vercel.json                  # Vercel frontend and backend deployment configuration
 ```
 
 Tests live with the behavior they verify: frontend tests belong beside frontend components,
-backend tests belong in `src/backend/tests/`, data-import tests belong in `data/`, and complete
-user-flow tests belong in `tests/e2e/`.
+backend tests belong in `src/backend/spots/tests/` beside the app they cover, data-import tests
+belong in `data/`, and complete user-flow tests belong in `tests/e2e/`.
 
 The shared contract in `contracts/` is the boundary between the frontend, API, data importer,
 database, and search implementation. Coordinate changes to it with every affected owner. Tool
@@ -73,9 +78,11 @@ and `refactor/`.
 - Add dependencies only when the change uses them, and commit the appropriate lockfile.
 - Add or update tests for changed behavior.
 - Update documentation when behavior, setup, configuration, or a public contract changes.
-- Never commit credentials, `.env` files, local databases, or generated search data. Copy
-  `.env.example` to `.env` only when local overrides are needed.
-- Use `just clean` carefully: it stops the Compose services and deletes their local Turso and
+- Never commit credentials, `.env` files, local databases, generated search data, or Terraform
+  state. Copy `.env.example` to `.env` only when local overrides are needed.
+- Changing a model means committing its migration. `just django-check` fails when the two
+  disagree, and it runs as part of `just check`.
+- Use `just clean` carefully: it stops the Compose services and deletes their Postgres and
   Meilisearch volumes.
 
 Write small commits in the imperative mood:
@@ -83,7 +90,7 @@ Write small commits in the imperative mood:
 ```text
 add neighborhood filter to spot search
 fix API liveness error response
-document local Turso configuration
+document local Postgres configuration
 ```
 
 Avoid vague messages such as `updates`, `fixed stuff`, or `WIP` in the final branch history.
@@ -111,11 +118,17 @@ errors. Also run the tests relevant to your change. For suites that currently ex
 
 ```shell
 cd src/frontend && bun run test
+just start-db
 just test
 ```
 
-`just test` runs the backend suite in `src/backend/tests/` and the data-import suite in
-`data/`. The pre-push hook runs both `just check` and `just test`.
+`just test` runs the backend suite in `src/backend/spots/tests/` and the data-import suite in
+`data/`. It needs Postgres running, which is what `just start-db` provides; pytest-django
+creates and drops its own test database, so your loaded data is left alone. The pre-push hook
+runs both `just check` and `just test`.
+
+If your change touches `infra/`, also run `just infra-check`, which formats and validates the
+Terraform without touching an AWS account.
 
 Use `just start` for a local container smoke test, `just dev` for live source updates, and
 `just nix-check` when changing the Nix environment. See `just --list` for all supported commands.
@@ -181,13 +194,14 @@ or perform a duplicate deployment.
 
 | Check or workflow | What it does | When it runs |
 |---|---|---|
-| `Repository checks` | Installs locked dependencies and runs `just check`, including a warning-strict Sphinx build | Every pull request and pushes to `staging` or `main` |
+| `Repository checks` | Installs locked dependencies and runs `just check` and `just test` against a Postgres service container, including a warning-strict Sphinx build | Every pull request and pushes to `staging` or `main` |
+| `Terraform` | Formats and validates `infra/terraform/` with no AWS credentials | Every pull request and pushes to `staging` or `main` |
 | `Container smoke test` | Builds the Compose services, waits for health checks, and probes the frontend and API | Every pull request and pushes to `staging` or `main` |
 | `Nix flake` | Evaluates the pinned Nix development environment | Every pull request and pushes to `staging` or `main` |
 | `Vercel` | Creates application deployments through the repository's Git integration | Pull requests and configured branch deployments |
 
-`Repository checks`, `Container smoke test`, `Nix flake`, and `Vercel` are protected-branch
-requirements. Branches must also be current, review conversations must be resolved, and force
+`Repository checks`, `Terraform`, `Container smoke test`, `Nix flake`, and `Vercel` are
+protected-branch requirements. Branches must also be current, review conversations must be resolved, and force
 pushes and branch deletion are disabled.
 
 The deployment flow is:
@@ -197,7 +211,11 @@ The deployment flow is:
 - release pull requests merge `staging` into `main`; and
 - pushes to `staging` update the developer app and its documentation at `/docs/`.
 
-Preview and staging deployments use staging services and credentials; production uses separate
-Turso configuration. Never copy production secrets into a feature environment. For an explicit
-manual preview or recovery deployment, maintainers can use `just deploy-preview` or
-`just deploy-production`; normal contributions should rely on the Git integration.
+Preview and staging deployments use staging services and credentials; production uses its own.
+Never copy production secrets into a feature environment. For an explicit manual preview or
+recovery deployment, maintainers can use `just deploy-preview` or `just deploy-production`;
+normal contributions should rely on the Git integration.
+
+The AWS deployment is deliberately outside CI: applying it needs long-lived AWS credentials,
+which do not belong in this repository. Maintainers apply it from a checkout with the `just
+aws-*` commands. See `infra/README.md`.

@@ -21,7 +21,7 @@ docker build --tag studyspot-frontend src/frontend
 docker build --tag studyspot-backend src/backend
 ```
 
-Meilisearch uses a versioned upstream image from its registry. Compose builds the two application images and downloads the search image as needed.
+Postgres and Meilisearch use versioned upstream images from their registries. Compose builds the two application images and downloads the other two as needed.
 
 Dockerfile layers are ordered so dependency manifests are copied and installed before frequently changed source code. This lets Docker reuse the expensive dependency layer after ordinary code edits.
 
@@ -33,11 +33,11 @@ Browser
 frontend:5173
    |
 backend:8000
-   |-- /app/.local/studyspot.db
+   |-- postgres:5432
    \-- meilisearch:7700
 ```
 
-The database path is an embedded Turso file on the backend's named volume, so there is no database container, private DNS name, or host port. Compose private DNS lets the backend reach `meilisearch:7700`; `localhost` inside a container refers only to that container.
+Compose private DNS lets the backend reach `postgres:5432` and `meilisearch:7700`; `localhost` inside a container refers only to that container. Postgres is the one service also published on the host, at `127.0.0.1:5432`, so that a backend run outside Compose uses the same database as the one inside it.
 
 ## Port mappings
 
@@ -46,11 +46,11 @@ ports:
   - "127.0.0.1:7501:8000"
 ```
 
-The first port belongs to the host; the second belongs to the container. StudySpot's containers use consecutive host ports `7500` through `7502`, while containers retain the conventional ports expected by their images and development tools. The optional documentation server uses `7503`. Binding to `127.0.0.1` prevents local development services from being exposed on every network interface.
+The first port belongs to the host; the second belongs to the container. StudySpot's application and search containers use consecutive host ports `7500` through `7502`, while containers retain the conventional ports expected by their images and development tools. The optional documentation server uses `7503`. Postgres keeps its conventional `5432` on the host as well, because every Postgres client and connection string assumes it. Binding to `127.0.0.1` prevents local development services from being exposed on every network interface.
 
 ## Disposable containers and persistent data
 
-Application containers should be replaceable. The backend's local Turso file and Meilisearch index live on named volumes so a normal shutdown preserves them:
+Application containers should be replaceable. The Postgres data directory and the Meilisearch index live on named volumes so a normal shutdown preserves them:
 
 ```shell
 docker compose down
@@ -64,7 +64,13 @@ docker compose down --volumes
 
 ## Health and startup order
 
-Compose starts Meilisearch first and verifies that it is accepting requests before the backend starts. The frontend waits for the backend health endpoint. The Turso adapter opens its local file in the backend process, so database readiness belongs in the planned API readiness check rather than Compose startup order. The Compose backend has no copy of `data/spots.json`, so its database is empty and the study-spot routes answer `503 database_unavailable` until a deployment step loads it. A running process is not considered ready until its health check succeeds.
+Compose starts Postgres and Meilisearch first and verifies that both are accepting requests before the backend starts. `pg_isready` is given the database name explicitly, because without it the check passes against the user's default database while initialization is still running. The frontend waits for the backend health endpoint. A running process is not considered ready until its health check succeeds.
+
+The backend then applies migrations before it starts serving, so a fresh volume gets a schema without anyone remembering to ask for one. It does not load data: an empty database is a valid state, and `GET /spots` answers with an empty page rather than an error. Fill it with:
+
+```shell
+just load-data
+```
 
 ## Development loop
 
@@ -72,7 +78,7 @@ Compose starts Meilisearch first and verifies that it is accepting requests befo
 docker compose up --build --watch
 ```
 
-Compose Watch synchronizes source edits into the application containers. Vite updates the browser, Uvicorn reloads Python, and dependency or Dockerfile changes rebuild only the affected image.
+Compose Watch synchronizes source edits into the application containers. Vite updates the browser, Django's development server reloads Python, and dependency or Dockerfile changes rebuild only the affected image.
 
 ## Essential commands
 
@@ -81,8 +87,9 @@ docker compose ps
 docker compose logs --follow
 docker compose logs --follow backend
 docker compose exec backend sh
+docker compose exec postgres psql --username=studyspot studyspot
 docker compose restart backend
 docker compose down
 ```
 
-Compose is appropriate for local development, integration tests, and a single-machine demo. It does not provide managed TLS, remote database backups, or cross-region failover; production database operations belong to Turso Cloud.
+Compose is appropriate for local development, integration tests, and a single-machine demo. It does not provide managed TLS, remote database backups, or cross-region failover. Deployed database operations belong to RDS, which the AWS target provisions with Terraform; see [Deployment](deployment.md).

@@ -12,7 +12,7 @@ cd studyspot
 docker compose up --build --watch
 ```
 
-Open <http://localhost:7500>. Requests under `/api/*` are proxied to FastAPI.
+Open <http://localhost:7500>. Requests under `/api/*` are proxied to the Django API. The backend applies its migrations on startup, so the first run leaves you with a working but empty database; see [Local database configuration](#local-database-configuration) to fill it.
 
 ## Nix setup
 
@@ -55,25 +55,36 @@ Use `just --list` as the authoritative list of supported commands.
 | API liveness | <http://localhost:7501/health/live> |
 | Meilisearch | <http://localhost:7502> |
 | Documentation (`just docs`) | <http://localhost:7503> |
+| Postgres | `127.0.0.1:5432` |
 
-Host-facing ports use the consecutive `7500` through `7503` range. The three Compose services occupy `7500` through `7502`; the optional documentation server uses `7503`. Turso uses an embedded file locally and therefore needs no port. Browser traffic should normally enter through the frontend, which mirrors production's `/api/*` boundary.
+Application and search ports use the consecutive `7500` through `7503` range: the frontend, backend, and Meilisearch containers occupy `7500` through `7502`, and the optional documentation server uses `7503`. Postgres keeps its conventional `5432`, because every Postgres client and connection string assumes it. Browser traffic should normally enter through the frontend, which mirrors the deployed `/api/*` boundary.
 
 ## Local database configuration
 
-Compose supplies `TURSO_DATABASE_URL=file:/app/.local/studyspot.db` and mounts the file on a named volume. Native development uses the value in `.env.example`:
+The database is a Postgres container, and the application reaches it through one variable:
 
 ```text
-TURSO_DATABASE_URL=file:.local/studyspot.db
-TURSO_AUTH_TOKEN=
+DATABASE_URL=postgresql://studyspot:studyspot@localhost:5432/studyspot
 ```
 
-No Turso account, CLI, or token is required for local development.
+Inside Compose the host is the service name, `postgres`; outside it, the same database is published on `127.0.0.1:5432`. Settings already default to that published port, so native development needs no configuration at all. `.env.example` lists the variables worth overriding, and `just` picks up a `.env` copied from it without any exporting. No hosted database, account, or token is involved in local development.
 
-Populate the local database before using the study-spot routes:
+Populate the database before using the study-spot routes:
 
 ```shell
 just load-data
 curl --fail 'http://localhost:7501/spots?limit=5'
 ```
 
-The loader copies `data/spots.json` into the embedded database file and is safe to re-run.
+`just load-data` replaces the table's contents with `data/spots.json` in one transaction and is safe to re-run. Before any data can be loaded the schema has to exist: Compose migrates on startup, and outside Compose that is `just migrate`.
+
+To work on the backend without running the whole system:
+
+```shell
+just start-db
+just migrate
+just load-data
+just dev-backend
+```
+
+See [Local development](local-development.md) for the rest of that loop and [Postgres database](database.md) for what the schema guarantees.
