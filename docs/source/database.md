@@ -19,9 +19,9 @@ Local files require no authentication token and do not consume hosted usage. Pre
 
 Follow Turso's current [Python SDK guidance](https://docs.turso.tech/sdk/python/quickstart):
 
-- use `pyturso` for the local embedded database;
-- use the `libsql` package for remote access to the Turso Cloud libSQL databases from stateless Vercel functions; and
-- keep both behind one StudySpot repository interface.
+- the `libsql` package handles both the local embedded file and remote Turso
+  Cloud access from stateless Vercel functions; and
+- both live behind one StudySpot interface (`studyspot_api.spots.store.connect`).
 
 The adapter interprets a local `file:` URL as a filesystem path for
 `turso.connect()` and passes a hosted URL plus token to `libsql.connect()`.
